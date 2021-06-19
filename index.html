@@ -1,0 +1,52 @@
+<html lang="en">
+
+    <head>
+        <title>Editor</title>
+        <link rel="stylesheet" href="./index.css"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="./code.js"></script>
+    </head>
+
+    <body>
+        <div class="App">
+            <div class="ToolBar">
+                <div class="dropdown">
+                    <button class="main-button" click="getDropDown">File</button>
+                    <div class="dropdown-content" id="File">
+                        <div><button>New File</button></div>
+                        <div><button>Open File</button></div>
+                        <div><button>Save File</button></div>
+                    </div>
+                </div>
+
+
+                <div class="dropdown">
+                    <button class="main-button" id="dropdown-button">Run</button>
+                    <div class="dropdown-content" id="run">
+                        <div><button>Run Module</button></div>
+                        <div><button>Run Without Debug</button></div>
+                        <div><button>Run W/ Debug</button></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="TextBox">
+                <span>
+                    <div id="display">
+                        DISPLAY
+                    </div>
+
+                    <div id="editor">
+                        <div class="line" id="1" contenteditable="true"></div>
+                    </div>
+                </span>
+            </div>
+
+            <div class="Output">
+
+            </div>
+        </div>
+    </body>
+
+</html>

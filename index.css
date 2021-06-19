@@ -1,0 +1,83 @@
+body {
+    overflow-x: hidden;
+    background-color: #333;
+}
+
+/* CSS */
+
+/* DROPDOWN */
+
+.ToolBar {
+    position: relative;
+    display: inline-block;
+  }
+  .dropdown {
+    float: left;
+  }
+  
+  .dropdown button {
+    all: unset;
+    padding: 5px 7px;
+    transition: 0.3s;
+    color: white;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    min-width: 160px;
+    z-index: 1;
+    transition: 0.3s;
+  }
+  
+  .dropdown-content div {
+    width: 100%
+  }
+  
+  .dropdown-content div:hover {
+    background-color: grey;
+    cursor: pointer;
+  }
+  
+  .dropdown:hover .main-button {
+    background-color: grey;
+  }
+  
+  /* MAIN TEXT */
+  
+  .TextBox {
+    height: 70vh;
+    width: 100vw;
+  }
+  
+  .TextBox #display {
+    float: left;
+    width: 15%;
+    height: 100%;
+    background-color: #222;
+  }
+  
+  .TextBox #editor {
+    float: left;
+    width: 80%;
+    color: white;
+    font-family: 'source-code-pro', monospace;
+    height: 100%;
+    border: 0px;
+    background-color: #555;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+  .TextBox:hover {
+    cursor: text;
+  }
+  
+  .TextBox [contentEditable] {
+    outline: 0px solid transparent;
+  }
+  
+  .TextBox #editor .statement {
+    color: #ff8c00;
+  }
