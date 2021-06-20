@@ -11,7 +11,7 @@
         <div class="App">
             <div class="ToolBar">
                 <div class="dropdown">
-                    <button class="main-button" click="getDropDown">File</button>
+                    <button class="main-button" click="getDropDown">FILE</button>
                     <div class="dropdown-content" id="File">
                         <div><button>New File</button></div>
                         <div><button>Open File</button></div>
@@ -19,26 +19,45 @@
                     </div>
                 </div>
 
+                <div class="dropdown">
+                    <button class="main-button" click="getDropDown">EDIT</button>
+                    <div class="dropdown-content" id="File">
+                        <div><button>Undo</button></div>
+                        <div><button>Redo</button></div>
+                        <div><button>Find</button></div>
+                        <div><button>Replace</button></div>
+                        <div><button>Toggle Comment</button></div>
+                    </div>
+                </div>
 
                 <div class="dropdown">
-                    <button class="main-button" id="dropdown-button">Run</button>
+                    <button class="main-button" id="dropdown-button">RUN</button>
                     <div class="dropdown-content" id="run">
                         <div><button>Run Module</button></div>
                         <div><button>Run Without Debug</button></div>
                         <div><button>Run W/ Debug</button></div>
                     </div>
                 </div>
+                
+                <div id="title">TITLE</div>
 
             </div>
 
             <div class="TextBox">
                 <span>
                     <div id="display">
-                        DISPLAY
+                        <div id="explorer">EXPLORER</div>
                     </div>
 
-                    <div id="editor">
-                        <div class="line" id="1" contenteditable="true"></div>
+                    <div id="code">
+                        <div id="tabs">
+                            <span id="selected-tab">Project 1</span>
+                            <span id="tab-objects">Project 2</span>
+                            <span id="tab-objects">Project 3</span>
+                        </div>
+                        <div id="editor">
+                            <div class="line" id="1" contenteditable="true"></div>
+                        </div>
                     </div>
                 </span>
             </div>
@@ -48,5 +67,9 @@
             </div>
         </div>
     </body>
+
+    <footer>
+        <div id="footer">Foot</div>
+    </footer>
 
 </html>

@@ -4,18 +4,12 @@ function setEndOfContenteditable(contentEditableElement)
     if (document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
     {
         range = document.createRange();//Create a range (a range is a like the selection but invisible)
-        range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+        range.selectNodeContents(contentEditableElement)//, end);//Select the entire contents of the element with the range
         range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        console.log(range);
         selection = window.getSelection();//get the selection object (allows you to change selection)
         selection.removeAllRanges();//remove any selections already made
         selection.addRange(range);//make the range you have just created the visible selection
-    }
-    else if (document.selection)//IE 8 and lower
-    { 
-        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
-        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
-        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-        range.select();//Select the range (make it the visible selection
     }
 }
 
@@ -43,7 +37,7 @@ function setEndOfContenteditable(contentEditableElement)
         }
     }
     return caretPos;
-} */
+}  */
 
 function correctID(index) {
     $(this).attr("id", index+1);
@@ -59,10 +53,12 @@ function checkString(event) {
         text = this.textContent, 
         key = event.keyCode,
         newHTML = "";
+        //caretPos = getCaretPosition(document.activeElement);
 
-    console.log(key);
+    //console.log(key);
 
     if (key == 9) {
+
         event.preventDefault();
         // Find out if you can re-run code that changes text and add in this tab key below where ever you are.
         //&#x09;
@@ -72,7 +68,7 @@ function checkString(event) {
         event.preventDefault();
 
         var current_id = parseInt(current_node.attr("id")),
-            next = current_id + 1
+            next = current_id + 1,
             obj = "<div class='line' id=" + next + " contenteditable='true'></div>";
         
         //$("#editor").append(obj);
@@ -81,13 +77,15 @@ function checkString(event) {
         $(".line").each( correctID );
 
         $('#'+next).keydown( checkString )
+
         setEndOfContenteditable(document.getElementById(next));
+        return;
     }
 
     if (key == 38) {
         // UP
-        var current_id = parseInt(current_node.attr("id"));
-            prev = current_id - 1
+        var current_id = parseInt(current_node.attr("id")),
+            prev = current_id - 1;
 
         if (current_id != 1) {
             $('#'+prev).focus();
@@ -96,8 +94,8 @@ function checkString(event) {
 
     if (key == 40) {
         // DOWN
-        var current_id = parseInt(current_node.attr("id"));
-            next = current_id + 1
+        var current_id = parseInt(current_node.attr("id")),
+            next = current_id + 1;
 
         try{
             $('#'+next).focus();
@@ -127,6 +125,9 @@ function main() {
             last_node.focus();
         }
         //console.log(event.target.id);
+    });
+    $(".dropdown button").each(function(index) {
+        $(this).click(function() {alert("check");});
     });
 
     $("#1").keydown( checkString )
