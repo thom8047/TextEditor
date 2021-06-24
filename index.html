@@ -4,12 +4,15 @@
         <title>Editor</title>
         <link rel="stylesheet" href="./index.css"></link>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="./code.js"></script>
+        <script src="./editor.js"></script>
     </head>
 
     <body>
         <div class="App">
             <div class="ToolBar">
+
+                <div id="title">TITLE</div>
+
                 <div class="dropdown">
                     <button class="main-button" click="getDropDown">FILE</button>
                     <div class="dropdown-content" id="File">
@@ -38,8 +41,6 @@
                         <div><button>Run W/ Debug</button></div>
                     </div>
                 </div>
-                
-                <div id="title">TITLE</div>
 
             </div>
 
@@ -55,8 +56,8 @@
                             <span id="tab-objects">Project 2</span>
                             <span id="tab-objects">Project 3</span>
                         </div>
-                        <div id="editor">
-                            <div class="line" id="1" contenteditable="true"></div>
+                        <div id="editor" data-row=1>
+                            <div class="line" id="1" contenteditable="true" data-col=0 data-current-col=0></div>
                         </div>
                     </div>
                 </span>
@@ -69,7 +70,7 @@
     </body>
 
     <footer>
-        <div id="footer">Foot</div>
+        <div id="footer"><span id="footer-data"></span></div>
     </footer>
 
 </html>
