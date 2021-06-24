@@ -34,8 +34,18 @@ function checkString(event) {
 
         if (text == "") {
             if (row == 1) {return;}
-            $('#editor').find('div').eq(row-1).remove('#'+row-1);
-            setCaret()
+            current_node.remove();
+            var max_row = parseInt($('#editor').attr('data-row')),
+                current_row = parseInt($('#editor').attr('data-current-row'));
+
+            setCaret($('#editor').children('#'+row-1).last()[0]);
+
+            $('#editor').attr('data-current-row', current_row-1);
+            $('#editor').attr('data-row', max_row-1);
+            
+            var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+row-1).attr('data-col');
+            $("#footer-data").text(footerdata);
+            return;
         }else {
             if (current_col == 0) {return;}
             current_node.find('span').eq(current_col-1).remove('#'+current_col-1);
@@ -59,6 +69,11 @@ function checkString(event) {
         $(".line").each( correctDivID ); 
         $('#editor').children('#'+next).keydown( checkString );
         $('#editor').children('#'+next).focus();
+        $('#editor').attr('data-current-row', next);
+
+        var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+next).attr('data-col');
+        $("#footer-data").text(footerdata);
+        return;
     }
 
     if (key == 39) {
@@ -67,6 +82,7 @@ function checkString(event) {
             if (row !== parseInt($('#editor').attr('data-row'))) {
                 var next = row + 1;
                 $('#editor').children('#'+next).focus();
+                $('#editor').attr('data-current-row', next);
                 return;
             }
             return;
@@ -82,6 +98,7 @@ function checkString(event) {
             if (row !== 1) {
                 var prev = row - 1;
                 $('#editor').children('#'+prev).focus();
+                $('#editor').attr('data-current-row', prev);
                 return;
             }
             return;
