@@ -26,7 +26,12 @@ function checkString(event) {
         current_col = parseInt($(current_node).attr("data-current-col"));
         key = event.keyCode,
         key_value = event.key,
-        addKey = true;
+        addKey = true,
+        altKeys = [16, 17, 18, 20, 91, 93]
+
+    if (altKeys.includes(key)) {
+        addKey = false;
+    }
 
     if (key == 8) {
         addKey = false;
@@ -76,22 +81,6 @@ function checkString(event) {
         return;
     }
 
-    if (key == 39) {
-        addKey = false;
-        if (current_col == col) {
-            if (row !== parseInt($('#editor').attr('data-row'))) {
-                var next = row + 1;
-                $('#editor').children('#'+next).focus();
-                $('#editor').attr('data-current-row', next);
-                return;
-            }
-            return;
-        }
-
-        $(current_node).attr("data-current-col", current_col+1);
-        //right
-    }
-
     if (key == 37) {
         addKey = false;
         if (current_col == 0) {
@@ -109,6 +98,64 @@ function checkString(event) {
 
     }
 
+    if (key == 38) {
+        addKey = false;
+        event.preventDefault();
+        // up
+        if (row == 1) {return;}
+
+        var upElement = $('#editor').find('div').eq(row-2),
+            upElementCol = parseInt(upElement.attr('data-current-col')),
+            upElementDOM;
+        if (upElementCol == 0) { upElementDOM = false; } else { upElementDOM = $(upElement).find('span').eq(upElementCol-1)[0]; }
+
+        upElement.focus();
+        if (upElementDOM) {
+            setCaret( upElementDOM );
+        }
+
+        var footerdata = "Line: " + upElement.attr('id') + ", Col: " + upElementCol;
+        $("#footer-data").text(footerdata);
+        return;
+    }
+
+    if (key == 39) {
+        addKey = false;
+        if (current_col == col) {
+            if (row !== parseInt($('#editor').attr('data-row'))) {
+                var next = row + 1;
+                $('#editor').children('#'+next).focus();
+                $('#editor').attr('data-current-row', next);
+                return;
+            }
+            return;
+        }
+
+        $(current_node).attr("data-current-col", current_col+1);
+        //right
+    }
+
+    if (key == 40) {
+        addKey = false;
+        event.preventDefault();
+        // down
+        if (row == parseInt($('#editor').attr('data-row'))) {return;}
+
+        var downElement = $('#editor').find('div').eq(row),
+            downElementCol = parseInt(downElement.attr('data-current-col')),
+            downElementDOM;
+        if (downElementCol == 0) { downElementDOM = false; } else { downElementDOM = $(downElement).find('span').eq(downElementCol-1)[0]; }
+
+        downElement.focus();
+        if (downElementDOM) {
+            setCaret( downElementDOM );
+        }
+
+        var footerdata = "Line: " + downElement.attr('id') + ", Col: " + downElementCol;
+        $("#footer-data").text(footerdata);
+        return;
+    }
+
     if (addKey == true) {
         event.preventDefault();
         var span = document.createElement('span');
@@ -116,6 +163,10 @@ function checkString(event) {
         span.textContent = key_value;
         span.setAttribute('class', 'other');
         span.setAttribute('id', col);
+
+        if (key == 9) { // Handle tab
+            span.innerHTML = '&#x09;'
+        }
 
         if (current_col == 0) { current_node.prepend(span); }
         else { 

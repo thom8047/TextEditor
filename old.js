@@ -125,6 +125,7 @@ function checkString(event) {
         event.preventDefault();
         // Find out if you can re-run code that changes text and add in this tab key below where ever you are.
         //&#x09;
+        //&emsp;
     }
 
     if (key == 13) {
