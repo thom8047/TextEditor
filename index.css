@@ -165,14 +165,13 @@ body {
   }
 
   #footer {
-    margin: 0;
     background-color:lightcoral;
+    color: #111;
     width: 100vw;
+    display: inline-block;
   }
 
   #footer #footer-data {
     float: right;
-    margin: 0;
-    background-color:lightcoral;
-    width: 100vw;
+    margin-right: 5px;
   }
