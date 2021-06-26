@@ -5,40 +5,41 @@
         <link rel="stylesheet" href="./index.css"></link>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="./editor.js"></script>
+        <script src="./dropdowns.js"></script>
     </head>
 
     <body>
         <div class="App">
             <div class="ToolBar">
 
-                <div id="title">TITLE</div>
+                <div id="title">untitled</div>
 
                 <div class="dropdown">
-                    <button class="main-button" click="getDropDown">FILE</button>
-                    <div class="dropdown-content" id="File">
-                        <div><button>New File</button></div>
-                        <div><button>Open File</button></div>
-                        <div><button>Save File</button></div>
+                    <button class="main-button" id="file">FILE</button>
+                    <div class="dropdown-content" id="file-dropdown">
+                        <div><button id="new-file">New File</button></div>
+                        <div><button id="open-file">Open File</button></div>
+                        <div><button id="save-file">Save File</button></div>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button class="main-button" click="getDropDown">EDIT</button>
-                    <div class="dropdown-content" id="File">
-                        <div><button>Undo</button></div>
-                        <div><button>Redo</button></div>
-                        <div><button>Find</button></div>
-                        <div><button>Replace</button></div>
-                        <div><button>Toggle Comment</button></div>
+                    <button class="main-button" id="edit">EDIT</button>
+                    <div class="dropdown-content" id="edit-dropdown">
+                        <div><button id="undo">Undo</button></div>
+                        <div><button id="redo">Redo</button></div>
+                        <div><button id="find">Find</button></div>
+                        <div><button id="replace">Replace</button></div>
+                        <div><button id="toggle-comment">Toggle Comment</button></div>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <button class="main-button" id="dropdown-button">RUN</button>
-                    <div class="dropdown-content" id="run">
-                        <div><button>Run Module</button></div>
-                        <div><button>Run Without Debug</button></div>
-                        <div><button>Run W/ Debug</button></div>
+                    <button class="main-button" id="run">RUN</button>
+                    <div class="dropdown-content" id="run-dropdown">
+                        <div><button id="run">Run Without Debug</button></div>
+                        <div><button id="run-debug">Run W/ Debug</button></div>
+                        <div><button id="quit">Quit</button></div>
                     </div>
                 </div>
 
@@ -52,9 +53,7 @@
 
                     <div id="code">
                         <div id="tabs">
-                            <span id="selected-tab">Project 1</span>
-                            <span id="tab-objects">Project 2</span>
-                            <span id="tab-objects">Project 3</span>
+                            <span id="selected-tab">untitled.*</span>
                         </div>
                         <div id="editor" data-row=1 data-current-row=1>
                             <div class="line" id="1" contenteditable="true" data-col=0 data-current-col=0></div>
@@ -70,7 +69,7 @@
     </body>
 
     <footer>
-        <div id="footer">main<span id="footer-data">Line: 1, Col: 0</span></div>
+        <div id="footer">no upstream set<span id="footer-data">Line: 1, Col: 0</span></div>
     </footer>
 
 </html>

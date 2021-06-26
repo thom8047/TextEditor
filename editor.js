@@ -191,13 +191,10 @@ function main() {
     $("#editor").click(function(event) {
         if (event.target.id == "editor") {
             var last_node = $("#editor div:last-child")
-            last_node.focus();
+            $(last_node.last()).focus();
             // To get the end of the focused node;
         }
         //console.log(event.target.id);
-    });
-    $(".dropdown button").each(function(index) {
-        $(this).click(function() {alert("check");});
     });
 
     $("#1").keydown( checkString )
