@@ -66,7 +66,7 @@ function checkString(event) {
         event.preventDefault();
 
         var next = row+1,
-            obj = "<div class='line' id=" + next + " contenteditable='true' data-col=0 data-current-col=0></div>";
+            obj = "<div class='line' id=" + next + " contenteditable='true' spellcheck='false' data-col=0 data-current-col=0></div>";
         
         //$("#editor").append(obj);
         current_node.after($(obj));

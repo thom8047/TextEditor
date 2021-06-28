@@ -141,6 +141,12 @@ body {
   
   .TextBox #editor .statement {
     color: #ff8c00;
+    white-space:pre;
+  }
+
+  .TextBox #editor .func {
+    color: #0E86D4;
+    white-space:pre;
   }
 
   .TextBox #editor .other{

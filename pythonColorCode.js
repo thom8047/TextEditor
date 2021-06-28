@@ -1,7 +1,58 @@
-function colorCode(text) {
+// gloabls
+currentRow = 1;
+pyKeyWords = ["False", "await", "else", "import", "pass", "None", "break", "except", "in", "raise", "True", "class", 
+        "finally", "is", "return", "and", "continue", "for", "lambda", "try", "as", "def", "from", "nonlocal", "while", 
+        "assert", "del", "global", "not", "with", 
+        "async", "elif", "if", "or", "yield"];
+unacceptableKeys = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+
+function checkForOccuranceOf(keyWord, text, start, current_node) {
+    if (text.indexOf(keyWord, start) == -1) {return;}
+
+    var occuranceIndex = text.indexOf(keyWord, start),
+        end = occuranceIndex+keyWord.length
+        specificNodes = $(current_node).children().slice(occuranceIndex, end),
+        prevKey = text.slice(occuranceIndex-1, occuranceIndex),
+        afterKey = text.slice(end, end+1);
+
+    // had to account for when the keyword was inside of a word, this is stupid, but needed. DON'T USE FOR STRINGS!
+    if (unacceptableKeys.includes(prevKey.toLowerCase()) || unacceptableKeys.includes(afterKey.toLowerCase())) {checkForOccuranceOf(keyWord, text, occuranceIndex+1, current_node); return;}
+
+    specificNodes.each(function() {
+        $(this).removeClass().addClass('statement');
+    });
+
+    if (keyWord == 'def') {
+        var endOfFunctionText = text.indexOf('(', end+1);
+        if (! (endOfFunctionText == -1)) {
+            var afterSpecifiedWords = $(current_node).children().slice(end+1, endOfFunctionText);
+            afterSpecifiedWords.removeClass().addClass('func');
+        }
+    }
+
+    checkForOccuranceOf(keyWord, text, occuranceIndex+1, current_node);
+}
+
+function colorCode(event) {
+    // Check to see if we're focused on an editable div.
+    if (! ($(document.activeElement).attr('class') == 'line') ) {return;}
+    // Get the current tab's extension and now we can reference this to our known keywords 
+    var currentFileType = $('#selected-tab').text().split('.')[1],
+        current_node = $(document.activeElement),
+        text = current_node.text();
+
+    $(current_node).children().each(function() { $(this).removeClass().addClass('other'); })
+
+    for (const keyWord of pyKeyWords) {
+        if (text.indexOf(keyWord) == -1) {continue;}
+        checkForOccuranceOf(keyWord, text, 0, current_node);
+    }
     /* 
-    Link this script to the event of every div so we can continuously check when the text is updated;
-    When text is updated, use loop of keywords to check if string contains each keyword and if so
+
+    Notes of dumb ass thoughts:
+
+
+    When text is updated, use this func with our keywords to check if string contains each keyword and if so
     then we can get a selection of the children using jQuery and .eq() and get the specific nodes from the length of the 
     keyword and from their change the class elements to a statement, this leaves all other span's uneffected. It is best
     time case, but we will need to account for the keywords possibly being changed by random changes.
@@ -11,3 +62,9 @@ function colorCode(text) {
     Think of better solution!!!!
     */
 }
+
+function main() {
+    $(document).on('keydown', colorCode);
+}
+
+$(document).ready(main)
