@@ -140,15 +140,35 @@ body {
   }
   
   .TextBox #editor .statement {
-    color: #ff8c00;
+    color: mediumpurple;
     white-space:pre;
   }
 
-  .TextBox #editor .func {
+  .TextBox #editor .functional-keys {
     color: #0E86D4;
     white-space:pre;
   }
-
+  .TextBox #editor .operator-keys {
+    color: darkcyan;
+    white-space:pre;
+  }
+  .TextBox #editor .value-keys {
+    color: #ff8c00;
+    white-space:pre;
+  }
+  .TextBox #editor .builtin-keys {
+    /* builtin would be print(), input(), and any of the other built in keywords, str, bool, <- these are built in classes though*/
+    color: darkcyan;
+    white-space:pre;
+  }
+  .TextBox #editor .string-keys {
+    color: limegreen;
+    white-space:pre;
+  }
+  .TextBox #editor .class-keys {
+    color: gold;
+    white-space:pre;
+  }
   .TextBox #editor .other{
     white-space:pre;
   }

@@ -14,8 +14,12 @@ Issues:
     - EVERY .keydown() WILL RESULT IN A FIX OF THE CARET PLACEMENT
 - each line is it's own specific div and therefore you cannot select, copy, or paste
     - SOLUTION IS IN CREATING MY OWN VERSION OF SELECTION THROUGH THE Shift+Arrow KEYS
-- when text is added, I haven't finished the colorCode.js script, so it is still wrong
+- when text is added, the colors primarily work right. Still complicated though.
 - the file, run, and edit tabs only .log() the names of the classes that belong to the button. I need to start the code after I finish the colorCode.
+
+6/29/2021
+- update the tab when encountering the tabular key at the end, needs to figure how many tabs were in the beginning of the line, then tab that many plus 1.
+- update coloring of integers for correctness.
 
 Side Notes:
 - most languages (Python, Java, JavaScript) have different keywords, but they also have different structures, though slight. This will be a challenging issue to overcome due to the fact that I will need to account for all generic occurances, such as the color of the text after the keyword "def" or "function" or "public", but then I'll also have to account for the specific occurances in the languages.

@@ -73,12 +73,38 @@ function checkString(event) {
 
         $(".line").each( correctDivID ); 
         $('#editor').children('#'+next).keydown( checkString );
-        $('#editor').children('#'+next).focus();
-        $('#editor').attr('data-current-row', next);
-
-        var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+next).attr('data-col');
-        $("#footer-data").text(footerdata);
-        return;
+        if (current_node.children().eq(col-1).text() == ":") {
+// create span.
+            var span = document.createElement('span');
+            span.innerHTML = "&#x09;";
+            span.setAttribute('class', 'other');
+            span.setAttribute('id', col);
+// set the current node and update the rows of the editor
+            $('#editor').children('#'+next).focus();
+            $('#editor').attr('data-current-row', next);
+// get current focued node
+            current_node = $(document.activeElement)
+ // append span          
+            current_node.prepend(span)
+// correct current_node's column numbering
+            $(current_node).find('span').each( correctID );
+            $(current_node).attr("data-col", 1);
+            $(current_node).attr("data-current-col", 1);
+// get selector so we can set caret correctly
+            var selector = $(current_node).find('span').eq(0);
+            setCaret(selector[0]);
+// Set new footer data
+            var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+next).attr('data-col');
+            $("#footer-data").text(footerdata);
+            return;
+        } else {
+            $('#editor').children('#'+next).focus();
+            $('#editor').attr('data-current-row', next);
+            
+            var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+next).attr('data-col');
+            $("#footer-data").text(footerdata);
+            return;
+        }
     }
 
     if (key == 37) {
