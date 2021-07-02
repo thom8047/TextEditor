@@ -61,13 +61,14 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
         } else {
             var findEnd = text.indexOf('(', occuranceIndex+1);
             if (findEnd == -1) {
-                specificNodes = $(current_node).children().slice(occuranceIndex);
+                //pass
+                //specificNodes = $(current_node).children().slice(occuranceIndex);
             } else {
                 specificNodes = $(current_node).children().slice(occuranceIndex, findEnd);
+                specificNodes.each(function() {
+                    $(this).removeClass().addClass('functional-keys');
+                });
             }
-            specificNodes.each(function() {
-                $(this).removeClass().addClass('functional-keys');
-            });
         }
     } 
 

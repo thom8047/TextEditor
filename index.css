@@ -95,6 +95,7 @@ body {
   }
 
   .TextBox #tabs {
+    cursor: grab;
     width: 100%;
     padding-top: 5px;
   }
