@@ -10,7 +10,7 @@ pyKeyWords = ["while","async","except","lambda","with","await","finally","nonloc
         
             "print"," input"," str"," int"," bool",
         
-            '"', ".", "'"];
+            '"', ".", "'", "	"];
 unacceptableKeys = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
@@ -72,6 +72,13 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
         }
     } 
 
+    else if (['	'].includes(keyWord)) {
+        specificNodes = $(current_node).children().slice(occuranceIndex, occuranceIndex+1);
+        specificNodes.each(function() {
+            $(this).removeClass().addClass('tab');
+        });
+    }
+
     else {
 
         // had to account for when the keyword was inside of a word, this is stupid, but needed. DON'T USE FOR STRINGS!
@@ -106,8 +113,15 @@ function colorCode(event) {
     var currentFileType = $('#selected-tab').text().split('.')[1],
         current_node = $(document.activeElement),
         text = current_node.text();
-
-    $(current_node).children().each(function() { $(this).removeClass().addClass('other'); })
+    // remove the classes so we can set them. we need to leave the tabs alone, so we can have a cool tab css
+    $(current_node).children().each(function() { 
+        console.log($(this).attr('id'))
+        if ($(this).attr('id') == 'tab') {
+            console.log('tab');
+        } else {
+            console.log('other');
+            $(this).removeClass().addClass('other'); }
+        });
 
     for (const keyWord of pyKeyWords) {
         if (text.indexOf(keyWord) == -1) {continue;}

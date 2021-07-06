@@ -1,5 +1,12 @@
+
 function dropBindClick(id) {
-    console.log(id);
+    $.ajax({
+        type: "GET",
+        url: "./test.py",
+        data: {param: 'test'},
+    }).done(function (returnData) {
+        console.log(returnData.split('\n'));
+    })
 }
 
 function main() {

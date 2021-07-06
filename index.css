@@ -173,6 +173,10 @@ body {
   .TextBox #editor .other{
     white-space:pre;
   }
+  .TextBox #editor .tab{
+    white-space:pre;
+    border-left:darkgray 1px solid;
+  }
 
   #explorer {
     padding-top: 5px;

@@ -7,6 +7,16 @@ function setCaret(newNode) {
     sel.addRange(range);
 }
 
+function numOfTabs(current_node) {
+    var num = 0; 
+    current_node.children().each(function(index) {
+        if ($(this).text() == '	'){
+            num += 1;
+        }
+    });
+    return num
+}
+
 function correctID(index) {
     $(this).attr("id", index);
     //console.log(index, $(this).attr("id"));
@@ -74,24 +84,29 @@ function checkString(event) {
         $(".line").each( correctDivID ); 
         $('#editor').children('#'+next).keydown( checkString );
         if (current_node.children().eq(col-1).text() == ":") {
-// create span.
-            var span = document.createElement('span');
-            span.innerHTML = "&#x09;";
-            span.setAttribute('class', 'other');
-            span.setAttribute('id', col);
+// get number of previous tabs. wish their was a lambda
+            var tabNum = numOfTabs(current_node)
 // set the current node and update the rows of the editor
             $('#editor').children('#'+next).focus();
             $('#editor').attr('data-current-row', next);
 // get current focued node
             current_node = $(document.activeElement)
- // append span          
-            current_node.prepend(span)
+// create span(s).
+            for (let i = 0; i <= tabNum; i++) {
+                console.log('try', tabNum)
+                var span = document.createElement('span');
+                span.innerHTML = "&#x09;";
+                span.setAttribute('class', 'tab');
+                span.setAttribute('id', tabNum-i);
+    // append span(s)    
+                current_node.prepend(span)
+            }
 // correct current_node's column numbering
             $(current_node).find('span').each( correctID );
-            $(current_node).attr("data-col", 1);
-            $(current_node).attr("data-current-col", 1);
+            $(current_node).attr("data-col", tabNum+1);
+            $(current_node).attr("data-current-col", tabNum+1);
 // get selector so we can set caret correctly
-            var selector = $(current_node).find('span').eq(0);
+            var selector = $(current_node).find('span').eq(tabNum);
             setCaret(selector[0]);
 // Set new footer data
             var footerdata = "Line: " + $('#editor').attr('data-current-row') + ", Col: " + $('#editor').children('#'+next).attr('data-col');
@@ -187,7 +202,7 @@ function checkString(event) {
         var span = document.createElement('span');
 
         span.textContent = key_value;
-        span.setAttribute('class', 'other');
+        span.setAttribute('class', 'tab');
         span.setAttribute('id', col);
 
         if (key == 9) { // Handle tab
