@@ -1,0 +1,239 @@
+body {
+    overflow-x: hidden;
+    background-color: #333;
+    margin-left: 0;
+}
+
+/* CSS */
+
+/* DROPDOWN */
+
+.ToolBar {
+    text-align: center;
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    background-color: darkcyan;
+  }
+  .ToolBar #title {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  .ToolBar .dropdown {
+    float: left;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;  /* This line allows the dropdowns to be above the title div */
+  }
+  
+  .dropdown button {
+    all: unset;
+    padding: 5px 7px;
+    transition: 0.3s;
+    color: white;
+    z-index: 1;
+  }
+  .dropdown label {
+    all: unset;
+    display: block;
+    padding: 5px 7px;
+    transition: 0.3s;
+    color: white;
+    z-index: 1;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #444;
+    min-width: 160px;
+    z-index: 2;
+    transition: 0.3s;
+  }
+  
+  .dropdown-content div {
+    width: 100%
+  }
+  
+  .dropdown-content div:hover {
+    background-color: grey;
+    cursor: pointer;
+  }
+  
+  .dropdown:hover .main-button {
+    background-color: lightcyan;
+    color: black;
+  }
+  
+  /* MAIN TEXT */
+  
+  .TextBox {
+    height: 90vh;
+    width: 100vw;
+  }
+  
+  .TextBox #display {
+    float: left;
+    width: 15%;
+    height: 105%;
+    background-color: #222;
+  } 
+  
+  .TextBox #display:hover {
+    cursor:default;
+  }
+
+  .TextBox #code {
+    float: left;
+    width: 80%;
+    height: 100%;
+  }
+  
+  .TextBox #editor {
+    color: white;
+    font-family: 'source-code-pro', monospace;
+    border: 0px;
+    background-color: #555;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 100%;
+  }
+
+  .TextBox #tabs {
+    cursor: grab;
+    width: 100%;
+    padding-top: 5px;
+  }
+
+  #tab-objects {
+    white-space: nowrap;
+    display: inline-block;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    width: 15%;
+    background-color: #555;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    /* border-top-left-radius: 7px;
+    border-top-right-radius: 7px; */
+  } 
+
+  #selected-tab {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    display: inline-block;
+    width: 15%;
+    background-color: #555;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* border-top-left-radius: 7px;
+    border-top-right-radius: 7px; */
+  }
+  #selected-tab:hover {
+    cursor: help;
+  }
+  #tab-objects:hover {
+    cursor: pointer;
+  }
+
+  .TextBox:hover {
+    cursor: text;
+  }
+  
+  .TextBox [contentEditable] {
+    outline: 0px solid transparent;
+  }
+  
+  .TextBox #editor .statement {
+    color: mediumpurple;
+    white-space:pre;
+  }
+
+  .TextBox #editor .functional-keys {
+    color: #0E86D4;
+    white-space:pre;
+  }
+  .TextBox #editor .operator-keys {
+    color: darkcyan;
+    white-space:pre;
+  }
+  .TextBox #editor .value-keys {
+    color: #ff8c00;
+    white-space:pre;
+  }
+  .TextBox #editor .builtin-keys {
+    /* builtin would be print(), input(), and any of the other built in keywords, str, bool, <- these are built in classes though*/
+    color: darkcyan;
+    white-space:pre;
+  }
+  .TextBox #editor .string-keys {
+    color: limegreen;
+    white-space:pre;
+  }
+  .TextBox #editor .class-keys {
+    color: gold;
+    white-space:pre;
+  }
+  .TextBox #editor .other{
+    white-space:pre;
+  }
+  .TextBox #editor .tab{
+    white-space:pre;
+    border-left:darkgray 1px solid;
+  }
+
+  #explorer {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    font-size: large;
+  }
+  #display-toolbar {
+    background-color: #333;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+    height: 100%;
+    display: inline;
+    text-align: center;
+  }
+
+
+  footer {
+    position: absolute;
+    bottom: 0;
+  }
+
+  #footer {
+    background-color:lightcoral;
+    color: #111;
+    width: 100vw;
+    display: inline-block;
+  }
+
+  #footer #footer-data {
+    float: right;
+    margin-right: 5px;
+  }
+
+  input[type="file"] {
+    display: none;
+  }

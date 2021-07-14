@@ -140,6 +140,9 @@ function colorCode(event) {
     This could be solved by making all children elements class = other then specifically changing the keywords each keydown events
 
     Think of better solution!!!!
+
+    As of July 14th, I'll use this script as a module and if it is a .py file then ill use this to run it and i can 
+    make other color code scripts to use with different extensions
     */
 }
 

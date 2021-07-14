@@ -1,12 +1,7 @@
 
 function dropBindClick(id) {
-    $.ajax({
-        type: "GET",
-        url: "./test.py",
-        data: {param: 'test'},
-    }).done(function (returnData) {
-        console.log(returnData.split('\n'));
-    })
+    //pass
+    console.log(id);
 }
 
 function main() {
@@ -28,7 +23,7 @@ function main() {
             $(this).on('click', function(event) {
                 /* send in the id of the clicked element, this is where we'll make a function for each button =/ that'll 
                 take forever */
-                dropBindClick($(this).find('button').attr('id'));
+                dropBindClick($(this).children().first().attr('id'));
             });
         });
 
