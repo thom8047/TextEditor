@@ -39,6 +39,8 @@ function checkString(event) {
         addKey = true,
         altKeys = [16, 17, 18, 20, 91, 93]
 
+    //console.log(text)
+
     if (altKeys.includes(key)) {
         addKey = false;
     }
@@ -93,7 +95,7 @@ function checkString(event) {
             current_node = $(document.activeElement)
 // create span(s).
             for (let i = 0; i <= tabNum; i++) {
-                console.log('try', tabNum)
+                //console.log('try', tabNum)
                 var span = document.createElement('span');
                 span.innerHTML = "&#x09;";
                 span.setAttribute('class', 'tab');
@@ -229,16 +231,17 @@ function checkString(event) {
 
 
 function main() {
-    $("#editor").click(function(event) {
+    $(document).on('click', function(event) {
         if (event.target.id == "editor") {
             var last_node = $("#editor div:last-child")
             $(last_node.last()).focus();
+            $('#editor').children().each(function(index) {
+                $(this).keydown( checkString )
+            })
             // To get the end of the focused node;
         }
         //console.log(event.target.id);
     });
-
-    $("#1").keydown( checkString )
 }
 
 $( document ).ready(main);

@@ -16,9 +16,30 @@ function getFileResolve(reader, files, currentNum) {
     }
 };
 
+function switchEditors(name) {
+    var childs = $("#code").children();
+    childs.each(function(index){
+        var child = $(this);
+        if (child.attr('id') == "tabs") {
+            // do nothing
+        } else {
+            var className = child.attr('class').split('-editor')[0]; 
+            child.attr('id', 'editor-null');
+            child.css('display', 'none');
+            console.log(className, name)
+            if (className == name) {
+                child.attr('id', 'editor');
+                child.css('display', 'block');
+            }
+        }
+    })
+}
+
 function displayClick(name) {
     var display_div = $("#tabs"),
         clicked;
+
+    switchEditors(name);
 
     display_div.children().each(function() {
         if ($(this).text() == name) {
@@ -48,11 +69,11 @@ function appendSideDisplay(name) {
         "text-overflow": "ellipsis",});
     $(new_file_div).text(name);
     $(new_file_div).mouseenter(function() {
-        console.log('hover')
+        //console.log('hover')
         $(new_file_div).css("background-color", "grey")
     })
     $(new_file_div).mouseleave(function() {
-        console.log('hover')
+        //console.log('hover')
         $(new_file_div).css("background-color", "#222")
     })
 
@@ -77,6 +98,7 @@ function appendTabDisplay(name) {
         display_div.children().each(function() {
             $(this).attr('id', 'tab-objects')
         });
+        switchEditors(name);
         $(this).attr('id', 'selected-tab')
     })
 
@@ -88,49 +110,73 @@ function createFileForViewing(name) {
     appendTabDisplay(name);
 }
 
-function createEditor(content) { //dont know about this
-    var editor = $('#editor'),
-        current_row = 1,
-        current_col = 0,
-        new_line = "<div class='line' id=" + current_row + " contenteditable='true' spellcheck='false' data-col=0 data-current-col=0></div>";
+function createNewLine(current_row) {
+    var new_line = $(document.createElement('div'));
+    new_line.addClass('line'); new_line.attr('id', current_row); new_line.attr('contenteditable', 'true'); new_line.attr('spellcheck', 'false'); new_line.attr('data-col', 0); new_line.attr('data-current-col', 0); 
 
-    //editor.append($(new_line));
+    return new_line
+}
 
-    for (const letter of content) {
-        if (letter == '\n') {
-            current_row++;
+function createNewEditor(name) {
+    var new_line = $(document.createElement('div'));
+    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.addClass(name+"-editor");
+    new_line.css({
+        "color": "white",
+        "font-family": "'source-code-pro', monospace",
+        "border": "0px",
+        "background-color": "#555",
+        "overflow-x": "auto",
+        "overflow-y": "auto",
+        "height": "100%",
+        "display": "block",
+    })
+    return new_line;
+}
 
-            new_line = "<div class='line' id=" + current_row + " contenteditable='true' spellcheck='false' data-col=0 data-current-col=0></div>";
+function addEditor(new_editor) {
+    var current = $('#editor'),
+        parent = $('#code');
+    current.attr('id', 'editor-null'); current.css('display', 'none');
+
+    parent.append(new_editor);
+    //setCaret(new_editor.children().last().last()[0])
+}
+
+function createEditor(content, name) { //dont know about this
+    var editor = createNewEditor(name);
+
+    content.split('\n').forEach(function(element, index) {
+        index++;
+        var new_line = createNewLine(index),
             current_col = 0;
-            editor.append($(new_line));
 
-            var span = $(document.createElement('span'))
+        //console.log(element, element.replace(/\s/g, '').length) 
+        
+        if (!(element.replace(/\s/g, '').length)) {
+            var span = $(document.createElement('span'));
             span.text(' ');
             span.attr('id', current_col);
             span.addClass('other');
-            editor.children().last().append(span);
-            editor.children().last().attr('data-col', current_col);
-            editor.children().last().attr('data-current-col', current_col);
 
-            continue
+            new_line.append(span);
+            current_col++;
+        } else {
+            for (let letter of element) {
+                var span = $(document.createElement('span'));
+                span.text(letter);
+                span.attr('id', current_col);
+                span.addClass('other');
+
+                new_line.append(span);
+                current_col++;
+            }
         }
-        console.log(letter)
-
-        var span = $(document.createElement('span'))
-        span.text(letter);
-        span.attr('id', current_col);
-        span.addClass('other');
-        editor.children().last().append(span)
-
-        //increment col
-        current_col++;
-
-    }
-    setCaret(editor.children().first().first()[0])
-    editor.children().last().attr('data-col', current_col);
-    editor.children().last().attr('data-current-col', current_col);
-    editor.attr('data-row', current_row);
-    editor.attr('data-current-row', 1);
+        new_line.attr('data-col', current_col); new_line.attr('data-current-col', current_col);
+        editor.append(new_line);
+        editor.attr('data-row', index);
+        editor.attr('data-current-row', index);
+    })
+    addEditor(editor);
 }
 
 function uploadFile() {
@@ -144,7 +190,7 @@ function uploadFile() {
                 name = files[currentFileNum].name;
 
             createFileForViewing(name)
-            createEditor(content)
+            createEditor(content, name)
             //console.log(name, content, "<------------------>")
             currentFileNum++;
 

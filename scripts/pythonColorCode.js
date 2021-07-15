@@ -11,6 +11,7 @@ pyKeyWords = ["while","async","except","lambda","with","await","finally","nonloc
             "print"," input"," str"," int"," bool",
         
             '"', ".", "'", "	"];
+txtKeyWords = ['test']
 unacceptableKeys = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
@@ -115,15 +116,15 @@ function colorCode(event) {
         text = current_node.text();
     // remove the classes so we can set them. we need to leave the tabs alone, so we can have a cool tab css
     $(current_node).children().each(function() { 
-        console.log($(this).attr('id'))
+        //console.log($(this).attr('id'))
         if ($(this).attr('id') == 'tab') {
-            console.log('tab');
+            //console.log('tab');
         } else {
-            console.log('other');
+            //console.log('other');
             $(this).removeClass().addClass('other'); }
         });
 
-    for (const keyWord of pyKeyWords) {
+    for (const keyWord of txtKeyWords) {
         if (text.indexOf(keyWord) == -1) {continue;}
         checkForOccuranceOf(keyWord, text, 0, current_node);
     }
