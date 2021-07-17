@@ -1,11 +1,6 @@
-function setCaret(newNode) {
-    let sel = document.getSelection();
-    let range = sel.getRangeAt(0);
-    range.selectNodeContents(newNode);
-    range.collapse(false);
-    sel.removeAllRanges();
-    sel.addRange(range);
-}
+//import for using editor
+import addEditScript from "./editor.js"
+
 
 function getFileResolve(reader, files, currentNum) {
     try {
@@ -139,7 +134,7 @@ function addEditor(new_editor) {
     current.attr('id', 'editor-null'); current.css('display', 'none');
 
     parent.append(new_editor);
-    //setCaret(new_editor.children().last().last()[0])
+    //setCaret(new_editor.children().last().last()[0]) //deprecated
 }
 
 function createEditor(content, name) { //dont know about this
@@ -170,13 +165,16 @@ function createEditor(content, name) { //dont know about this
                 new_line.append(span);
                 current_col++;
             }
+            //current_col--;
         }
+        
         new_line.attr('data-col', current_col); new_line.attr('data-current-col', current_col);
         editor.append(new_line);
         editor.attr('data-row', index);
         editor.attr('data-current-row', index);
     })
     addEditor(editor);
+    addEditScript(editor);
 }
 
 function uploadFile() {
@@ -203,7 +201,7 @@ function uploadFile() {
 
 function main() {
     uploadFile(); // so we can upload a file
-
+    //addEditScript($('#editor'))
 }
 
 $(document).ready(main);
