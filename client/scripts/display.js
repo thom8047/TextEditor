@@ -122,7 +122,7 @@ function createNewEditor(name) {
         "background-color": "#555",
         "overflow-x": "auto",
         "overflow-y": "auto",
-        "height": "100%",
+        "height": "95%",
         "display": "block",
     })
     return new_line;
