@@ -31,7 +31,7 @@ function correctID(index) {
 }
 
 function correctDivID(index) {
-    console.log(index)
+    //console.log(index)
     $(this).attr("id", index+1);
     $('#editor').attr('data-row', index+1);
     //console.log(index, $(this).attr("id"));
@@ -46,12 +46,12 @@ function createNewLine(current_row) {
 
 function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
     if (int_row == 1 || int_row == int_last_row) {
-        console.log('at end')
+        //console.log('at end')
         if (int_row+dir < 1) {
-            console.log('cant go up')
+            //console.log('cant go up')
             return; 
         } else if (int_row+dir > int_last_row) {
-            console.log('cant go down')
+            //console.log('cant go down')
             return;
         } // if we're at the ends, stop from going to farr but continue to allow shit to happen
     }
@@ -100,11 +100,21 @@ function checkString(editor) {
 
             if (keyCode%2) {
                 if (-(38-keyCode) > 0){
-                    if (int_col >= int_last_col) { return; } // at end
+                    if (int_col >= int_last_col) { 
+                        console.log('move right')
+                        return; 
+                    } // at end
                     if (int_col == int_last_col-1) { $(row).attr("data-current-col", int_last_col); setCaret($(col)[0], false); updateFooter(editor); return; } // move just once more
                     moveCursorRight(editor, row, next_col, int_col, col);
                 } else {
-                    if (int_col == 0) { return; } //at end
+                    if (int_col == 0) { // lets check if we can up a row
+                        /*if (int_row == 1) { return; } // cannot move up a row
+                        console.log('try')
+                        var lastColInPrevRow = parseInt($(editor).children().eq(int_row-2).attr('data-col'))
+                        moveCursorVert(editor, 40 {/* knowing keyCode=38 is up , int_row, int_last_row, lastColInPrevRow-1 /* having to use prev rows last col, we already know it exists ) */
+                        return; 
+                    } //at end
+
                     //if (int_col == int_last_col-1) { setCaret($(col)[0], true); return; }
                     moveCursorLeft(editor, row, prev_col, int_col, col);
                 }
@@ -135,7 +145,6 @@ function checkString(editor) {
         }
 
         if (`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) {
-            console.log("yes")
             key_obj.preventDefault();
             var span = document.createElement('span');
     
@@ -170,6 +179,13 @@ export default function addEditScript(editor) {
     //pass in editor to main script
     checkString(editor);
 }
+//----------------------------------------------------
+// Notes: 8/2/2021
+//Work out bugs that are popping up with trying to move vert when moving left and right, I feel like focusing and setting the 
+//caret could be a better way of going about the problem, but we also have the code that moves it up or down, so do whatever
+//works
+
+//-----------------------------------------------------
 
 //Change this to allow the regular use of the content editable div to be preformed. cannot keep dealing with issues that
 //arise because i want to use the divs in my own way. Keep all this work and we might be able to get it working, 
