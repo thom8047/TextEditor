@@ -41,4 +41,6 @@ function main() {
     });
 }
 
-$( document ).ready(main);
+export default function getDropDown() {
+    main()
+}

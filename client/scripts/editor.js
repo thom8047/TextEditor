@@ -5,15 +5,28 @@ String.prototype.paddingLeft = function (paddingValue) {
  // my code below -------------------------------------------------------------------
 
 function setCaret(newNode, before) { //setting the caret, visa versa we want to set the position when the caret changes!
-    let sel = document.getSelection();
-    let range = sel.getRangeAt(0);
-    range.selectNodeContents(newNode);
-    range.collapse(before);  // sets it before if you give it true
-    sel.removeAllRanges();
-    sel.addRange(range);
+    try {
+        let sel = document.getSelection();
+        let range = sel.getRangeAt(0);
+        range.selectNodeContents(newNode);
+        range.collapse(before);  // sets it before if you give it true
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } catch (error) {
+        if (error.name == "IndexSizeError") { console.log(`${error.name} is being thrown due to the fact the Range is not within the Selection Obj. This likely means the Selection Obj is not the editor.
+Full details:\n`); console.log(error.message)}
+    }
 }
 
-function focusOn(who) {
+function focusOn(who, goToEnd) {
+    if (goToEnd) {
+        if ($(who).children().length > 1) {
+            return setCaret($(who).children().last()[0], false);
+            //return $(who).children().last().focus();
+        } else {
+            return setCaret($(who)[0], false);
+        }
+    }
     return $(who).focus();
 }
 
@@ -60,8 +73,11 @@ function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
 
     row.attr('data-current-col', col)
     $(editor).attr("data-current-row", int_row+dir)
-    focusOn(row);
-    setCaret(row.children().eq(col-1)[0], false);
+    focusOn(row, false);
+    // bit of code to put the cursor in a similar pos that it was, this line will change
+    if (row.children().length > 1) {
+        setCaret(row.children().eq(col-1)[0], false);
+    }
 }
 
 function moveCursorLeft(editor, row, prev_col, int_col, col) {
@@ -125,22 +141,48 @@ function checkString(editor) {
         }
 
         if ([8, 9, 13].includes(keyCode)) {
-            if (keyCode == 8) {
+            if (keyCode == 8) { // back-space
                 if (!row.text()) { 
+                    event.preventDefault(); // so we're not deleting the previous lines text
+
                     if (row.attr('id') == 1) { return; } // make sure we're not the last line
+
+                    var newRow = $(editor).children().eq(int_row-2);
+                    focusOn(newRow, true);
+
                     $(row).remove(); // remove the row
                     // fix editor row data info and correct divs
                     $(editor).attr("data-row", int_last_row-1);
                     $(editor).attr("data-current-row", int_row-1);
                     $(editor).find('div').each( correctDivID );
 
-                    var newRow = $(editor).children().eq(int_row-2);
-                    focusOn(newRow);
+                    updateFooter(editor)
                     return;
                 } // make sure we don't keep removing files
+                // make sure there is something to delete, if not return null for now
+                // this is also where we can add in the code that would move all the text over to the prev row
+                if (int_col == 0) { return; }
+
                 $(row).attr("data-col", int_last_col-1);
                 $(row).attr("data-current-col", int_col-1);
                 $(row).find('span').each( correctID );
+            }
+
+            if (keyCode == 13) { // enter
+                event.preventDefault();
+                // new line
+                var line = createNewLine(int_row+1);
+                $(line).insertAfter($(editor).find('div').eq(int_row-1));
+                // clean up
+                $(editor).attr("data-row", int_last_row+1);
+                $(editor).attr("data-current-row", int_row+1);
+                $(editor).find('div').each( correctDivID );
+
+                // update footer
+                updateFooter(editor);
+                
+                // set focus on the new line
+                focusOn(line, false);
             }
         }
 
@@ -152,9 +194,9 @@ function checkString(editor) {
             span.setAttribute('class', 'tab');
             span.setAttribute('id', int_col);
     
-            if (keyCode == 9) { // Handle tab
-                span.innerHTML = '&#x09;'
-            }
+            // if (keyCode == 9) { // Handle tab!!
+            //     span.innerHTML = '&#x09;'
+            // }
     
             if (int_col == 0) { row.prepend(span); }
             else { 
@@ -174,10 +216,40 @@ function checkString(editor) {
 }
 
 export default function addEditScript(editor) {
-    //put focus on the end of the file
-    
+    //put focus on the end of the file when clicked
+    $(editor).on('click', function(event) {
+        if ((event.target !== this) && ($(event.target).is('span'))) { 
+            var span = $(event.target),
+                offset = (event.pageX - $(event.target).offset().left)-2.7,  // 2.7 seems to be a good medium and if every span is the same size then this should be fine.
+                span_id = (offset > 0) ? parseInt(span.attr('id'))+1 : parseInt(span.attr('id')),
+                row = span.parent();
+
+            if (offset > 0) { focusOn(span, true); } else { focusOn(span, false); }
+
+            $(editor).attr('data-current-row', parseInt(row.attr('id')));
+            $(row).attr("data-current-col", span_id);
+            updateFooter(editor);
+            return; 
+        } else if ((event.target !== this) && ($(event.target).is('div'))) {
+            console.log('this is the click event');
+            
+            var row = $(event.target);
+            $(editor).attr('data-current-row', parseInt(row.attr('id')));
+            $(row).attr("data-current-col", parseInt(row.attr('data-col')));
+            updateFooter(editor);
+            return; 
+        }
+
+        $(editor).attr('data-current-row', parseInt($(editor).children().last().attr('id')))
+        var last = $(editor).children().last()
+        last.attr('data-current-col', parseInt(last.attr('data-col')));
+        updateFooter(editor);
+        focusOn(last, true);
+    })
     //pass in editor to main script
     checkString(editor);
+    // update the footer text for each new editor
+    updateFooter(editor);
 }
 //----------------------------------------------------
 // Notes: 8/2/2021

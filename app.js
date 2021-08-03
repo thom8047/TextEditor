@@ -8,7 +8,7 @@ app.listen(port);
 
 const client = new pg.Client({
     user: 'dbuser',
-    host: 'database.server.com',
+    host: 'localhost',
     database: 'mydb',
     password: 'secretpassword',
     port: 3211,

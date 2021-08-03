@@ -1,5 +1,6 @@
 //import for using editor
 import addEditScript from "./editor.js"
+import getDropDown from "./dropdowns.js"
 
 
 function getFileResolve(reader, files, currentNum) {
@@ -123,6 +124,8 @@ function createNewEditor(name) {
         "overflow-x": "auto",
         "overflow-y": "auto",
         "height": "95%",
+        "width": "98%",
+        "float": "right",
         "display": "block",
     })
     return new_line;
@@ -200,8 +203,14 @@ function uploadFile() {
 };
 
 function main() {
+    // so drop downs can work correctly
+    getDropDown();
+
     uploadFile(); // so we can upload a file
-    //addEditScript($('#editor'))
+    
+    // create blank editor to start
+    createFileForViewing("blank")
+    createEditor("-- Blank --", "blank")
 }
 
 $(document).ready(main);
