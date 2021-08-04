@@ -1,6 +1,7 @@
 //import for using editor
-import addEditScript from "./editor.js"
-import getDropDown from "./dropdowns.js"
+import addEditScript from "./editor.js";
+import getDropDown from "./dropdowns.js";
+import updateTitle from "./version.js";
 
 
 function getFileResolve(reader, files, currentNum) {
@@ -12,7 +13,7 @@ function getFileResolve(reader, files, currentNum) {
     }
 };
 
-function switchEditors(name) {
+function switchEditors(name) { // awesome function
     var childs = $("#code").children();
     childs.each(function(index){
         var child = $(this);
@@ -75,6 +76,9 @@ function appendSideDisplay(name) {
 
     $(new_file_div).on('click', function(){
         displayClick(name);
+        
+        // update title
+        updateTitle();
     });
 
     display_div.append(new_file_div);
@@ -96,6 +100,9 @@ function appendTabDisplay(name) {
         });
         switchEditors(name);
         $(this).attr('id', 'selected-tab')
+
+        //update title
+        updateTitle();
     })
 
     display_div.append(new_file_span);
@@ -104,6 +111,7 @@ function appendTabDisplay(name) {
 function createFileForViewing(name) {
     appendSideDisplay(name);
     appendTabDisplay(name);
+    updateTitle();
 }
 
 function createNewLine(current_row) {
@@ -209,8 +217,9 @@ function main() {
     uploadFile(); // so we can upload a file
     
     // create blank editor to start
-    createFileForViewing("blank")
-    createEditor("-- Blank --", "blank")
+    var blank_file_info = ['blank.txt', '-- Blank --']
+    createFileForViewing(blank_file_info[0])
+    createEditor(blank_file_info[1], blank_file_info[0])
 }
 
 $(document).ready(main);
