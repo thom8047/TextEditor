@@ -1,7 +1,19 @@
 
 function dropBindClick(id) {
-    //pass
-    console.log(id);
+    //get data
+    var data = {};
+    data.name = "blank.txt";
+    data.file_no = 0;
+    
+    $.ajax({ // use to get and save data created.
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: 'http://localhost:8000/data',						
+        success: function(data) {
+            console.log(JSON.stringify(data));
+        }
+    });
 }
 
 function main() {
