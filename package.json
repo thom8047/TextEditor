@@ -4,7 +4,7 @@
   "description": "Text editor meant to be implemented with a database that holds txt files and saves, stores them for future use",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "fs": "0.0.1-security",
+    "jest": "^27.0.6"
   }
 }
