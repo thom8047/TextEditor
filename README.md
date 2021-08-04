@@ -21,7 +21,19 @@ Issues:
 - update the tab when encountering the tabular key at the end, needs to figure how many tabs were in the beginning of the line, then tab that many plus 1.
 - update coloring of integers for correctness.
 
-Side Notes:
-- most languages (Python, Java, JavaScript) have different keywords, but they also have different structures, though slight. This will be a challenging issue to overcome due to the fact that I will need to account for all generic occurances, such as the color of the text after the keyword "def" or "function" or "public", but then I'll also have to account for the specific occurances in the languages.
+7/21/2021
+- didn't like how original code was written, ended up redoing all code by breaking the system into a generic delivery. Whether new or opened file, we could build an editor div thats' css was taken care of by the code. This allowed a simple way of being able to "toggle" through the opened files, and allow for blank files to be opened and correctly set up to be updated via an editor script that's pulled into the main display script. 
 
-- I primarily made the lines of the editor broken up div's but only because of how I started. When I started from scratch to fix the letter placement (catch key inputs and halt and insert a span with the keyCode instead), I damn near fixed the issue I ran into when I started. I could probably have one contenteditable div that inserts all keys as spans and then I wouldn't have to worry so much about the caret placement, the selection making, or whatever other problems are being caused. Haven't actually tried to debug, but it'll rip apart my code and that sounds fucking hard.
+8/4/2021
+- The editor can now be used as of version 2.4.0
+- CAN use mouse to move caret
+- The caret can still randomly move or sit in a spot that isn't where it's supposed to be. As of now I have made every precaution I can think of to keep caret placed in the correct spot. This includes clicking inside the editor, clicking in a specific line, and clicking at a specific character to type before or after it. The keys to move up, down, left and right also should correctly place caret without fail, so unless one was trying to break the editor, there likely is no need for more effort to be put into this issue.
+- Select, copy and paste is still an issue, I have yet to add hotkeys: | 'Shift-C' etc | and due to the way I have set up the ditor, I will have to write in the code that selects multi-lined text. This will be implemented last due to other issues taking precedence.
+- Text coloring does work, but I'll likely tweak the code to fit my own needs at a later time
+- The dropdowns are currently being editted. As of now, the open file works and can open a file in ones directory.
+
+I have added a Node.JS back-end to serve the front end. This can now become a website that I may host on portfolio.
+
+(Possible) Future features:
+- Database access to open/save files instead of local file access. This is for security, but I would need to properly secure the database acess from the server side, making it an interesting project. The database schema is also really cool, I'd like a directory-like shema and a non-relational db could probably be the route.
+- Instead of pushing it as a webpage, I'd like to make it a desktop application. I need to research more for how to accomplish this, and whether I can transition the HTML, CSS< and JavaScript directly over, but this would be a cooler project is I did.
