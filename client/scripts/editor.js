@@ -34,6 +34,8 @@ function updateFooter(editor) {
     var getNewRowInt = String(parseInt($(editor).attr('data-current-row'))),
         getNewColInt = String(parseInt($(editor).children().eq(getNewRowInt-1).attr('data-current-col'))),
         footer = $('#footer-data');
+
+    $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
     
     footer.text(`LN: ${getNewRowInt.paddingLeft('___')} | Col: ${getNewColInt.paddingLeft('___')}`)
 }
@@ -59,17 +61,14 @@ function createNewLine(current_row) {
 
 function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
     if (int_row == 1 || int_row == int_last_row) {
-        //console.log('at end')
         if (int_row+dir < 1) {
-            //console.log('cant go up')
             return; 
         } else if (int_row+dir > int_last_row) {
-            //console.log('cant go down')
             return;
-        } // if we're at the ends, stop from going to farr but continue to allow shit to happen
+        } // if we're at the ends, stop from going to far but continue to allow shit to happen
     }
     var row = $(editor).children().eq((int_row+dir)-1),
-        col = (parseInt(row.attr('data-col')) >= int_col) ? int_col : parseInt(row.attr('data-col'))
+        col = (parseInt(row.attr('data-col')) >= parseInt($(editor).attr('data-column-vertical-adj'))) ? parseInt($(editor).attr('data-column-vertical-adj')) : parseInt(row.attr('data-col'))
 
     row.attr('data-current-col', col)
     $(editor).attr("data-current-row", int_row+dir)
@@ -137,6 +136,7 @@ function checkString(editor) {
                 
             } else {
                 moveCursorVert(editor, -(39-keyCode), int_row, int_last_row, int_col)
+                return; // so that our 'data-column-vertical-adj' data variable does not change
             }
         }
 
@@ -203,7 +203,7 @@ function checkString(editor) {
                 $(span).insertAfter($(row).find('span').eq(int_col-1)); 
             }
             $(row).find('span').each( correctID );
-    
+
             $(row).attr("data-col", int_last_col+1);
             $(row).attr("data-current-col", int_col+1);
     

@@ -115,7 +115,7 @@ function createNewLine(current_row) {
 
 function createNewEditor(name) {
     var new_line = $(document.createElement('div'));
-    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.addClass(name+"-editor");
+    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor");
     new_line.css({
         "color": "white",
         "font-family": "'source-code-pro', monospace",
