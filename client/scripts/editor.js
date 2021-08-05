@@ -72,8 +72,14 @@ function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
 
     row.attr('data-current-col', col)
     $(editor).attr("data-current-row", int_row+dir)
+
+    // Because of the column-vertical-adj data variable in the editor div, I don't think I need this code any more.
+    // sike I need an updateFooter, but then it sets the col-vert-adj, so figure it out!
+
+    
+
     focusOn(row, false);
-    // bit of code to put the cursor in a similar pos that it was, this line will change
+    //bit of code to put the cursor in a similar pos that it was, this line will change
     if (row.children().length > 1) {
         setCaret(row.children().eq(col-1)[0], false);
     }
