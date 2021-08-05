@@ -6,6 +6,28 @@ body {
 
 /* CSS */
 
+/* width */
+#code::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+#code::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  transition: 0.5s;
+}
+ 
+/* Handle */
+#code::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+#code::-webkit-scrollbar-thumb:hover {
+  opacity: 0.5;
+  background: rgb(161, 161, 161)
+}
+
 /* DROPDOWN */
 
 .ToolBar {
@@ -74,6 +96,20 @@ body {
     height: 90vh;
     width: 100vw;
   }
+
+  .TextBox #number_scale {
+    float: left;
+    color: white;
+    font-family: 'source-code-pro', monospace;
+    border: 0px;
+    background-color: #555;
+    /* overflow-x: hidden; */
+    height: 97%;
+    width: 3%;
+    display: block;
+
+    text-align: left;
+  }
   
   .TextBox #display {
     float: left;
@@ -86,21 +122,20 @@ body {
     cursor:default;
   }
 
-  .TextBox #code {
+  .TextBox #main {
     float: left;
     width: 80%;
     height: 100%;
   }
-  
-  .TextBox #editor {
-    color: white;
-    font-family: 'source-code-pro', monospace;
+
+  .TextBox #code {
+    overflow-y: auto;
     border: 0px;
     background-color: #555;
-    overflow-x: auto;
-    overflow-y: auto;
-    height: 95%;
-    display: block;
+  }
+
+  .TextBox .line {
+    scroll-snap-align: start;
   }
 
   .TextBox #tabs {

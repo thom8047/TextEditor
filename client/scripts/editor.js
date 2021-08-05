@@ -30,12 +30,33 @@ function focusOn(who, goToEnd) {
     return $(who).focus();
 }
 
-function updateFooter(editor) {
+function fixScale(scale) {
+    scale.children().each(function(index) {
+        $(this).attr('id', index+1);
+        $(this).text(index+1);
+    });
+}
+
+function changeScale(removeNumber) {
+    var scale = $('#number_scale')
+    if (removeNumber) {
+        scale.children().last().remove()
+    } else {
+        var number = document.createElement('div');
+        scale.append(number);
+    }
+
+    fixScale(scale);
+}
+
+function updateFooter(editor, updateWhileKeepingColVertAdj=false) {
     var getNewRowInt = String(parseInt($(editor).attr('data-current-row'))),
         getNewColInt = String(parseInt($(editor).children().eq(getNewRowInt-1).attr('data-current-col'))),
         footer = $('#footer-data');
 
-    $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
+    if (!updateWhileKeepingColVertAdj) {
+        $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
+    }
     
     footer.text(`LN: ${getNewRowInt.paddingLeft('___')} | Col: ${getNewColInt.paddingLeft('___')}`)
 }
@@ -77,10 +98,11 @@ function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
     // sike I need an updateFooter, but then it sets the col-vert-adj, so figure it out!
 
     
-
+    updateFooter(editor, true);
     focusOn(row, false);
     //bit of code to put the cursor in a similar pos that it was, this line will change
     if (row.children().length > 1) {
+        if (col == 0) { setCaret(row.children().eq(col)[0], true); return; }
         setCaret(row.children().eq(col-1)[0], false);
     }
 }
@@ -162,7 +184,8 @@ function checkString(editor) {
                     $(editor).attr("data-current-row", int_row-1);
                     $(editor).find('div').each( correctDivID );
 
-                    updateFooter(editor)
+                    changeScale(true);
+                    updateFooter(editor);
                     return;
                 } // make sure we don't keep removing files
                 // make sure there is something to delete, if not return null for now
@@ -175,7 +198,7 @@ function checkString(editor) {
             }
 
             if (keyCode == 13) { // enter
-                event.preventDefault();
+                key_obj.preventDefault();
                 // new line
                 var line = createNewLine(int_row+1);
                 $(line).insertAfter($(editor).find('div').eq(int_row-1));
@@ -184,7 +207,8 @@ function checkString(editor) {
                 $(editor).attr("data-current-row", int_row+1);
                 $(editor).find('div').each( correctDivID );
 
-                // update footer
+                // update footer and change scale
+                changeScale(false);
                 updateFooter(editor);
                 
                 // set focus on the new line
@@ -221,7 +245,7 @@ function checkString(editor) {
     });
 }
 
-export default function addEditScript(editor) {
+function addEditScript(editor) {
     //put focus on the end of the file when clicked
     $(editor).on('click', function(event) {
         if ((event.target !== this) && ($(event.target).is('span'))) { 
@@ -257,6 +281,8 @@ export default function addEditScript(editor) {
     // update the footer text for each new editor
     updateFooter(editor);
 }
+
+export { addEditScript, changeScale }
 //----------------------------------------------------
 // Notes: 8/2/2021
 //Work out bugs that are popping up with trying to move vert when moving left and right, I feel like focusing and setting the 

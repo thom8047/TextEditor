@@ -1,8 +1,8 @@
 //import for using editor
-import addEditScript from "./editor.js";
+import { addEditScript, changeScale } from "./editor.js";
 import getDropDown from "./dropdowns.js";
 import updateTitle from "./version.js";
-
+import { createNumbers } from "./number_scale.js";
 
 function getFileResolve(reader, files, currentNum) {
     try {
@@ -17,9 +17,10 @@ function switchEditors(name) { // awesome function
     var childs = $("#code").children();
     childs.each(function(index){
         var child = $(this);
-        if (child.attr('id') == "tabs") {
+        if (child.attr('id') == "number_scale") {
             // do nothing
         } else {
+            console.log(child.attr('class'))
             var className = child.attr('class').split('-editor')[0]; 
             child.attr('id', 'editor-null');
             child.css('display', 'none');
@@ -129,12 +130,11 @@ function createNewEditor(name) {
         "font-family": "'source-code-pro', monospace",
         "border": "0px",
         "background-color": "#555",
-        "overflow-x": "auto",
-        "overflow-y": "auto",
-        "height": "95%",
-        "width": "98%",
-        "float": "right",
+        "height": "97%",
+        "width": "97%",
+        "float": "left",
         "display": "block",
+        "scroll-snap-type": "y mandatory",
     })
     return new_line;
 }
@@ -220,6 +220,8 @@ function main() {
     var blank_file_info = ['blank.txt', '-- Blank --']
     createFileForViewing(blank_file_info[0])
     createEditor(blank_file_info[1], blank_file_info[0])
+
+    createNumbers();
 }
 
 $(document).ready(main);
