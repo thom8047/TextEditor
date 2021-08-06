@@ -131,8 +131,7 @@ function createNewEditor(name) {
         "border": "0px",
         "background-color": "#555",
         "height": "97%",
-        "width": "97%",
-        "float": "left",
+        "margin-left": "40px",
         "display": "block",
         "scroll-snap-type": "y mandatory",
     })

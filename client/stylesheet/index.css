@@ -1,5 +1,5 @@
 body {
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: #333;
     margin-left: 0;
 }
@@ -7,23 +7,23 @@ body {
 /* CSS */
 
 /* width */
-#code::-webkit-scrollbar {
-  width: 10px;
+/* #code */::-webkit-scrollbar {
+  width: 2px;
+  transition: 0.5s;
 }
 
 /* Track */
-#code::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: #f1f1f1; 
-  transition: 0.5s;
 }
  
 /* Handle */
-#code::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background: #888; 
 }
 
 /* Handle on hover */
-#code::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
   opacity: 0.5;
   background: rgb(161, 161, 161)
 }
@@ -98,18 +98,21 @@ body {
   }
 
   .TextBox #number_scale {
+    /* position: absolute; */
     float: left;
     color: white;
     font-family: 'source-code-pro', monospace;
     border: 0px;
     background-color: #555;
-    /* overflow-x: hidden; */
     height: 97%;
-    width: 3%;
+    width: 40px;
     display: block;
 
     text-align: left;
   }
+  /* .TextBox #scale {
+    position: absolute;
+  } */
   
   .TextBox #display {
     float: left;
@@ -129,13 +132,15 @@ body {
   }
 
   .TextBox #code {
-    overflow-y: auto;
+    overflow: auto;
     border: 0px;
+    width: 100%;
     background-color: #555;
   }
 
   .TextBox .line {
     scroll-snap-align: start;
+    white-space: pre;
   }
 
   .TextBox #tabs {
