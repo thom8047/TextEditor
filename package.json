@@ -1,6 +1,6 @@
 {
   "name": "texteditor",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "description": "Text editor meant to be implemented with a database that holds txt files and saves, stores them for future use",
   "main": "app.js",
   "scripts": {
