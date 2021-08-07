@@ -30,23 +30,18 @@ function focusOn(who, goToEnd) {
     return $(who).focus();
 }
 
-function fixScale(scale) {
-    scale.children().each(function(index) {
-        $(this).attr('id', index+1);
-        $(this).text(index+1);
-    });
-}
-
-function changeScale(removeNumber) {
-    var scale = $('#number_scale')
+function changeScale(row, removeNumber, actual_row_length) {
+    var scale = $('#number_scale'),
+        scales_child_len = scale.children().length;
     if (removeNumber) {
-        scale.children().last().remove()
+        scale.children().last().remove();
     } else {
         var number = document.createElement('div');
-        scale.append(number);
+        $(number).attr('id', scales_child_len+1);
+        var str = `${scales_child_len+1}|`
+        $(number).text(str);
+        scale.append(number)
     }
-
-    fixScale(scale);
 }
 
 function updateFooter(editor, updateWhileKeepingColVertAdj=false) {
@@ -58,7 +53,7 @@ function updateFooter(editor, updateWhileKeepingColVertAdj=false) {
         $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
     }
     
-    footer.text(`LN: ${getNewRowInt.paddingLeft('___')} | Col: ${getNewColInt.paddingLeft('___')}`)
+    footer.text(`LN: ${getNewRowInt.paddingLeft('____')} | Col: ${getNewColInt.paddingLeft('____')}`)
 }
 
 function correctID(index) {
@@ -184,7 +179,7 @@ function checkString(editor) {
                     $(editor).attr("data-current-row", int_row-1);
                     $(editor).find('div').each( correctDivID );
 
-                    changeScale(true);
+                    changeScale(int_row, true, int_last_row);
                     updateFooter(editor);
                     return;
                 } // make sure we don't keep removing files
@@ -208,7 +203,7 @@ function checkString(editor) {
                 $(editor).find('div').each( correctDivID );
 
                 // update footer and change scale
-                changeScale(false);
+                changeScale(int_row, false, int_last_row);
                 updateFooter(editor);
                 
                 // set focus on the new line

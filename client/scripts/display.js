@@ -1,8 +1,19 @@
 //import for using editor
-import { addEditScript, changeScale } from "./editor.js";
+import { addEditScript } from "./editor.js";
 import getDropDown from "./dropdowns.js";
 import updateTitle from "./version.js";
 import { createNumbers } from "./number_scale.js";
+import { scrollBothDivs } from "./scroll.js"
+
+function updateNumbers(name) {
+    // we should have a match when this is called and there should never be more than 20 open at a time, if so we can throw a user error or something
+    $('#code').children().each(function() {
+        if ($(this).attr('data-name') === name) {
+            var n = parseInt($(this).attr('data-row'));
+            createNumbers(n, true);
+        }
+    })
+}
 
 function getFileResolve(reader, files, currentNum) {
     try {
@@ -20,11 +31,11 @@ function switchEditors(name) { // awesome function
         if (child.attr('id') == "number_scale") {
             // do nothing
         } else {
-            console.log(child.attr('class'))
+            //console.log(child.attr('class'))
             var className = child.attr('class').split('-editor')[0]; 
             child.attr('id', 'editor-null');
             child.css('display', 'none');
-            console.log(className, name)
+            //console.log(className, name)
             if (className == name) {
                 child.attr('id', 'editor');
                 child.css('display', 'block');
@@ -78,8 +89,9 @@ function appendSideDisplay(name) {
     $(new_file_div).on('click', function(){
         displayClick(name);
         
-        // update title
+        // update title and numbering system
         updateTitle();
+        updateNumbers(name);
     });
 
     display_div.append(new_file_div);
@@ -102,8 +114,9 @@ function appendTabDisplay(name) {
         switchEditors(name);
         $(this).attr('id', 'selected-tab')
 
-        //update title
+        //update title and numbering system
         updateTitle();
+        updateNumbers(name);
     })
 
     display_div.append(new_file_span);
@@ -126,12 +139,13 @@ function createNewEditor(name) {
     var new_line = $(document.createElement('div'));
     new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor");
     new_line.css({
+        "overflow": "auto",
         "color": "white",
         "font-family": "'source-code-pro', monospace",
         "border": "0px",
         "background-color": "#555",
         "height": "97%",
-        "margin-left": "40px",
+        "margin-left": "45px",
         "display": "block",
         "scroll-snap-type": "y mandatory",
     })
@@ -185,6 +199,10 @@ function createEditor(content, name) { //dont know about this
     })
     addEditor(editor);
     addEditScript(editor);
+
+    // update numbering row
+    updateNumbers(name);
+    scrollBothDivs(editor);
 }
 
 function uploadFile() {
@@ -219,8 +237,6 @@ function main() {
     var blank_file_info = ['blank.txt', '-- Blank --']
     createFileForViewing(blank_file_info[0])
     createEditor(blank_file_info[1], blank_file_info[0])
-
-    createNumbers();
 }
 
 $(document).ready(main);
