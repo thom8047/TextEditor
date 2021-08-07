@@ -6,7 +6,7 @@ import { createNumbers } from "./number_scale.js";
 import { scrollBothDivs } from "./scroll.js"
 
 function updateNumbers(name) {
-    // we should have a match when this is called and there should never be more than 20 open at a time, if so we can throw a user error or something
+    // Look through all the editor for the one we want and get the number of rows. 
     $('#code').children().each(function() {
         if ($(this).attr('data-name') === name) {
             var n = parseInt($(this).attr('data-row'));
@@ -15,6 +15,7 @@ function updateNumbers(name) {
     })
 }
 
+// For db implement, we won't need this.
 function getFileResolve(reader, files, currentNum) {
     try {
         var file = files[currentNum];
@@ -44,6 +45,7 @@ function switchEditors(name) { // awesome function
     })
 }
 
+// With the three following functions, we have overlap and a poor job of using it to our advantage. CleanUP!!!
 function displayClick(name) {
     var display_div = $("#tabs"),
         clicked;
@@ -158,7 +160,7 @@ function addEditor(new_editor) {
     current.attr('id', 'editor-null'); current.css('display', 'none');
 
     parent.append(new_editor);
-    //setCaret(new_editor.children().last().last()[0]) //deprecated
+    //setCaret(new_editor.children().last().last()[0]) //deprecated for now
 }
 
 function createEditor(content, name) { //dont know about this
@@ -200,7 +202,7 @@ function createEditor(content, name) { //dont know about this
     addEditor(editor);
     addEditScript(editor);
 
-    // update numbering row
+    // update numbering row and make numbering row scrollTop() follow #editor scrollTop()
     updateNumbers(name);
     scrollBothDivs(editor);
 }
@@ -230,8 +232,8 @@ function uploadFile() {
 function main() {
     // so drop downs can work correctly
     getDropDown();
-
-    uploadFile(); // so we can upload a file
+    // so we can upload a file
+    uploadFile(); 
     
     // create blank editor to start
     var blank_file_info = ['blank.txt', '-- Blank --']
@@ -241,7 +243,14 @@ function main() {
 
 $(document).ready(main);
 
-/*
+
+/* 8/7/21
+As of now, this script looks great and just needs a bit of clean up. We are ready to move into two directions:
+
+The database implementation, and the full on file opening and file saving implementation.
+*/
+
+/*  //I have no idea when I made this note
 Here we can import in the python color changing script and we can check the extension of the files we add
 
 We should be able to read the file and create the divs accordingly and change the main div, from there we don't 

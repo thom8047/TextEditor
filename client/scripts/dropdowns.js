@@ -1,11 +1,10 @@
-
 function dropBindClick(id) {
     //get data
     var data = {};
     data.name = "blank.txt";
     data.file_no = 0;
     
-    $.ajax({ // use to get and save data created.
+    /* $.ajax({ // use to get and save data created.
         type: 'POST',
         data: JSON.stringify(data),
         contentType: 'application/json',
@@ -13,7 +12,7 @@ function dropBindClick(id) {
         success: function(data) {
             console.log(JSON.stringify(data));
         }
-    });
+    }); */
 }
 
 function main() {
@@ -56,3 +55,7 @@ function main() {
 export default function getDropDown() {
     main()
 }
+
+/*  8/7/21
+This script will be different for both sides of the project!, at least the "File > Open, Save, New" will
+*/

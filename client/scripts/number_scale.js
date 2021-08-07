@@ -20,6 +20,4 @@ function createNumbers(n, remove) {
     }
 }
 
-
-
 export { createNumbers }

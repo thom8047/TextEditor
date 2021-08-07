@@ -152,3 +152,7 @@ function main() {
 }
 
 $(document).ready(main)
+
+/* 8/7/21
+This will come into play eventually
+*/

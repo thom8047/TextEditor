@@ -37,7 +37,7 @@ pool.on('error', (err, client) => {
 })
 
 /* ---------------------------------------------------------------------------------- */
-// Functionality for server
+// Functionality for server, this will get messy soon!
 
 function getDBName(_obj, result) {
     var obj = JSON.parse(_obj);

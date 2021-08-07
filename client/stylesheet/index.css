@@ -6,24 +6,17 @@ body {
 
 /* CSS */
 
-/* width */
+/* SCROLL BAR  */
 ::-webkit-scrollbar {
   width: 2px;
   height: 2px;
 }
-
-/* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-  transition: 0.5s;
+  background: #f1f1f1;
 }
- 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888; 
 }
-
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   opacity: 0.5;
   background: rgb(161, 161, 161)
@@ -91,12 +84,12 @@ body {
     color: black;
   }
   
-  /* MAIN TEXT */
+  /* MAIN SECTION */
   
-  .TextBox {
-    height: 90vh;
-    width: 100vw;
-  }
+.TextBox {
+  height: 90vh;
+  width: 100vw;
+}
 
   .TextBox #number_scale {
     /* position: absolute; */
@@ -114,14 +107,14 @@ body {
   /* .TextBox #scale {
     position: absolute;
   } */
-  
+
   .TextBox #display {
     float: left;
     width: 15%;
     height: 105%;
     background-color: #222;
   } 
-  
+
   .TextBox #display:hover {
     cursor:default;
   }
@@ -195,11 +188,11 @@ body {
   .TextBox:hover {
     cursor: text;
   }
-  
+
   .TextBox [contentEditable] {
     outline: 0px solid transparent;
   }
-  
+
   .TextBox #editor .statement {
     color: mediumpurple;
     white-space:pre;
@@ -259,11 +252,15 @@ body {
     text-align: center;
   }
 
+/* OUTPUT */
+/* In development... */
 
-  footer {
-    position: absolute;
-    bottom: 0;
-  }
+/* FOOTER */
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
 
   #footer {
     background-color:lightcoral;

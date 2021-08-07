@@ -278,6 +278,14 @@ function addEditScript(editor) {
 }
 
 export { addEditScript, changeScale }
+
+/* 8/7/21
+Pretty seemless code, after reviewing at 6am, but cleaning up the comments and making it pretty will be the final step
+
+This is damnnear done aside from the hotkeys, and extra key cptures, and any other editor-specific features needing to get done.
+The undo and redo will need to happen here as well!
+*/
+
 //----------------------------------------------------
 // Notes: 8/2/2021
 //Work out bugs that are popping up with trying to move vert when moving left and right, I feel like focusing and setting the 

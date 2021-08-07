@@ -1,4 +1,4 @@
-var __version__ = "2.4.2";
+var __version__ = "2.5.0";
 
 export default function updateTitle() {
     var __current__ = $("#selected-tab").text();
