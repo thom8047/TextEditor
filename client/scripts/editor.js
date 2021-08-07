@@ -4,6 +4,9 @@ String.prototype.paddingLeft = function (paddingValue) {
 
  // my code below -------------------------------------------------------------------
 
+ // Global variables!
+var prevSpanList = [];
+
 function setCaret(newNode, before) { //setting the caret, visa versa we want to set the position when the caret changes!
     try {
         let sel = document.getSelection();
@@ -15,6 +18,30 @@ function setCaret(newNode, before) { //setting the caret, visa versa we want to 
     } catch (error) {
         if (error.name == "IndexSizeError") { console.log(`${error.name} is being thrown due to the fact the Range is not within the Selection Obj. This likely means the Selection Obj is not the editor.
 Full details:\n`); console.log(error.message)}
+    }
+}
+
+function checkWidths(row, span, editor) {
+    // The 15 is to give me some space so I can see what could potentially be written after
+    var spanPos = ((parseInt($(span).attr('id'))) *9),
+        editorWidth = $(editor).width(),  // ($(window).width() - ($(editor).offset().left)),
+        diff = ( spanPos - editorWidth );
+
+    if (prevSpanList.length > 2) {
+        prevSpanList.splice(0, 1);
+    }
+    prevSpanList.push($(span).offset().left)
+
+    //console.log(diff, $(span).offset().left)
+    if (diff > 0) {
+        $(editor).scrollLeft(diff);
+        if ((prevSpanList[1]-prevSpanList[2]) == 0) {
+            console.log('same')
+        } // don't know what this is for??
+        
+        /* $(editor).animate({
+            scrollLeft: diff,
+        }, 100); */
     }
 }
 
@@ -234,6 +261,9 @@ function checkString(editor) {
     
             var selector = $(row).find('span').eq(int_col);
             setCaret(selector[0], false);
+
+            // Check widths to bump scrolling back or not
+            checkWidths(row, span, editor);
         }
 
         updateFooter(editor); //update footer

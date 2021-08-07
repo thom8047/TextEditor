@@ -11,6 +11,8 @@ function updateNumbers(name) {
         if ($(this).attr('data-name') === name) {
             var n = parseInt($(this).attr('data-row'));
             createNumbers(n, true);
+
+            $('#number_scale').scrollTop($(this).scrollTop()); // keeping the divs scrolled together
         }
     })
 }
@@ -42,7 +44,9 @@ function switchEditors(name) { // awesome function
                 child.css('display', 'block');
             }
         }
-    })
+    });
+
+    // Now we've switched editors
 }
 
 // With the three following functions, we have overlap and a poor job of using it to our advantage. CleanUP!!!
