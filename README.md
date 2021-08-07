@@ -37,3 +37,39 @@ I have added a Node.JS back-end to serve the front end. This can now become a we
 (Possible) Future features:
 - Database access to open/save files instead of local file access. This is for security, but I would need to properly secure the database acess from the server side, making it an interesting project. The database schema is also really cool, I'd like a directory-like shema and a non-relational db could probably be the route.
 - Instead of pushing it as a webpage, I'd like to make it a desktop application. I need to research more for how to accomplish this, and whether I can transition the HTML, CSS< and JavaScript directly over, but this would be a cooler project is I did.
+
+
+8/7/21
+- Got database imlplementation started
+- Fixed caret bugs, such as moving up and down
+- Line breaks that would "soft-wrap" the `class='line'` div have been removed and now we don't need to worry about updating the numbering row accordingly. Though because of the nature of the div, we can implement a soft-wrap feature easily.
+- Moved the tab div out of the parent div with editor divs
+- Added number row, with correct scrolling to compliment
+
+NEXT STEPS:
+
+    1.) Try to see how well this whole app would shift to an Desktop application.
+    2.) Build out postgres db to fit the needs of a ajax request
+    3.) Depending on 1), continue with a web-browser feature
+
+I think it's funny, the postgres Open feature can be used along with the FileReader obj. We can check name, and content to see similarities and from their proceed to create a new row in table or to use existing one. This way we can always view all our rows in a subpage of the app, hopefully in a hierarchy fashion. eg:
+
+    /c/
+     |
+     +----- Desktop
+     |         |
+     |         +----- Some File
+     |         |
+     |         |_____ Some File
+     |
+     |
+     |
+     |_____ Documents
+               |
+               +----- Some Folder
+               |           |
+               |           |
+               |           |_________________ etc...
+               |           
+               |           
+               |_____ Some File
