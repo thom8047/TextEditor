@@ -18,23 +18,7 @@ Full details:\n`); console.log(error.message)}
     }
 }
 
-/* function checkWhereWeAreInRow(row) { 
-    // ONLY to check the length of a full row before it becomes 
-    $(row).children().each(function(i) {
-        var spanPos = parseInt($(this).attr('id')),
-            spanPixel = spanPos*9,
-            rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
-            percentage = (rowWidth - spanPixel) / rowWidth;
-
-        console.log(`Row width: ${rowWidth} | Span pixel: ${spanPixel}`)
-        /* if ((percentage > 0)) {
-            console.log(`Row width: ${rowWidth} | Span pixel: ${spanPixel}`)
-            return false;
-        } 
-    });
-} */
-
-function checkWidths(row, span, editor, backwards=false) { // holy shit was this the hardest thing ever or what
+/* function checkWidths(row, span, editor, backwards=false) { // holy shit was this the hardest thing ever or what
     var spanPixel = ((parseInt($(span).attr('id'))) *9),
         rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
         diff_out = spanPixel-rowWidth,
@@ -49,6 +33,21 @@ function checkWidths(row, span, editor, backwards=false) { // holy shit was this
     }
     if ($(editor).scrollLeft() < diff_out) {
         $(editor).scrollLeft(diff_out) // this works!!!!!
+    }
+} */
+
+function checkWidths(row, span, editor) { // holy shit was this the hardest thing ever or what
+    var spanPixel = ((parseInt($(span).attr('id'))) *9),
+        rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
+        percentage = -((rowWidth - spanPixel) / rowWidth) +1,
+        diff_out = (spanPixel-rowWidth)-(percentage*18.9) +18,  // check what the fuck is up with this
+        diff_in = spanPixel-(percentage*18.9) -27;
+
+    if ($(editor).scrollLeft() < diff_out) {
+        $(editor).scrollLeft(diff_out) // this works!!!!!
+    }
+    if ($(editor).scrollLeft() > diff_in) {
+        $(editor).scrollLeft(diff_in) // this works!!!!!
     }
 }
 
