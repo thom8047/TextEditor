@@ -4,9 +4,6 @@ String.prototype.paddingLeft = function (paddingValue) {
 
  // my code below -------------------------------------------------------------------
 
- // Global variables!
-var prevSpanList = [];
-
 function setCaret(newNode, before) { //setting the caret, visa versa we want to set the position when the caret changes!
     try {
         let sel = document.getSelection();
@@ -21,27 +18,29 @@ Full details:\n`); console.log(error.message)}
     }
 }
 
-function checkWidths(row, span, editor) {
-    // The 15 is to give me some space so I can see what could potentially be written after
-    var spanPos = ((parseInt($(span).attr('id'))) *9),
-        editorWidth = $(editor).width(),  // ($(window).width() - ($(editor).offset().left)),
-        diff = ( spanPos - editorWidth );
+/* function checkWhereWeAreInRow(row) { 
+    // ONLY to check the length of a full row before it becomes 
+    $(row).children().each(function(i) {
+        var spanPos = parseInt($(this).attr('id')),
+            spanPixel = spanPos*9,
+            rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
+            percentage = (rowWidth - spanPixel) / rowWidth;
 
-    if (prevSpanList.length > 2) {
-        prevSpanList.splice(0, 1);
-    }
-    prevSpanList.push($(span).offset().left)
+        console.log(`Row width: ${rowWidth} | Span pixel: ${spanPixel}`)
+        /* if ((percentage > 0)) {
+            console.log(`Row width: ${rowWidth} | Span pixel: ${spanPixel}`)
+            return false;
+        } 
+    });
+} */
 
-    //console.log(diff, $(span).offset().left)
-    if (diff > 0) {
-        $(editor).scrollLeft(diff);
-        if ((prevSpanList[1]-prevSpanList[2]) == 0) {
-            console.log('same')
-        } // don't know what this is for??
-        
-        /* $(editor).animate({
-            scrollLeft: diff,
-        }, 100); */
+function checkWidths(row, span, editor) { // holy shit was this the hardest thing ever or what
+    var spanPixel = ((parseInt($(span).attr('id'))) *8.9),
+        rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
+        diff = spanPixel-rowWidth;
+
+    if ($(editor).scrollLeft() < diff) {
+        $(editor).scrollLeft(diff) // this works!!!!!
     }
 }
 
