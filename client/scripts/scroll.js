@@ -1,7 +1,6 @@
 function scrollBothDivs(editor) {
     $(editor).on('scroll', function(event) {
         $('#number_scale').scrollTop($(this).scrollTop());
-        console.log(`This is the scroll event saying: ${$(this).scrollLeft()}`)
     });
 }
 

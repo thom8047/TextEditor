@@ -34,13 +34,21 @@ Full details:\n`); console.log(error.message)}
     });
 } */
 
-function checkWidths(row, span, editor) { // holy shit was this the hardest thing ever or what
-    var spanPixel = ((parseInt($(span).attr('id'))) *8.9),
+function checkWidths(row, span, editor, backwards=false) { // holy shit was this the hardest thing ever or what
+    var spanPixel = ((parseInt($(span).attr('id'))) *9),
         rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
-        diff = spanPixel-rowWidth;
+        diff_out = spanPixel-rowWidth,
+        diff_in = spanPixel-(rowWidth*0.025);
 
-    if ($(editor).scrollLeft() < diff) {
-        $(editor).scrollLeft(diff) // this works!!!!!
+    if (backwards) { // This is to update the scroll when you move left 
+        //or right in a div you just bumped up or down in, or if you're just moving the mouse cursor
+        if ($(editor).scrollLeft() > diff_in) {
+            $(editor).scrollLeft(diff_in) // this works!!!!!
+        }
+        return;
+    }
+    if ($(editor).scrollLeft() < diff_out) {
+        $(editor).scrollLeft(diff_out) // this works!!!!!
     }
 }
 
@@ -170,6 +178,7 @@ function checkString(editor) {
                     } // at end
                     if (int_col == int_last_col-1) { $(row).attr("data-current-col", int_last_col); setCaret($(col)[0], false); updateFooter(editor); return; } // move just once more
                     moveCursorRight(editor, row, next_col, int_col, col);
+                    checkWidths(row, next_col, editor, false);
                 } else {
                     if (int_col == 0) { // lets check if we can up a row
                         /*if (int_row == 1) { return; } // cannot move up a row
@@ -181,6 +190,7 @@ function checkString(editor) {
 
                     //if (int_col == int_last_col-1) { setCaret($(col)[0], true); return; }
                     moveCursorLeft(editor, row, prev_col, int_col, col);
+                    checkWidths(row, prev_col, editor, true);
                 }
                 
             } else {
@@ -262,7 +272,7 @@ function checkString(editor) {
             setCaret(selector[0], false);
 
             // Check widths to bump scrolling back or not
-            checkWidths(row, span, editor);
+            checkWidths(row, span, editor, false);
         }
 
         updateFooter(editor); //update footer
