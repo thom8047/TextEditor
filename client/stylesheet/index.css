@@ -194,12 +194,12 @@ body {
   }
 
   .TextBox #editor .statement {
-    color: mediumpurple;
+    color: #CCCCFF;
     white-space:pre;
   }
 
   .TextBox #editor .functional-keys {
-    color: #0E86D4;
+    color: #89CFF0;
     white-space:pre;
   }
   .TextBox #editor .operator-keys {
@@ -219,8 +219,13 @@ body {
     color: limegreen;
     white-space:pre;
   }
+  .TextBox #editor .self {
+    color: #A95C68;
+    font-style: italic;
+    white-space:pre;
+  }
   .TextBox #editor .class-keys {
-    color: gold;
+    color: yellow;
     white-space:pre;
   }
   .TextBox #editor .other{

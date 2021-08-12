@@ -40,8 +40,9 @@ function checkWidths(row, span, editor) { // holy shit was this the hardest thin
     var spanPixel = ((parseInt($(span).attr('id'))) *9),
         rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
         percentage = -((rowWidth - spanPixel) / rowWidth) +1,
-        diff_out = (spanPixel-rowWidth)-(percentage*18.9) +18,  // check what the fuck is up with this
-        diff_in = spanPixel-(percentage*18.9) -27;
+        spacing = (0.016829919857524488*$(window).width()),
+        diff_out = (spanPixel-rowWidth)-(percentage*spacing) +18,  // check what the fuck is up with this
+        diff_in = spanPixel-(percentage*spacing) -27;
 
     if ($(editor).scrollLeft() < diff_out) {
         $(editor).scrollLeft(diff_out) // this works!!!!!
@@ -229,6 +230,14 @@ function checkString(editor) {
 
             if (keyCode == 13) { // enter
                 key_obj.preventDefault();
+
+                // check to see if we need to auto append tab
+                if ($(row).children().length > 3) {
+                    var last_char_in_row = $(row).children().last().text();
+                    // implement a separate function for adding tab to the text
+                    // maybe move the updating row out
+                }
+
                 // new line
                 var line = createNewLine(int_row+1);
                 $(line).insertAfter($(editor).find('div').eq(int_row-1));
@@ -246,28 +255,40 @@ function checkString(editor) {
             }
         }
 
-        if (`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) {
+        if ((`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) || (keyCode == 9)) {
             key_obj.preventDefault();
-            var span = document.createElement('span');
+            var span = document.createElement('span'),
+                size = 1;
     
             span.textContent = key;
             span.setAttribute('class', 'tab');
             span.setAttribute('id', int_col);
     
-            // if (keyCode == 9) { // Handle tab!!
-            //     span.innerHTML = '&#x09;'
-            // }
+            if (keyCode == 9) { // Handle tab!!  // Think about whether or not to keep tab and row.attr() change in here
+                span.innerHTML = ` `;
+                size = 4;
+            }
     
             if (int_col == 0) { row.prepend(span); }
             else { 
                 $(span).insertAfter($(row).find('span').eq(int_col-1)); 
             }
+            if (keyCode == 9) { // Handle tab!!
+                for (let a = 1; a < 4; a++) {
+                    var span = document.createElement('span');
+                    span.setAttribute('class', 'tab');
+                    span.setAttribute('id', int_col+a);
+                    span.innerHTML = ` `;
+                    $(span).insertAfter($(row).find('span').eq(int_col-1+a)); 
+                }
+                
+            }
             $(row).find('span').each( correctID );
 
-            $(row).attr("data-col", int_last_col+1);
-            $(row).attr("data-current-col", int_col+1);
+            $(row).attr("data-col", int_last_col+size);
+            $(row).attr("data-current-col", int_col+size);
     
-            var selector = $(row).find('span').eq(int_col);
+            var selector = $(row).find('span').eq(int_col+(size-1));
             setCaret(selector[0], false);
 
             // Check widths to bump scrolling back or not

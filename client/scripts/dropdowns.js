@@ -1,18 +1,54 @@
-function dropBindClick(id) {
+function getText(editor) {
+    var str = "";
+    editor.children().each(function() {
+        str = `${str}${$(this).text()}\n`;
+    });
+    return str;
+}
+
+function dropBindClick(id, editor) {
     //get data
-    var data = {};
-    data.name = "blank.txt";
-    data.file_no = 0;
-    
-    /* $.ajax({ // use to get and save data created.
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        url: 'http://localhost:8000/data',						
-        success: function(data) {
-            console.log(JSON.stringify(data));
+    if (id.includes('file')) {
+
+        if (id.includes('save')) {
+            var data = {};
+            data.name = editor.attr('data-name')//"blank.txt";
+            data.content = getText(editor);
+            data.accessed = 0;
+            data.file_no = 0;
+            data.type = id.split('-file')[0];
+        
+            $.ajax({ // use to get and save data created.
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:8000/data',						
+                success: function(data) {
+                    console.log(JSON.stringify(data));
+                }
+            });
         }
-    }); */
+
+        if (id.includes('open')) {
+            $.ajax({ // use to get and save data created.
+                type: 'GET',
+                //contentType: 'application/json',
+                url: 'http://localhost:8000/data',						
+                success: function(data) {
+                    var file_names = JSON.stringify(data)
+                    console.log(file_names.split(',')[0])//typeof(file_names))
+                    // have to correctly adjust from a JSON string to a list, so we could enumerate through.
+                }
+            });
+
+            console.log(typeof(file_names))
+        }
+
+        if (id.includes('new')) {
+            // this is where we need to push a new file, all front end
+        }
+        
+    }
 }
 
 function main() {
@@ -34,7 +70,7 @@ function main() {
             $(this).on('click', function(event) {
                 /* send in the id of the clicked element, this is where we'll make a function for each button =/ that'll 
                 take forever */
-                dropBindClick($(this).children().first().attr('id'));
+                dropBindClick($(this).children().first().attr('id'), $('#editor'));
             });
         });
 
