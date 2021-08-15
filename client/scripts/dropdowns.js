@@ -22,7 +22,7 @@ function dropBindClick(id, editor) {
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                url: 'http://localhost:8000/data',						
+                url: '/data',						
                 success: function(data) {
                     console.log(JSON.stringify(data));
                 }
@@ -32,16 +32,16 @@ function dropBindClick(id, editor) {
         if (id.includes('open')) {
             $.ajax({ // use to get and save data created.
                 type: 'GET',
-                //contentType: 'application/json',
-                url: 'http://localhost:8000/data',						
+                url: '/data',						
                 success: function(data) {
-                    var file_names = JSON.stringify(data)
-                    console.log(file_names.split(',')[0])//typeof(file_names))
+                    var file_names = JSON.stringify(data) // split this json string to cut out the brackets that make it look like a list, but really a string
+                    
+                    file_names.split(',').forEach(function () {
+                        // we need to create a popup window and fill it with this content, only to cross reference with whatever we currently have open
+                    });
                     // have to correctly adjust from a JSON string to a list, so we could enumerate through.
                 }
             });
-
-            console.log(typeof(file_names))
         }
 
         if (id.includes('new')) {

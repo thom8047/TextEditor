@@ -144,6 +144,18 @@ body {
     padding-top: 5px;
   }
 
+  #exit {
+    white-space: pre;
+    color: pink;
+    font-weight: 900;
+    float: left;
+    transition: 0.3s;
+  }
+  #exit:hover {
+    transform: rotate(45deg);
+    cursor: pointer;
+  }
+
   #tab-objects {
     white-space: nowrap;
     display: inline-block;

@@ -57,7 +57,7 @@ function displayClick(name) {
     switchEditors(name);
 
     display_div.children().each(function() {
-        if ($(this).text() == name) {
+        if ($(this).children().eq(1).text() == name) {
             clicked = $(this);
         } 
     });
@@ -66,6 +66,12 @@ function displayClick(name) {
         $(this).attr('id', 'tab-objects')
     });
     $(clicked).attr('id', 'selected-tab')
+}
+
+function xSpan(span) {
+    // take care of span css
+    span.text(" + ");
+    span.attr("id", "exit")
 }
 
 function appendSideDisplay(name) {
@@ -105,15 +111,21 @@ function appendSideDisplay(name) {
 
 function appendTabDisplay(name) {
     var new_file_span = $(document.createElement("div")),
+        x_span = $(document.createElement("span")),
+        text_span = $(document.createElement("span")),
         display_div = $("#tabs");
 
-    new_file_span.text(name); 
+    xSpan(x_span);
+    text_span.text(name);
+    new_file_span.append([x_span, text_span]); 
+
     display_div.children().each(function() {
         $(this).attr('id', 'tab-objects')
     });
     new_file_span.attr('id', 'selected-tab');
+    new_file_span.on('click', function(event) {
+        if ($(event.target).attr("id") === "exit") {console.log('x')}
 
-    new_file_span.on('click', function() {
         display_div.children().each(function() {
             $(this).attr('id', 'tab-objects')
         });
