@@ -223,6 +223,7 @@ function createEditor(content, name) { //dont know about this
     scrollBothDivs(editor);
 }
 
+// DEPRECATED --------------------------------*******
 function uploadFile() {
     $('#imported-files').on('change', function() {
         var files = this.files,
@@ -246,8 +247,6 @@ function uploadFile() {
 };
 
 function main() {
-    // so drop downs can work correctly
-    getDropDown();
     // so we can upload a file
     uploadFile(); 
     
@@ -255,6 +254,9 @@ function main() {
     var blank_file_info = ['blank.txt', '-- Blank --']
     createFileForViewing(blank_file_info[0])
     createEditor(blank_file_info[1], blank_file_info[0])
+
+    // so drop downs can work correctly
+    getDropDown();
 }
 
 $(document).ready(main);
