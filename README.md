@@ -73,3 +73,9 @@ I think it's funny, the postgres Open feature can be used along with the FileRea
                |           
                |           
                |_____ Some File
+
+As of 08/20/2021
+
+The db has an interface with user, opening up the pop up menu, pulling all file names and populating them to the user. From here we'll query the content when opened, and "read" the content line by line to put it into a new editor.
+
+Updates soon
