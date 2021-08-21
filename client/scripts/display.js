@@ -1,6 +1,6 @@
 //import for using editor
 import { addEditScript } from "./editor.js";
-import getDropDown from "./dropdowns.js";
+import getDropDown from "./newSaveLoad.js";
 import updateTitle from "./version.js";
 import { createNumbers } from "./number_scale.js";
 import { scrollBothDivs } from "./scroll.js"
@@ -246,14 +246,17 @@ function uploadFile() {
     })
 };
 
+function createBlankEditor(name, content) {
+    createFileForViewing(name)
+    createEditor(content, name)
+}
+
 function main() {
     // so we can upload a file
     uploadFile(); 
     
     // create blank editor to start
-    var blank_file_info = ['blank.txt', '-- Blank --']
-    createFileForViewing(blank_file_info[0])
-    createEditor(blank_file_info[1], blank_file_info[0])
+    createBlankEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
 
     // so drop downs can work correctly
     getDropDown();

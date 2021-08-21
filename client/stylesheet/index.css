@@ -31,6 +31,7 @@ body {
   display: flex;
   justify-content: center;
   transition: 0.5s;
+  z-index: -2
 }
 
 /* .FileExplorer:hover #full-screen-popup-background {
@@ -47,8 +48,8 @@ body {
   width: 100%;
   height: 100%;
   background: black;
-  opacity: 0.25;
-  z-index: 2;
+  opacity: 0;
+  z-index: -2;
   transition: inherit;
 }
 
@@ -58,7 +59,7 @@ body {
   width: 400px;
   height: 250px;
   background: #222;
-  z-index: 3;
+  z-index: inherit;
   border: 1px solid lightgrey;
   transition: inherit;
 }
@@ -81,7 +82,7 @@ body {
   font-size: larger;
   font-weight: bold;
   transform: rotate(45deg);
-  z-index: 4;
+  z-index: inherit;
   transition: 1s;
 }
 #popup-navbar-x:hover {
@@ -96,7 +97,7 @@ body {
   width: 60%;
   height: 75%;
   background: rgb(29, 29, 34);
-  z-index: 4;
+  z-index: inherit;
   overflow-y: auto;
 }
 
@@ -106,7 +107,7 @@ body {
   width: 30%;
   height: 75%;
   background: rgb(29, 29, 34);
-  z-index: 4;
+  z-index: inherit;
 }
 
 
@@ -294,7 +295,7 @@ body {
   }
 
   .TextBox #editor .statement {
-    color: #CCCCFF;
+    color: #a0a0ff;
     white-space:pre;
   }
 
@@ -321,6 +322,11 @@ body {
   }
   .TextBox #editor .self {
     color: #A95C68;
+    font-style: italic;
+    white-space:pre;
+  }
+  .TextBox #editor .comment {
+    color: grey;
     font-style: italic;
     white-space:pre;
   }

@@ -21,7 +21,7 @@ txtKeyWords = ["while","async","except","lambda","with","await","finally","nonlo
 
 "print"," input"," str"," int"," bool",
 
-'"', ".", "'",
+'"', ".", "'", "#",
 
 "self"];
 unacceptableKeys = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
@@ -59,7 +59,7 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
         });
     } 
 
-    else if (['"', ".", "'"].includes(keyWord)) {
+    else if (['"', ".", "'", "#"].includes(keyWord)) {
         if (keyWord == "'" || keyWord == '"') {
             var findNextOccurance = text.indexOf(keyWord, occuranceIndex+1);
             if (findNextOccurance == -1) {
@@ -70,6 +70,12 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
             }
             specificNodes.each(function() {
                 $(this).removeClass().addClass('string-keys');
+            });
+
+        } else if (keyWord == '#') {
+            specificNodes = $(current_node).children().slice(occuranceIndex);
+            specificNodes.each(function() {
+                $(this).removeClass().addClass('comment');
             });
         } else {
             var findEnd = text.indexOf('(', occuranceIndex+1);
