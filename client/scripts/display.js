@@ -246,7 +246,7 @@ function uploadFile() {
     })
 };
 
-function createBlankEditor(name, content) {
+function genericEditor(name, content) {
     createFileForViewing(name)
     createEditor(content, name)
 }
@@ -256,7 +256,7 @@ function main() {
     uploadFile(); 
     
     // create blank editor to start
-    createBlankEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
+    genericEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
 
     // so drop downs can work correctly
     getDropDown();
