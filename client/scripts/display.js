@@ -1,9 +1,23 @@
 //import for using editor
-import addEditScript from "./editor.js";
+import { addEditScript } from "./editor.js";
 import getDropDown from "./dropdowns.js";
 import updateTitle from "./version.js";
+import { createNumbers } from "./number_scale.js";
+import { scrollBothDivs } from "./scroll.js"
 
+function updateNumbers(name) {
+    // Look through all the editor for the one we want and get the number of rows. 
+    $('#code').children().each(function() {
+        if ($(this).attr('data-name') === name) {
+            var n = parseInt($(this).attr('data-row'));
+            createNumbers(n, true);
 
+            $('#number_scale').scrollTop($(this).scrollTop()); // keeping the divs scrolled together
+        }
+    })
+}
+
+// For db implement, we won't need this.
 function getFileResolve(reader, files, currentNum) {
     try {
         var file = files[currentNum];
@@ -17,21 +31,25 @@ function switchEditors(name) { // awesome function
     var childs = $("#code").children();
     childs.each(function(index){
         var child = $(this);
-        if (child.attr('id') == "tabs") {
+        if (child.attr('id') == "number_scale") {
             // do nothing
         } else {
+            //console.log(child.attr('class'))
             var className = child.attr('class').split('-editor')[0]; 
             child.attr('id', 'editor-null');
             child.css('display', 'none');
-            console.log(className, name)
+            //console.log(className, name)
             if (className == name) {
                 child.attr('id', 'editor');
                 child.css('display', 'block');
             }
         }
-    })
+    });
+
+    // Now we've switched editors
 }
 
+// With the three following functions, we have overlap and a poor job of using it to our advantage. CleanUP!!!
 function displayClick(name) {
     var display_div = $("#tabs"),
         clicked;
@@ -39,7 +57,7 @@ function displayClick(name) {
     switchEditors(name);
 
     display_div.children().each(function() {
-        if ($(this).text() == name) {
+        if ($(this).children().eq(1).text() == name) {
             clicked = $(this);
         } 
     });
@@ -48,6 +66,12 @@ function displayClick(name) {
         $(this).attr('id', 'tab-objects')
     });
     $(clicked).attr('id', 'selected-tab')
+}
+
+function xSpan(span) {
+    // take care of span css
+    span.text(" + ");
+    span.attr("id", "exit")
 }
 
 function appendSideDisplay(name) {
@@ -77,8 +101,9 @@ function appendSideDisplay(name) {
     $(new_file_div).on('click', function(){
         displayClick(name);
         
-        // update title
+        // update title and numbering system
         updateTitle();
+        updateNumbers(name);
     });
 
     display_div.append(new_file_div);
@@ -86,23 +111,30 @@ function appendSideDisplay(name) {
 
 function appendTabDisplay(name) {
     var new_file_span = $(document.createElement("div")),
+        x_span = $(document.createElement("span")),
+        text_span = $(document.createElement("span")),
         display_div = $("#tabs");
 
-    new_file_span.text(name); 
+    xSpan(x_span);
+    text_span.text(name);
+    new_file_span.append([x_span, text_span]); 
+
     display_div.children().each(function() {
         $(this).attr('id', 'tab-objects')
     });
     new_file_span.attr('id', 'selected-tab');
+    new_file_span.on('click', function(event) {
+        if ($(event.target).attr("id") === "exit") {console.log('x')}
 
-    new_file_span.on('click', function() {
         display_div.children().each(function() {
             $(this).attr('id', 'tab-objects')
         });
         switchEditors(name);
         $(this).attr('id', 'selected-tab')
 
-        //update title
+        //update title and numbering system
         updateTitle();
+        updateNumbers(name);
     })
 
     display_div.append(new_file_span);
@@ -125,16 +157,15 @@ function createNewEditor(name) {
     var new_line = $(document.createElement('div'));
     new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor");
     new_line.css({
+        "overflow": "auto",
         "color": "white",
         "font-family": "'source-code-pro', monospace",
         "border": "0px",
         "background-color": "#555",
-        "overflow-x": "auto",
-        "overflow-y": "auto",
-        "height": "95%",
-        "width": "98%",
-        "float": "right",
+        "height": "97%",
+        "margin-left": "45px",
         "display": "block",
+        "scroll-snap-type": "y mandatory",
     })
     return new_line;
 }
@@ -145,7 +176,7 @@ function addEditor(new_editor) {
     current.attr('id', 'editor-null'); current.css('display', 'none');
 
     parent.append(new_editor);
-    //setCaret(new_editor.children().last().last()[0]) //deprecated
+    //setCaret(new_editor.children().last().last()[0]) //deprecated for now
 }
 
 function createEditor(content, name) { //dont know about this
@@ -186,6 +217,10 @@ function createEditor(content, name) { //dont know about this
     })
     addEditor(editor);
     addEditScript(editor);
+
+    // update numbering row and make numbering row scrollTop() follow #editor scrollTop()
+    updateNumbers(name);
+    scrollBothDivs(editor);
 }
 
 function uploadFile() {
@@ -213,8 +248,8 @@ function uploadFile() {
 function main() {
     // so drop downs can work correctly
     getDropDown();
-
-    uploadFile(); // so we can upload a file
+    // so we can upload a file
+    uploadFile(); 
     
     // create blank editor to start
     var blank_file_info = ['blank.txt', '-- Blank --']
@@ -224,7 +259,14 @@ function main() {
 
 $(document).ready(main);
 
-/*
+
+/* 8/7/21
+As of now, this script looks great and just needs a bit of clean up. We are ready to move into two directions:
+
+The database implementation, and the full on file opening and file saving implementation.
+*/
+
+/*  //I have no idea when I made this note
 Here we can import in the python color changing script and we can check the extension of the files we add
 
 We should be able to read the file and create the divs accordingly and change the main div, from there we don't 

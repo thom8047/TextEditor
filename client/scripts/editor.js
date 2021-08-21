@@ -18,6 +18,40 @@ Full details:\n`); console.log(error.message)}
     }
 }
 
+/* function checkWidths(row, span, editor, backwards=false) { // holy shit was this the hardest thing ever or what
+    var spanPixel = ((parseInt($(span).attr('id'))) *9),
+        rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
+        diff_out = spanPixel-rowWidth,
+        diff_in = spanPixel-(rowWidth*0.025);
+
+    if (backwards) { // This is to update the scroll when you move left 
+        //or right in a div you just bumped up or down in, or if you're just moving the mouse cursor
+        if ($(editor).scrollLeft() > diff_in) {
+            $(editor).scrollLeft(diff_in) // this works!!!!!
+        }
+        return;
+    }
+    if ($(editor).scrollLeft() < diff_out) {
+        $(editor).scrollLeft(diff_out) // this works!!!!!
+    }
+} */
+
+function checkWidths(row, span, editor) { // holy shit was this the hardest thing ever or what
+    var spanPixel = ((parseInt($(span).attr('id'))) *9),
+        rowWidth = $(row).width(),  // ($(window).width() - ($(editor).offset().left)),
+        percentage = -((rowWidth - spanPixel) / rowWidth) +1,
+        spacing = (0.016829919857524488*$(window).width()),
+        diff_out = (spanPixel-rowWidth)-(percentage*spacing) +18,  // check what the fuck is up with this
+        diff_in = spanPixel-(percentage*spacing) -27;
+
+    if ($(editor).scrollLeft() < diff_out) {
+        $(editor).scrollLeft(diff_out) // this works!!!!!
+    }
+    if ($(editor).scrollLeft() > diff_in) {
+        $(editor).scrollLeft(diff_in) // this works!!!!!
+    }
+}
+
 function focusOn(who, goToEnd) {
     if (goToEnd) {
         if ($(who).children().length > 1) {
@@ -30,14 +64,30 @@ function focusOn(who, goToEnd) {
     return $(who).focus();
 }
 
-function updateFooter(editor) {
+function changeScale(row, removeNumber, actual_row_length) {
+    var scale = $('#number_scale'),
+        scales_child_len = scale.children().length;
+    if (removeNumber) {
+        scale.children().last().remove();
+    } else {
+        var number = document.createElement('div');
+        $(number).attr('id', scales_child_len+1);
+        var str = `${scales_child_len+1}|`
+        $(number).text(str);
+        scale.append(number)
+    }
+}
+
+function updateFooter(editor, updateWhileKeepingColVertAdj=false) {
     var getNewRowInt = String(parseInt($(editor).attr('data-current-row'))),
         getNewColInt = String(parseInt($(editor).children().eq(getNewRowInt-1).attr('data-current-col'))),
         footer = $('#footer-data');
 
-    $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
+    if (!updateWhileKeepingColVertAdj) {
+        $(editor).attr('data-column-vertical-adj', parseInt(getNewColInt));
+    }
     
-    footer.text(`LN: ${getNewRowInt.paddingLeft('___')} | Col: ${getNewColInt.paddingLeft('___')}`)
+    footer.text(`LN: ${getNewRowInt.paddingLeft('____')} | Col: ${getNewColInt.paddingLeft('____')}`)
 }
 
 function correctID(index) {
@@ -72,9 +122,16 @@ function moveCursorVert(editor, dir, int_row, int_last_row, int_col) {
 
     row.attr('data-current-col', col)
     $(editor).attr("data-current-row", int_row+dir)
+
+    // Because of the column-vertical-adj data variable in the editor div, I don't think I need this code any more.
+    // sike I need an updateFooter, but then it sets the col-vert-adj, so figure it out!
+
+    
+    updateFooter(editor, true);
     focusOn(row, false);
-    // bit of code to put the cursor in a similar pos that it was, this line will change
+    //bit of code to put the cursor in a similar pos that it was, this line will change
     if (row.children().length > 1) {
+        if (col == 0) { setCaret(row.children().eq(col)[0], true); return; }
         setCaret(row.children().eq(col-1)[0], false);
     }
 }
@@ -121,6 +178,7 @@ function checkString(editor) {
                     } // at end
                     if (int_col == int_last_col-1) { $(row).attr("data-current-col", int_last_col); setCaret($(col)[0], false); updateFooter(editor); return; } // move just once more
                     moveCursorRight(editor, row, next_col, int_col, col);
+                    checkWidths(row, next_col, editor, false);
                 } else {
                     if (int_col == 0) { // lets check if we can up a row
                         /*if (int_row == 1) { return; } // cannot move up a row
@@ -132,6 +190,7 @@ function checkString(editor) {
 
                     //if (int_col == int_last_col-1) { setCaret($(col)[0], true); return; }
                     moveCursorLeft(editor, row, prev_col, int_col, col);
+                    checkWidths(row, prev_col, editor, true);
                 }
                 
             } else {
@@ -156,7 +215,8 @@ function checkString(editor) {
                     $(editor).attr("data-current-row", int_row-1);
                     $(editor).find('div').each( correctDivID );
 
-                    updateFooter(editor)
+                    changeScale(int_row, true, int_last_row);
+                    updateFooter(editor);
                     return;
                 } // make sure we don't keep removing files
                 // make sure there is something to delete, if not return null for now
@@ -169,7 +229,15 @@ function checkString(editor) {
             }
 
             if (keyCode == 13) { // enter
-                event.preventDefault();
+                key_obj.preventDefault();
+
+                // check to see if we need to auto append tab
+                if ($(row).children().length > 3) {
+                    var last_char_in_row = $(row).children().last().text();
+                    // implement a separate function for adding tab to the text
+                    // maybe move the updating row out
+                }
+
                 // new line
                 var line = createNewLine(int_row+1);
                 $(line).insertAfter($(editor).find('div').eq(int_row-1));
@@ -178,7 +246,8 @@ function checkString(editor) {
                 $(editor).attr("data-current-row", int_row+1);
                 $(editor).find('div').each( correctDivID );
 
-                // update footer
+                // update footer and change scale
+                changeScale(int_row, false, int_last_row);
                 updateFooter(editor);
                 
                 // set focus on the new line
@@ -186,36 +255,51 @@ function checkString(editor) {
             }
         }
 
-        if (`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) {
+        if ((`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) || (keyCode == 9)) {
             key_obj.preventDefault();
-            var span = document.createElement('span');
+            var span = document.createElement('span'),
+                size = 1;
     
             span.textContent = key;
             span.setAttribute('class', 'tab');
             span.setAttribute('id', int_col);
     
-            // if (keyCode == 9) { // Handle tab!!
-            //     span.innerHTML = '&#x09;'
-            // }
+            if (keyCode == 9) { // Handle tab!!  // Think about whether or not to keep tab and row.attr() change in here
+                span.innerHTML = ` `;
+                size = 4;
+            }
     
             if (int_col == 0) { row.prepend(span); }
             else { 
                 $(span).insertAfter($(row).find('span').eq(int_col-1)); 
             }
+            if (keyCode == 9) { // Handle tab!!
+                for (let a = 1; a < 4; a++) {
+                    var span = document.createElement('span');
+                    span.setAttribute('class', 'tab');
+                    span.setAttribute('id', int_col+a);
+                    span.innerHTML = ` `;
+                    $(span).insertAfter($(row).find('span').eq(int_col-1+a)); 
+                }
+                
+            }
             $(row).find('span').each( correctID );
 
-            $(row).attr("data-col", int_last_col+1);
-            $(row).attr("data-current-col", int_col+1);
+            $(row).attr("data-col", int_last_col+size);
+            $(row).attr("data-current-col", int_col+size);
     
-            var selector = $(row).find('span').eq(int_col);
+            var selector = $(row).find('span').eq(int_col+(size-1));
             setCaret(selector[0], false);
+
+            // Check widths to bump scrolling back or not
+            checkWidths(row, span, editor, false);
         }
 
         updateFooter(editor); //update footer
     });
 }
 
-export default function addEditScript(editor) {
+function addEditScript(editor) {
     //put focus on the end of the file when clicked
     $(editor).on('click', function(event) {
         if ((event.target !== this) && ($(event.target).is('span'))) { 
@@ -251,6 +335,16 @@ export default function addEditScript(editor) {
     // update the footer text for each new editor
     updateFooter(editor);
 }
+
+export { addEditScript, changeScale }
+
+/* 8/7/21
+Pretty seemless code, after reviewing at 6am, but cleaning up the comments and making it pretty will be the final step
+
+This is damnnear done aside from the hotkeys, and extra key cptures, and any other editor-specific features needing to get done.
+The undo and redo will need to happen here as well!
+*/
+
 //----------------------------------------------------
 // Notes: 8/2/2021
 //Work out bugs that are popping up with trying to move vert when moving left and right, I feel like focusing and setting the 

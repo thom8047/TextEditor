@@ -11,7 +11,19 @@ pyKeyWords = ["while","async","except","lambda","with","await","finally","nonloc
             "print"," input"," str"," int"," bool",
         
             '"', ".", "'", "	"];
-txtKeyWords = ['test']
+txtKeyWords = ["while","async","except","lambda","with","await","finally","nonlocal",
+"yield","break","for","import","return","as","elif","in","try","assert","else",
+"class","from","continue","global","pass","def","if","raise","del",
+
+"is","or","and","not",
+
+"False","None","True",
+
+"print"," input"," str"," int"," bool",
+
+'"', ".", "'",
+
+"self"];
 unacceptableKeys = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
@@ -77,6 +89,13 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
         specificNodes = $(current_node).children().slice(occuranceIndex, occuranceIndex+1);
         specificNodes.each(function() {
             $(this).removeClass().addClass('tab');
+        });
+    }
+
+    else if (keyWord === "self") {
+        specificNodes = $(current_node).children().slice(occuranceIndex, occuranceIndex+4);
+        specificNodes.each(function() {
+            $(this).removeClass().addClass('self');
         });
     }
 
@@ -152,3 +171,7 @@ function main() {
 }
 
 $(document).ready(main)
+
+/* 8/7/21
+This will come into play eventually
+*/

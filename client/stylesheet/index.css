@@ -1,10 +1,26 @@
 body {
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: #333;
     margin-left: 0;
 }
 
 /* CSS */
+
+/* SCROLL BAR  */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.5;
+  background: rgb(161, 161, 161)
+}
 
 /* DROPDOWN */
 
@@ -68,45 +84,76 @@ body {
     color: black;
   }
   
-  /* MAIN TEXT */
+  /* MAIN SECTION */
   
-  .TextBox {
-    height: 90vh;
-    width: 100vw;
+.TextBox {
+  height: 90vh;
+  width: 100vw;
+}
+
+  .TextBox #number_scale {
+    /* position: absolute; */
+    float: left;
+    color: #FFFDD0 /* #ADD8E6 */;
+    font-family: 'source-code-pro', monospace;
+    border: 0px;
+    background-color: #555;
+    height: 97%;
+    width: 45px;
+    display: block;
+    overflow: hidden;
+    text-align: right;
   }
-  
+  /* .TextBox #scale {
+    position: absolute;
+  } */
+
   .TextBox #display {
     float: left;
     width: 15%;
     height: 105%;
     background-color: #222;
   } 
-  
+
   .TextBox #display:hover {
     cursor:default;
   }
 
-  .TextBox #code {
+  .TextBox #main {
     float: left;
     width: 80%;
     height: 100%;
   }
-  
-  .TextBox #editor {
-    color: white;
-    font-family: 'source-code-pro', monospace;
+
+  .TextBox #code {
+    overflow: hidden;
     border: 0px;
+    width: 100%;
     background-color: #555;
-    overflow-x: auto;
-    overflow-y: auto;
-    height: 95%;
-    display: block;
+  }
+
+  .TextBox .line {
+    scroll-snap-align: start;
+    white-space: pre;
+    /* overflow-x: auto; */
   }
 
   .TextBox #tabs {
     cursor: grab;
     width: 100%;
     padding-top: 5px;
+  }
+
+  #exit {
+    white-space: pre;
+    color: pink;
+    font-weight: 900;
+    float: left;
+    transition: 0.3s;
+  }
+  #exit:hover {
+    transform: rotate(45deg);
+    cursor: pointer;
   }
 
   #tab-objects {
@@ -153,18 +200,18 @@ body {
   .TextBox:hover {
     cursor: text;
   }
-  
+
   .TextBox [contentEditable] {
     outline: 0px solid transparent;
   }
-  
+
   .TextBox #editor .statement {
-    color: mediumpurple;
+    color: #CCCCFF;
     white-space:pre;
   }
 
   .TextBox #editor .functional-keys {
-    color: #0E86D4;
+    color: #89CFF0;
     white-space:pre;
   }
   .TextBox #editor .operator-keys {
@@ -184,8 +231,13 @@ body {
     color: limegreen;
     white-space:pre;
   }
+  .TextBox #editor .self {
+    color: #A95C68;
+    font-style: italic;
+    white-space:pre;
+  }
   .TextBox #editor .class-keys {
-    color: gold;
+    color: yellow;
     white-space:pre;
   }
   .TextBox #editor .other{
@@ -217,11 +269,15 @@ body {
     text-align: center;
   }
 
+/* OUTPUT */
+/* In development... */
 
-  footer {
-    position: absolute;
-    bottom: 0;
-  }
+/* FOOTER */
+
+footer {
+  position: absolute;
+  bottom: 0;
+}
 
   #footer {
     background-color:lightcoral;
