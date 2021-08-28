@@ -17,6 +17,27 @@ function updateNumbers(name) {
     })
 }
 
+// functionality for closing the popup window
+function closePopUp() {
+    $('#popup-navbar-x').on('click', (event) => {
+        var explorer = $('.FileExplorer'),
+            backdrop = $('#full-screen-popup-background'),
+            popup = $('#popup-background');
+
+        backdrop.css({
+            "opacity": "0",
+        })
+        popup.css({
+            "opacity": "0",
+        })
+        setTimeout(() => {
+            explorer.css({
+                "display": "none",
+            }) 
+        }, 1000);
+    });
+}
+
 // For db implement, we won't need this.
 function getFileResolve(reader, files, currentNum) {
     try {
@@ -260,6 +281,9 @@ function main() {
 
     // so drop downs can work correctly
     getDropDown();
+
+    // so we can close popup
+    closePopUp();
 }
 
 $(document).ready(main);

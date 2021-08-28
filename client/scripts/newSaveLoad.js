@@ -14,9 +14,23 @@ function bindClickEvent(id, editor) {
             // create new row within table, so we'd "post" to data to push our new file
         }
         if (id.includes('open')) {
-            // first we'll "get" and query all file names, then display them within our explorer 
+            var explorer = $('.FileExplorer'),
+                backdrop = $('#full-screen-popup-background'),
+                popup = $('#popup-background');
 
-            // then when we select one, we click and open button and this will "post" to get all of our file content and change the accessed bit of the db
+            explorer.css({
+                "display": "flex",
+            })
+            setTimeout( () => {
+                backdrop.css({
+                    "opacity": "0.5",
+                })
+                popup.css({
+                    "opacity": "1",
+                })
+            }, 1);
+
+            // Now let's populate the actual explorer with all the files in db
 
         }
         // Already what I need

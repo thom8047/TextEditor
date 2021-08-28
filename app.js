@@ -90,23 +90,34 @@ function getDBFiles(result) {
 // App post, get, update and delete
 
 app.get('/data', function(request, response) {
+    var obj = JSON.parse(JSON.stringify(request.body)), // name | file_no
+        data = {};
+
+    data.typeOfRequest = obj["type"] // this is what we are asking for, all or specific
+
     pool.connect().then(client => {
-        client.query('SELECT * FROM data_holdings')
-        .then(result => {
-            client.release() // release client
+        if (data.typeOfRequest == 'all') {
+            client.query('SELECT * FROM data_holdings')
+                .then(result => {
+                    client.release() // release client
 
-            console.log(result.rows); // just to see possible updates
+                    console.log(result.rows); // just to see possible updates
 
-            var name_list = getDBFiles(result.rows)
-            
-            // respond with the list, so we can 
-            response.send(name_list);
-        })
-        .catch(error => {
-            client.release()
-            response.send("Error * ");
-            console.log('There was an issue pulling data from DB: ', error) 
-        });
+                    var name_list = getDBFiles(result.rows)
+                    
+                    // respond with the list, so we can 
+                    response.send(name_list);
+                })
+                .catch(error => {
+                    client.release()
+                    response.send("Error * ");
+                    console.log('There was an issue pulling data from DB: ', error) 
+                });
+        } else {
+            if (obj["name"]) {
+                // now we send back the specific named content
+            }
+        }
     });
 });
 

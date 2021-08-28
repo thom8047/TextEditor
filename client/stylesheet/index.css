@@ -28,10 +28,10 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: flex;
+  display: none;
   justify-content: center;
-  transition: 0.5s;
-  z-index: -2
+  transition: 1s;
+  z-index: 4;
 }
 
 /* .FileExplorer:hover #full-screen-popup-background {
@@ -49,7 +49,7 @@ body {
   height: 100%;
   background: black;
   opacity: 0;
-  z-index: -2;
+  z-index: 3;
   transition: inherit;
 }
 
@@ -60,13 +60,14 @@ body {
   height: 250px;
   background: #222;
   z-index: inherit;
+  opacity: 0;
   border: 1px solid lightgrey;
   transition: inherit;
 }
 
-#popup-background:hover #full-screen-popup-background {
+/* #popup-background:hover #full-screen-popup-background {
   opacity: 0;
-}
+} */
 
 #popup-navbar {
   background: teal;
@@ -76,6 +77,9 @@ body {
   border: 0;
 }
 #popup-navbar-x {
+  /* cannot select */
+  user-select: none;
+
   float: right;
   white-space: pre;
   color: pink;
