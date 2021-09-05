@@ -90,13 +90,9 @@ function getDBFiles(result) {
 // App post, get, update and delete
 
 app.get('/data', function(request, response) {
-    var obj = JSON.parse(JSON.stringify(request.body)), // name | file_no
-        data = {};
-
-    data.typeOfRequest = obj["type"] // this is what we are asking for, all or specific
-
     pool.connect().then(client => {
-        if (data.typeOfRequest == 'all') {
+        if (true) {
+            //console.log('yups')
             client.query('SELECT * FROM data_holdings')
                 .then(result => {
                     client.release() // release client

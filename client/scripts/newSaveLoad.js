@@ -14,6 +14,25 @@ function openFile(id) {
     //call ajax request for all the files within the database,
     //remove and populate the names of the files within the database. From here we need to add a function to them in display.js
 
+    $.ajax({ // use to save data created.
+        type: 'GET',
+        url: '/data',
+        contentType: 'application/json',						
+        success: function(returned_data) {
+            var data = JSON.stringify(returned_data);
+            data = data.substring(1, data.length - 1)
+
+            // double check that multiple data entries in the db will result in a list-like response!!
+            console.log(data)
+
+            // once this is done, now I have a list of names, and I can iterate through with the split function.
+            
+        },
+        error: function(err) {
+            console.log('Handle Error: ', err)
+        }
+    });
+
     explorer.css({
         "display": "flex",
     })
