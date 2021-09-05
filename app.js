@@ -116,6 +116,8 @@ app.get('/data', function(request, response) {
         } else {
             if (obj["name"]) {
                 // now we send back the specific named content
+                // client query select name  from data_holdings
+                // client query update the accessed key
             }
         }
     });

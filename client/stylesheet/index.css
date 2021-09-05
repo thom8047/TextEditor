@@ -30,7 +30,7 @@ body {
   height: 100%;
   display: none;
   justify-content: center;
-  transition: 1s;
+  transition: 0.5s;
   z-index: 4;
 }
 
@@ -87,7 +87,7 @@ body {
   font-weight: bold;
   transform: rotate(45deg);
   z-index: inherit;
-  transition: 1s;
+  transition: 0.5s;
 }
 #popup-navbar-x:hover {
   cursor: pointer;

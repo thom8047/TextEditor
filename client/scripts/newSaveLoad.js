@@ -6,6 +6,27 @@ function getText(editor) {
     return str;
 }
 
+function openFile(id) {
+    var explorer = $('.FileExplorer'),
+        backdrop = $('#full-screen-popup-background'),
+        popup = $('#popup-background');
+
+    //call ajax request for all the files within the database,
+    //remove and populate the names of the files within the database. From here we need to add a function to them in display.js
+
+    explorer.css({
+        "display": "flex",
+    })
+    setTimeout( () => {
+        backdrop.css({
+            "opacity": "0.5",
+        })
+        popup.css({
+            "opacity": "1",
+        })
+    }, 1);
+}
+
 function bindClickEvent(id, editor) {
 
     if (id.includes('file')) {
@@ -13,26 +34,10 @@ function bindClickEvent(id, editor) {
             // better yet, let's push a new editor out, and if we save it, we'll check if file exists in back-end and add new row
             // create new row within table, so we'd "post" to data to push our new file
         }
-        if (id.includes('open')) {
-            var explorer = $('.FileExplorer'),
-                backdrop = $('#full-screen-popup-background'),
-                popup = $('#popup-background');
-
-            explorer.css({
-                "display": "flex",
-            })
-            setTimeout( () => {
-                backdrop.css({
-                    "opacity": "0.5",
-                })
-                popup.css({
-                    "opacity": "1",
-                })
-            }, 1);
-
-            // Now let's populate the actual explorer with all the files in db
-
-        }
+        /* if (id.includes('open')) {
+            // We will call this function outside of this script, but we'll write all that we can do, then we'll call it outside.
+            
+        } */
         // Already what I need
         if (id.includes('save')) { 
             var data = {};
@@ -90,6 +95,10 @@ function main() {
     });
 }
 
-export default function getDropDown() {
+function getDropDown() {
+    // pass in function to create a new editor with name and content, that way we can use that thing to populate the file
+    // can't actually
     main()
 }
+
+export { getDropDown, openFile }

@@ -1,9 +1,20 @@
 //import for using editor
 import { addEditScript } from "./editor.js";
-import getDropDown from "./newSaveLoad.js";
+import { getDropDown, openFile } from "./newSaveLoad.js";
 import updateTitle from "./version.js";
 import { createNumbers } from "./number_scale.js";
 import { scrollBothDivs } from "./scroll.js"
+
+/* heres where we'll check for the click event from the open button, this is key, because we need
+to pull in our file names and call the ajax request to pull content here!
+*/
+function onOpenFileClick() {
+    $('#open-file').on('click', (event) => {
+        //console.log();
+        // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
+        openFile($(this).attr('id'));  // () => { //function to call ajax request to open file });
+    });
+}
 
 function updateNumbers(name) {
     // Look through all the editor for the one we want and get the number of rows. 
@@ -34,7 +45,7 @@ function closePopUp() {
             explorer.css({
                 "display": "none",
             }) 
-        }, 1000);
+        }, 500);
     });
 }
 
@@ -281,8 +292,9 @@ function main() {
 
     // so drop downs can work correctly
     getDropDown();
+    onOpenFileClick();
 
-    // so we can close popup
+    // This is for closing the pop up, it gotsta go somewhere 
     closePopUp();
 }
 
