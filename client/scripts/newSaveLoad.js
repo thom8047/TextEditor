@@ -9,27 +9,59 @@ function getText(editor) {
 function openFile(id) {
     var explorer = $('.FileExplorer'),
         backdrop = $('#full-screen-popup-background'),
-        popup = $('#popup-background');
+        popup = $('#popup-background'),
+        returned_value_from_click;
 
     //call ajax request for all the files within the database,
     //remove and populate the names of the files within the database. From here we need to add a function to them in display.js
 
-    $.ajax({ // use to save data created.
+    $.ajax({ // use to pull data for the names of the file.
         type: 'GET',
         url: '/data',
         contentType: 'application/json',						
         success: function(returned_data) {
             var data = JSON.stringify(returned_data);
-            data = data.substring(1, data.length - 1)
+            data = data.substring(1, data.length - 1);
 
-            // double check that multiple data entries in the db will result in a list-like response!!
-            console.log(data)
+            //lets make this beach a list
+            data = data.split(',');
 
-            // once this is done, now I have a list of names, and I can iterate through with the split function.
-            
+            // Got it, now let's remove a possible list of file names then populate the current
+            $.when($('#popup-content-files').children().each((index) => {
+                $('#popup-content-files').children().eq(index-1).remove();
+                $('#popup-content-props').children().eq(index-1).remove();
+            })).then(() => {
+                // let's populate all the stuff
+                for (let file_name of data) {
+                    var file_name_div = $(document.createElement('div')),
+                        file_ext_div = $(document.createElement('div')),
+                        file_info = file_name.substring(1, file_name.length - 1).split('.');
+                    file_name_div.attr('id', 'popup-content-file');
+                    file_name_div.text(file_info[0]);
+                    file_ext_div.attr('id', 'popup-content-prop');
+                    file_ext_div.text(`File Type: ~.${file_info[1]}`);
+
+                    file_name_div.on('click', function() {
+                        console.log($(this).css('background-color'))
+                        if ($(this).css('background-color') == 'rgb(128, 128, 128)') {
+                            $(this).css({
+                                'background-color': '',
+                            })
+                        } else {
+                            $(this).css({
+                                'background-color': 'grey',
+                            })
+                        }
+                    });
+
+                    $('#popup-content-files').append(file_name_div);
+                    $('#popup-content-props').append(file_ext_div);
+                }
+            })
+
         },
         error: function(err) {
-            console.log('Handle Error: ', err)
+            console.log('CANNOT DISPLAY DATA: ', err)
         }
     });
 
@@ -44,6 +76,8 @@ function openFile(id) {
             "opacity": "1",
         })
     }, 1);
+
+    return returned_value_from_click
 }
 
 function bindClickEvent(id, editor) {

@@ -10,9 +10,9 @@ to pull in our file names and call the ajax request to pull content here!
 */
 function onOpenFileClick() {
     $('#open-file').on('click', (event) => {
-        //console.log();
         // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
-        openFile($(this).attr('id'));  // () => { //function to call ajax request to open file });
+        $.when(openFile($(this).attr('id'))).then((result) => { console.log(result) });  // () => { //function to call ajax request to open file });
+        
     });
 }
 

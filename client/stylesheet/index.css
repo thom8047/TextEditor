@@ -105,13 +105,36 @@ body {
   overflow-y: auto;
 }
 
+#popup-content-file {
+  user-select: none;
+  z-index: inherit;
+  color: white;
+}
+
+#popup-content-file:hover {
+  cursor: pointer;
+  /* background-color: grey; */
+}
+
 #popup-content-props {
+  user-select: none;
   float: left;
   margin-top: 5%;
   width: 30%;
   height: 75%;
   background: rgb(29, 29, 34);
   z-index: inherit;
+}
+
+#popup-content-prop {
+  z-index: inherit;
+  color: white;
+}
+
+#open-all-files {
+  z-index: inherit;
+  color: white;
+  background-color: teal;
 }
 
 
