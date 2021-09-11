@@ -8,13 +8,63 @@ import { scrollBothDivs } from "./scroll.js"
 /* heres where we'll check for the click event from the open button, this is key, because we need
 to pull in our file names and call the ajax request to pull content here!
 */
+function fade() {
+    var explorer = $('.FileExplorer'),
+        backdrop = $('#full-screen-popup-background'),
+        popup = $('#popup-background');
+
+    backdrop.css({
+        "opacity": "0",
+    })
+    popup.css({
+        "opacity": "0",
+    })
+    setTimeout(() => {
+        explorer.css({
+            "display": "none",
+        }) 
+    }, 500);
+}
 function onOpenFileClick() {
+
+    function openAll() {
+        let fileDomElementList = [];
+        $('#popup-content-files').children().each(function() {
+            if ($(this).attr('data-selected') == 'true') {
+                fileDomElementList.push($(this).text())
+            }
+        });
+
+        console.log(fileDomElementList);
+
+        // call ajax request right here to pull the content of the files, to then be populated below
+        // switch the fileDomELementList to a dictionary
+
+        // QUESTION: Either pull the content before this, that way we have our content in an element or something to that effect
+
+        fileDomElementList.forEach(function(localFileName) {
+            genericEditor(localFileName, "Test");
+        });
+        fade();
+    }
+    
     $('#open-file').on('click', (event) => {
+        $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
         // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
-        $.when(openFile($(this).attr('id'))).then((result) => { console.log(result) });  // () => { //function to call ajax request to open file });
-        
+        openFile($(this).attr('id'))
     });
 }
+// functionality for closing the popup window
+function closePopUp() {
+    $('#popup-navbar-x').on('click', (event) => {
+        fade();
+    });
+    $('#full-screen-popup-background').on('click', (event) => {
+        fade();
+    });
+}
+
+/*---------------------------------------------------------------------*/
 
 function updateNumbers(name) {
     // Look through all the editor for the one we want and get the number of rows. 
@@ -26,27 +76,6 @@ function updateNumbers(name) {
             $('#number_scale').scrollTop($(this).scrollTop()); // keeping the divs scrolled together
         }
     })
-}
-
-// functionality for closing the popup window
-function closePopUp() {
-    $('#popup-navbar-x').on('click', (event) => {
-        var explorer = $('.FileExplorer'),
-            backdrop = $('#full-screen-popup-background'),
-            popup = $('#popup-background');
-
-        backdrop.css({
-            "opacity": "0",
-        })
-        popup.css({
-            "opacity": "0",
-        })
-        setTimeout(() => {
-            explorer.css({
-                "display": "none",
-            }) 
-        }, 500);
-    });
 }
 
 // For db implement, we won't need this.
@@ -93,11 +122,27 @@ function displayClick(name) {
             clicked = $(this);
         } 
     });
-
     display_div.children().each(function() {
         $(this).attr('id', 'tab-objects')
     });
-    $(clicked).attr('id', 'selected-tab')
+    
+    $(clicked).attr('id', 'selected-tab');
+}
+
+function displaySideClick(name) {
+    var display_div = $("#display-toolbar"),
+        side_clicked;
+    //-------------
+    display_div.children().each(function() {
+        if ($(this).text() == name) {
+            side_clicked = $(this);
+        } 
+    });
+    display_div.children().each(function() {
+        $(this).attr('id', 'side-tab-objs');
+    });
+    //-------------
+    $(side_clicked).attr('id', 'side-tab-selected');
 }
 
 function xSpan(span) {
@@ -110,25 +155,21 @@ function appendSideDisplay(name) {
     var new_file_div = document.createElement("div"),
         display_div = $("#display-toolbar");
 
-    $(new_file_div).css(
-        {"color": "white",
-        "paddingTop": "5px",
-        "paddingBottom": "5px",
-        "transition": "0.3s",
-        "background-color": "#222",
-        "text-align": "left",
-        "whitespace": "nowrap",
-        "overflow": "hidden",
-        "text-overflow": "ellipsis",});
+    display_div.children().each(function() {
+        $(this).attr('id', 'side-tab-objs');
+    });
+
+    $(new_file_div).attr('id', 'side-tab-selected')
     $(new_file_div).text(name);
-    $(new_file_div).mouseenter(function() {
+    // Deprecate because we habdle it in the css
+    /* $(new_file_div).mouseenter(function() {
         //console.log('hover')
         $(new_file_div).css("background-color", "grey")
     })
     $(new_file_div).mouseleave(function() {
         //console.log('hover')
         $(new_file_div).css("background-color", "#222")
-    })
+    }) */
 
     $(new_file_div).on('click', function(){
         displayClick(name);
@@ -136,6 +177,11 @@ function appendSideDisplay(name) {
         // update title and numbering system
         updateTitle();
         updateNumbers(name);
+
+        display_div.children().each(function() {
+            $(this).attr('id', 'side-tab-objs');
+        });
+        $(this).attr('id', 'side-tab-selected');
     });
 
     display_div.append(new_file_div);
@@ -162,6 +208,7 @@ function appendTabDisplay(name) {
             $(this).attr('id', 'tab-objects')
         });
         switchEditors(name);
+        displaySideClick(name);
         $(this).attr('id', 'selected-tab')
 
         //update title and numbering system
@@ -288,7 +335,7 @@ function main() {
     uploadFile(); 
     
     // create blank editor to start
-    genericEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
+    //genericEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
 
     // so drop downs can work correctly
     getDropDown();

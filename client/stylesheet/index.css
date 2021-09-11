@@ -132,6 +132,8 @@ body {
 }
 
 #open-all-files {
+  user-select: none;
+  cursor: pointer;
   z-index: inherit;
   color: white;
   background-color: teal;
@@ -313,6 +315,32 @@ body {
     cursor: pointer;
   }
 
+  #side-tab-objs {
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    background-color: #222;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #side-tab-selected {
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: grey;
+  }
+  #side-tab-objs:hover {
+    background-color: grey;
+  }
+
   .TextBox:hover {
     cursor: text;
   }
@@ -412,6 +440,6 @@ footer {
     margin-right: 5px;
   }
 
-  input[type="file"] {
+  /* input[type="file"] {
     display: none;
-  }
+  } */ /* DEPRECATED */

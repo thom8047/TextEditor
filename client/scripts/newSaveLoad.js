@@ -35,22 +35,24 @@ function openFile(id) {
                 for (let file_name of data) {
                     var file_name_div = $(document.createElement('div')),
                         file_ext_div = $(document.createElement('div')),
-                        file_info = file_name.substring(1, file_name.length - 1).split('.');
+                        file_info = file_name.substring(1, file_name.length - 1) //.split('.'); // split() func. to split the ext
                     file_name_div.attr('id', 'popup-content-file');
-                    file_name_div.text(file_info[0]);
+                    file_name_div.text(file_info);
                     file_ext_div.attr('id', 'popup-content-prop');
-                    file_ext_div.text(`File Type: ~.${file_info[1]}`);
+                    file_ext_div.text(`File Data: N/A`);
 
                     file_name_div.on('click', function() {
-                        console.log($(this).css('background-color'))
+                        // to select or deselect file
                         if ($(this).css('background-color') == 'rgb(128, 128, 128)') {
                             $(this).css({
                                 'background-color': '',
-                            })
+                            });
+                            $(this).attr('data-selected', false);
                         } else {
                             $(this).css({
                                 'background-color': 'grey',
-                            })
+                            });
+                            $(this).attr('data-selected', 'true');
                         }
                     });
 
