@@ -79,3 +79,26 @@ As of 08/20/2021
 The db has an interface with user, opening up the pop up menu, pulling all file names and populating them to the user. From here we'll query the content when opened, and "read" the content line by line to put it into a new editor.
 
 Updates soon
+
+As of 9/11/2021  # shoutout Saylor birthday, and rip 9/11
+I have done a handful of things:
+- I have created my own file explorer
+- I have used this file explorer to extract data from database and display it
+- I can open single/multiple files at a time
+
+This comes with a caveat, I need to pull all the random code out of the display module and organize it correctly so I am using this plug and play method correctly.
+
+# THE DISPLAY MODULE MAY NOT WORK WHEN PULLED, BUT I BELIEVE IT SHOULD
+
+Other complex, yet achievable things:
+- I need to not allow files to be populated more than once, nming convention does not allow.
+- I need to pull the content from the database to be populated.
+- Add in a check system to see when files are saved or not
+- Removing files with the x in the top tab
+- I need to rearrange all the code into a new "MAIN" module script that allows for some clarity to what belongs where.
+- I still need to write in the NEW FILE code, so I can populate a blank sheet with an unsavable name? 
+    - This get's way more complicated because this wouldn't be saved, it would be a save as in an actual editor, so fuck
+    - SIKE, I can just have it prompt the user for a name and extension type, which will allow for no repeat names and to control the extension type in need be.
+
+
+Until all of this is done, I cannot work on the color coding script. 
