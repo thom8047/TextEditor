@@ -1,9 +1,38 @@
+import { genericEditor } from "./display.js";
+
 function getText(editor) {
     var str = "";
     editor.children().each(function() {
         str = `${str}${$(this).text()}\n`;
     });
     return str;
+}
+
+function fade() {
+    var explorer = $('.FileExplorer'),
+        backdrop = $('#full-screen-popup-background'),
+        popup = $('#popup-background');
+
+    backdrop.css({
+        "opacity": "0",
+    })
+    popup.css({
+        "opacity": "0",
+    })
+    setTimeout(() => {
+        explorer.css({
+            "display": "none",
+        }) 
+    }, 500);
+}
+
+function closePopUp() {
+    $('#popup-navbar-x').on('click', (event) => {
+        fade();
+    });
+    $('#full-screen-popup-background').on('click', (event) => {
+        fade();
+    });
 }
 
 function openFile(id) {
@@ -17,7 +46,7 @@ function openFile(id) {
 
     $.ajax({ // use to pull data for the names of the file.
         type: 'GET',
-        url: '/data',
+        url: '/data',  // learn how to pass in parameters to pull different code!!
         contentType: 'application/json',						
         success: function(returned_data) {
             var data = JSON.stringify(returned_data);
@@ -88,18 +117,42 @@ function bindClickEvent(id, editor) {
         if (id.includes('new')) {
             // better yet, let's push a new editor out, and if we save it, we'll check if file exists in back-end and add new row
             // create new row within table, so we'd "post" to data to push our new file
+            var today = new Date(),
+                date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
+    
+            genericEditor('untitled.*', `# ${date}\n# © 2021 Edward Thomas; All rights reserved`)
         }
-        /* if (id.includes('open')) {
-            // We will call this function outside of this script, but we'll write all that we can do, then we'll call it outside.
-            
-        } */
-        // Already what I need
+
+        if (id.includes('open')) {
+            function openAll() {
+                let fileDomElementList = [];
+                $('#popup-content-files').children().each(function() {
+                    if ($(this).attr('data-selected') == 'true') {
+                        fileDomElementList.push($(this).text())
+                    }
+                });
+        
+                console.log(fileDomElementList);
+        
+                // call ajax request right here to pull the content of the files, to then be populated below
+                // switch the fileDomELementList to a dictionary
+        
+                fileDomElementList.forEach(function(localFileName) {
+                    genericEditor(localFileName, "Test");
+                });
+                fade();
+            }
+                $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
+                // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
+                openFile(id);
+        }
+        
         if (id.includes('save')) { 
             var data = {};
             data.name = editor.attr('data-name')  //"blank.txt";
             data.content = getText(editor);
             data.accessed = 0;
-            data.file_no = 0;
+            data.file_no = editor.attr('data-fileNum');
             data.type = id.split('-file')[0];
         
             $.ajax({ // use to save data created.
@@ -108,7 +161,10 @@ function bindClickEvent(id, editor) {
                 contentType: 'application/json',
                 url: '/data',						
                 success: function(data) {
-                    console.log(JSON.stringify(data));
+                    console.log('saved');
+                },
+                error: function(err) {
+                    console.log('not saved', err);
                 }
             });
         }
@@ -156,4 +212,4 @@ function getDropDown() {
     main()
 }
 
-export { getDropDown, openFile }
+export { getDropDown, openFile, closePopUp, fade }

@@ -1,70 +1,8 @@
 //import for using editor
 import { addEditScript } from "./editor.js";
-import { getDropDown, openFile } from "./newSaveLoad.js";
 import updateTitle from "./version.js";
 import { createNumbers } from "./number_scale.js";
 import { scrollBothDivs } from "./scroll.js"
-
-/* heres where we'll check for the click event from the open button, this is key, because we need
-to pull in our file names and call the ajax request to pull content here!
-*/
-function fade() {
-    var explorer = $('.FileExplorer'),
-        backdrop = $('#full-screen-popup-background'),
-        popup = $('#popup-background');
-
-    backdrop.css({
-        "opacity": "0",
-    })
-    popup.css({
-        "opacity": "0",
-    })
-    setTimeout(() => {
-        explorer.css({
-            "display": "none",
-        }) 
-    }, 500);
-}
-function onOpenFileClick() {
-
-    function openAll() {
-        let fileDomElementList = [];
-        $('#popup-content-files').children().each(function() {
-            if ($(this).attr('data-selected') == 'true') {
-                fileDomElementList.push($(this).text())
-            }
-        });
-
-        console.log(fileDomElementList);
-
-        // call ajax request right here to pull the content of the files, to then be populated below
-        // switch the fileDomELementList to a dictionary
-
-        // QUESTION: Either pull the content before this, that way we have our content in an element or something to that effect
-
-        fileDomElementList.forEach(function(localFileName) {
-            genericEditor(localFileName, "Test");
-        });
-        fade();
-    }
-    
-    $('#open-file').on('click', (event) => {
-        $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
-        // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
-        openFile($(this).attr('id'))
-    });
-}
-// functionality for closing the popup window
-function closePopUp() {
-    $('#popup-navbar-x').on('click', (event) => {
-        fade();
-    });
-    $('#full-screen-popup-background').on('click', (event) => {
-        fade();
-    });
-}
-
-/*---------------------------------------------------------------------*/
 
 function updateNumbers(name) {
     // Look through all the editor for the one we want and get the number of rows. 
@@ -77,16 +15,6 @@ function updateNumbers(name) {
         }
     })
 }
-
-// For db implement, we won't need this.
-function getFileResolve(reader, files, currentNum) {
-    try {
-        var file = files[currentNum];
-        return reader.readAsText(file)
-    } catch(err) {
-        //console.log("END")
-    }
-};
 
 function switchEditors(name) { // awesome function
     var childs = $("#code").children();
@@ -161,15 +89,6 @@ function appendSideDisplay(name) {
 
     $(new_file_div).attr('id', 'side-tab-selected')
     $(new_file_div).text(name);
-    // Deprecate because we habdle it in the css
-    /* $(new_file_div).mouseenter(function() {
-        //console.log('hover')
-        $(new_file_div).css("background-color", "grey")
-    })
-    $(new_file_div).mouseleave(function() {
-        //console.log('hover')
-        $(new_file_div).css("background-color", "#222")
-    }) */
 
     $(new_file_div).on('click', function(){
         displayClick(name);
@@ -302,7 +221,40 @@ function createEditor(content, name) { //dont know about this
     scrollBothDivs(editor);
 }
 
-// DEPRECATED --------------------------------*******
+function genericEditor(name, content) {
+    createFileForViewing(name)
+    createEditor(content, name)
+}
+
+export { genericEditor }
+
+
+/* 8/7/21
+As of now, this script looks great and just needs a bit of clean up. We are ready to move into two directions:
+
+The database implementation, and the full on file opening and file saving implementation.
+*/
+
+/*  //I have no idea when I made this note
+Here we can import in the python color changing script and we can check the extension of the files we add
+
+We should be able to read the file and create the divs accordingly and change the main div, from there we don't 
+have to worry about any excess work because our python script alread loops through every line to update the text
+
+We will need to create a container for the text and use it accordingly to hold all the text of every specific file.
+This might get big, but if we store it correctly then we should be able to just leave it somewhere.
+
+********************************* OLD CODE FOR OPENING FILE READER *********************************************
+
+function getFileResolve(reader, files, currentNum) {
+    try {
+        var file = files[currentNum];
+        return reader.readAsText(file)
+    } catch(err) {
+        //console.log("END")
+    }
+};
+
 function uploadFile() {
     $('#imported-files').on('change', function() {
         var files = this.files,
@@ -325,41 +277,4 @@ function uploadFile() {
     })
 };
 
-function genericEditor(name, content) {
-    createFileForViewing(name)
-    createEditor(content, name)
-}
-
-function main() {
-    // so we can upload a file
-    uploadFile(); 
-    
-    // create blank editor to start
-    //genericEditor('blank.txt', 'if __name__ == "__main__":\n    # Do something');
-
-    // so drop downs can work correctly
-    getDropDown();
-    onOpenFileClick();
-
-    // This is for closing the pop up, it gotsta go somewhere 
-    closePopUp();
-}
-
-$(document).ready(main);
-
-
-/* 8/7/21
-As of now, this script looks great and just needs a bit of clean up. We are ready to move into two directions:
-
-The database implementation, and the full on file opening and file saving implementation.
-*/
-
-/*  //I have no idea when I made this note
-Here we can import in the python color changing script and we can check the extension of the files we add
-
-We should be able to read the file and create the divs accordingly and change the main div, from there we don't 
-have to worry about any excess work because our python script alread loops through every line to update the text
-
-We will need to create a container for the text and use it accordingly to hold all the text of every specific file.
-This might get big, but if we store it correctly then we should be able to just leave it somewhere.
 */

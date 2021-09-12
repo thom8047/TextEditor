@@ -109,12 +109,6 @@ app.get('/data', function(request, response) {
                     response.send("Error * ");
                     console.log('There was an issue pulling data from DB: ', error) 
                 });
-        } else {
-            if (obj["name"]) {
-                // now we send back the specific named content
-                // client query select name  from data_holdings
-                // client query update the accessed key
-            }
         }
     });
 });
@@ -128,6 +122,8 @@ app.post('/data', function(request, response){
     data.accessed = obj["accessed"];
     data.file_no = obj["file_no"];
     data.type = obj["type"];
+
+    if (data.name == 'untitled.*') {console.log('new')}
 
     pool.connect().then(client => {
         //var text = `UPDATE data_holdings SET content = ${data.content} WHERE name = ${data.name}`
