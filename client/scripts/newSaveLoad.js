@@ -8,6 +8,28 @@ function getText(editor) {
     return str;
 }
 
+function ajaxReqFunc(fileList) {
+    $.ajax({ // use to pull data for the names of the file.
+        type: 'GET',
+        url: '/data',  // learn how to pass in parameters to pull different code!!
+        data: { request: 'content',
+                params:  fileList},
+        contentType: 'application/json',						
+        success: function(returned_data) {
+            for (const key in returned_data) {
+                genericEditor(key, returned_data[key][0], returned_data[key][1]);
+            }
+        },
+        error: function(err) {
+            return err;
+        }
+    });
+}
+
+function getFilesContent(fileList) {
+    var content = ajaxReqFunc(fileList);
+}
+
 function fade() {
     var explorer = $('.FileExplorer'),
         backdrop = $('#full-screen-popup-background'),
@@ -46,6 +68,7 @@ function openFile(id) {
 
     $.ajax({ // use to pull data for the names of the file.
         type: 'GET',
+        data: { request: 'names' },
         url: '/data',  // learn how to pass in parameters to pull different code!!
         contentType: 'application/json',						
         success: function(returned_data) {
@@ -120,7 +143,8 @@ function bindClickEvent(id, editor) {
             var today = new Date(),
                 date = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
     
-            genericEditor('untitled.*', `# ${date}\n# © 2021 Edward Thomas; All rights reserved`)
+            // access the json file and hopefully find a way to write to it!!!
+            genericEditor('untitled.*', `# ${date}\n# © 2021 Edward Thomas; All rights reserved`, 100)
         }
 
         if (id.includes('open')) {
@@ -132,19 +156,16 @@ function bindClickEvent(id, editor) {
                     }
                 });
         
-                console.log(fileDomElementList);
-        
-                // call ajax request right here to pull the content of the files, to then be populated below
-                // switch the fileDomELementList to a dictionary
-        
-                fileDomElementList.forEach(function(localFileName) {
-                    genericEditor(localFileName, "Test");
-                });
+                // call ajax deeper into to a handful of functions and the success will open the editors for us.
+                // issues include: no file_no, duplicates
+
+                getFilesContent(fileDomElementList);
+                
                 fade();
             }
-                $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
-                // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
-                openFile(id);
+            $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
+            // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
+            openFile(id);
         }
         
         if (id.includes('save')) { 

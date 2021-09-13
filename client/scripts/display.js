@@ -151,9 +151,9 @@ function createNewLine(current_row) {
     return new_line
 }
 
-function createNewEditor(name) {
+function createNewEditor(name, file_no) {
     var new_line = $(document.createElement('div'));
-    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor");
+    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor"); new_line.attr('data-file-number', file_no);
     new_line.css({
         "overflow": "auto",
         "color": "white",
@@ -177,8 +177,8 @@ function addEditor(new_editor) {
     //setCaret(new_editor.children().last().last()[0]) //deprecated for now
 }
 
-function createEditor(content, name) { //dont know about this
-    var editor = createNewEditor(name);
+function createEditor(content, name, file_no) { //dont know about this
+    var editor = createNewEditor(name, file_no);
 
     content.split('\n').forEach(function(element, index) {
         index++;
@@ -221,9 +221,9 @@ function createEditor(content, name) { //dont know about this
     scrollBothDivs(editor);
 }
 
-function genericEditor(name, content) {
-    createFileForViewing(name)
-    createEditor(content, name)
+function genericEditor(name, content, file_no) {
+    createFileForViewing(name);
+    createEditor(content, name, file_no);
 }
 
 export { genericEditor }
