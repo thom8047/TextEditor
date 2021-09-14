@@ -102,3 +102,11 @@ Other complex, yet achievable things:
 
 
 Until all of this is done, I cannot work on the color coding script. 
+
+
+ADD ON - HOT KEYS
+
+CTRL-S : save
+CTRL-U : upper
+CTRL-L : lower
+CTRL-A : select all
