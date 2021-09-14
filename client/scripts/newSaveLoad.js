@@ -134,6 +134,30 @@ function openFile(id) {
     return returned_value_from_click
 }
 
+function saveFile(id, editor) {
+    var data = {};
+    data.name = editor.attr('data-name')  //"blank.txt";
+    data.content = getText(editor);
+    data.accessed = 0;
+    data.file_no = editor.attr('data-file-number');
+    data.type = 'save'; //id.split('-file')[0];
+
+    if (editor.attr('saved') == 'true') { return; } else { editor.attr('saved', true); $('#selected-tab').children().eq(0).attr('id', 'exit-saved');  }
+
+    $.ajax({ // use to save data created.
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/data',						
+        success: function(data) {
+            console.log('saved');
+        },
+        error: function(err) {
+            console.log('not saved', err);
+        }
+    });
+}
+
 function bindClickEvent(id, editor) {
 
     if (id.includes('file')) {
@@ -169,25 +193,7 @@ function bindClickEvent(id, editor) {
         }
         
         if (id.includes('save')) { 
-            var data = {};
-            data.name = editor.attr('data-name')  //"blank.txt";
-            data.content = getText(editor);
-            data.accessed = 0;
-            data.file_no = editor.attr('data-fileNum');
-            data.type = id.split('-file')[0];
-        
-            $.ajax({ // use to save data created.
-                type: 'POST',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                url: '/data',						
-                success: function(data) {
-                    console.log('saved');
-                },
-                error: function(err) {
-                    console.log('not saved', err);
-                }
-            });
+            saveFile(id, editor);
         }
     }
 }
@@ -233,4 +239,4 @@ function getDropDown() {
     main()
 }
 
-export { getDropDown, openFile, closePopUp, fade }
+export { getDropDown, openFile, closePopUp, fade, saveFile }

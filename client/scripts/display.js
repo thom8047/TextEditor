@@ -1,5 +1,6 @@
 //import for using editor
 import { addEditScript } from "./editor.js";
+import { saveFile } from "./newSaveLoad.js";
 import updateTitle from "./version.js";
 import { createNumbers } from "./number_scale.js";
 import { scrollBothDivs } from "./scroll.js"
@@ -73,10 +74,35 @@ function displaySideClick(name) {
     $(side_clicked).attr('id', 'side-tab-selected');
 }
 
-function xSpan(span) {
+function xSpan(span, name) {
     // take care of span css
     span.text(" + ");
-    span.attr("id", "exit")
+    span.attr("id", "exit-saved")
+    span.on('click', function() { 
+        var x = document.getElementsByClassName(`${name}-editor`);
+
+        if ($(this).attr('id') == 'exit-unsaved') {
+            saveFile('save', $(x[0]));
+        } else {
+            // pass in file no to the side and regular tabs so we can remove those
+            $(x[0]).remove();
+            $('#side-tab-selected').remove();
+            $('#selected-tab').remove();
+            if ($('#tabs').children().length > 0) {
+                var newName = $('#tabs').children().last().text().substring(3);
+
+                switchEditors(newName);
+
+/*                 displayClick(newName);
+                displaySideClick(newName); */
+
+                updateTitle();
+                updateNumbers(newName);
+            } else {
+                createNumbers(0, true);
+            }
+        }
+    })
 }
 
 function appendSideDisplay(name) {
@@ -112,7 +138,7 @@ function appendTabDisplay(name) {
         text_span = $(document.createElement("span")),
         display_div = $("#tabs");
 
-    xSpan(x_span);
+    xSpan(x_span, name);
     text_span.text(name);
     new_file_span.append([x_span, text_span]); 
 
@@ -121,7 +147,7 @@ function appendTabDisplay(name) {
     });
     new_file_span.attr('id', 'selected-tab');
     new_file_span.on('click', function(event) {
-        if ($(event.target).attr("id") === "exit") {console.log('x')}
+        //if ($(event.target).attr("id") === "exit") {console.log('x')}
 
         display_div.children().each(function() {
             $(this).attr('id', 'tab-objects')
@@ -153,7 +179,7 @@ function createNewLine(current_row) {
 
 function createNewEditor(name, file_no) {
     var new_line = $(document.createElement('div'));
-    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor"); new_line.attr('data-file-number', file_no);
+    new_line.attr('id', 'editor'); new_line.attr('data-row', 1); new_line.attr('data-current-row', 1); new_line.attr('data-name', name); new_line.attr('data-column-vertical-adj', 0); new_line.addClass(name+"-editor"); new_line.attr('data-file-number', file_no); new_line.attr('saved', true);
     new_line.css({
         "overflow": "auto",
         "color": "white",

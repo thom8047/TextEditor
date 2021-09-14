@@ -262,16 +262,24 @@ body {
     padding-top: 5px;
   }
 
-  #exit {
+  #exit-unsaved {
+    user-select: none;
     white-space: pre;
     color: pink;
     font-weight: 900;
     float: left;
     transition: 0.3s;
-  }
-  #exit:hover {
-    transform: rotate(45deg);
     cursor: pointer;
+  }
+  #exit-saved {
+    user-select: none;
+    white-space: pre;
+    color: pink;
+    font-weight: 900;
+    float: left;
+    transition: 0.3s;
+    cursor: pointer;
+    transform: rotate(45deg);
   }
 
   #tab-objects {
