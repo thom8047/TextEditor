@@ -57,7 +57,7 @@ body {
   position: absolute;
   top: 200px;
   width: 400px;
-  height: 250px;
+  height: 260px;
   background: #222;
   z-index: inherit;
   opacity: 0;
@@ -109,6 +109,7 @@ body {
   user-select: none;
   z-index: inherit;
   color: white;
+  text-align: center;
 }
 
 #popup-content-file:hover {
@@ -124,6 +125,7 @@ body {
   height: 75%;
   background: rgb(29, 29, 34);
   z-index: inherit;
+  overflow-y: auto;
 }
 
 #popup-content-prop {
@@ -137,6 +139,8 @@ body {
   z-index: inherit;
   color: white;
   background-color: teal;
+  padding: 0px 38px;
+  text-align: center;
 }
 
 

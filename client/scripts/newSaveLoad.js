@@ -26,6 +26,22 @@ function ajaxReqFunc(fileList) {
     });
 }
 
+function openAll() {
+    let fileDomElementList = [];
+    $('#popup-content-files').children().each(function() {
+        if ($(this).attr('data-selected') == 'true') {
+            fileDomElementList.push($(this).text())
+        }
+    });
+
+    // call ajax deeper into to a handful of functions and the success will open the editors for us.
+    // issues include: no file_no, duplicates
+
+    getFilesContent(fileDomElementList);
+    
+    fade();
+}
+
 function getFilesContent(fileList) {
     var content = ajaxReqFunc(fileList);
 }
@@ -49,11 +65,14 @@ function fade() {
 }
 
 function closePopUp() {
+    
     $('#popup-navbar-x').on('click', (event) => {
+        $('#popup-content-files').children().each(function() { $(this).remove(); });
         fade();
     });
     $('#full-screen-popup-background').on('click', (event) => {
         fade();
+        $('#popup-content-files').empty();
     });
 }
 
@@ -79,10 +98,7 @@ function openFile(id) {
             data = data.split(',');
 
             // Got it, now let's remove a possible list of file names then populate the current
-            $.when($('#popup-content-files').children().each((index) => {
-                $('#popup-content-files').children().eq(index-1).remove();
-                $('#popup-content-props').children().eq(index-1).remove();
-            })).then(() => {
+            $.when($('#popup-content-files').empty()).then( () => {
                 // let's populate all the stuff
                 for (let file_name of data) {
                     var file_name_div = $(document.createElement('div')),
@@ -90,8 +106,8 @@ function openFile(id) {
                         file_info = file_name.substring(1, file_name.length - 1) //.split('.'); // split() func. to split the ext
                     file_name_div.attr('id', 'popup-content-file');
                     file_name_div.text(file_info);
-                    file_ext_div.attr('id', 'popup-content-prop');
-                    file_ext_div.text(`File Data: N/A`);
+                    //file_ext_div.attr('id', 'popup-content-prop');
+                    //file_ext_div.text(`File Data: N/A`);
 
                     file_name_div.on('click', function() {
                         // to select or deselect file
@@ -109,9 +125,9 @@ function openFile(id) {
                     });
 
                     $('#popup-content-files').append(file_name_div);
-                    $('#popup-content-props').append(file_ext_div);
+                    //$('#popup-content-props').append(file_ext_div);
                 }
-            })
+            });
 
         },
         error: function(err) {
@@ -172,21 +188,8 @@ function bindClickEvent(id, editor) {
         }
 
         if (id.includes('open')) {
-            function openAll() {
-                let fileDomElementList = [];
-                $('#popup-content-files').children().each(function() {
-                    if ($(this).attr('data-selected') == 'true') {
-                        fileDomElementList.push($(this).text())
-                    }
-                });
-        
-                // call ajax deeper into to a handful of functions and the success will open the editors for us.
-                // issues include: no file_no, duplicates
+            console.log('yup')
 
-                getFilesContent(fileDomElementList);
-                
-                fade();
-            }
             $('#open-all-files').on('click', function() { $.when( openAll() ).then($(this).off('click')) } );
             // pass in the function to call ajax request when the right file name is clicked; IT NEEDS TO BE IN THIS SCRIPT!!
             openFile(id);

@@ -82,8 +82,13 @@ function xSpan(span, name) {
         var x = document.getElementsByClassName(`${name}-editor`);
 
         if ($(this).attr('id') == 'exit-unsaved') {
+            alert("Saving...");
             saveFile('save', $(x[0]));
         } else {
+            if ($(x).attr('id') == 'editor-null') { return; };
+            
+            alert("Closing...");
+
             // pass in file no to the side and regular tabs so we can remove those
             $(x[0]).remove();
             $('#side-tab-selected').remove();
@@ -93,8 +98,8 @@ function xSpan(span, name) {
 
                 switchEditors(newName);
 
-/*                 displayClick(newName);
-                displaySideClick(newName); */
+                displayClick(newName);
+                displaySideClick(newName); 
 
                 updateTitle();
                 updateNumbers(newName);
