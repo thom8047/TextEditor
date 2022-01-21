@@ -1,3 +1,5 @@
+// DEPRECATED
+
 function getText(editor) {
     var str = "";
     editor.children().each(function() {

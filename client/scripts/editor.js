@@ -166,6 +166,9 @@ function checkString(editor) {
         try {prev_col = row.children().eq(int_col-1)} catch {prev_col = null}
 
         //console.log(`${key} and the code: ${keyCode}`);
+
+        // unsave editor
+        if (!([37,38,39,40,20,16,17,18,93].includes(keyCode))) { $(this).attr('saved', false); $('#selected-tab').children().eq(0).attr('id', 'exit-unsaved'); }
     
         if ([37,38,39,40].includes(keyCode)) {
             key_obj.preventDefault();
@@ -257,6 +260,7 @@ function checkString(editor) {
 
         if ((`\`~1234567890!@#$%^&*( )-_=+[{]}\|;:'",<.>/?abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`.includes(key)) || (keyCode == 9)) {
             key_obj.preventDefault();
+
             var span = document.createElement('span'),
                 size = 1;
     

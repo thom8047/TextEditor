@@ -1,20 +1,50 @@
-<html lang="en">
+<!-- <!DOCTYPE html>
+
+    // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH!
+
+ --><html lang="en">
 
     <head>
         <title>Editor</title>
         <link rel="stylesheet" href="stylesheet/index.css"></link>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="scripts/editor.js" type="module"></script>
-        <script src="scripts/dropdowns.js" type="module"></script>
+        <script src="scripts/newSaveLoad.js" type="module"></script>
         <script src="scripts/version.js" type="module"></script>
         <script src="scripts/number_scale.js" type="module"></script>
         <script src="scripts/scroll.js" type="module"></script>
         <script src="scripts/pythonColorCode.js"></script>
         <script src="scripts/display.js" type="module"></script>
+        <script src="scripts/exec.js" type="module"></script>
     </head>
 
     <body>
         <div class="App">
+            <div class="FileExplorer">
+                <div id="full-screen-popup-background"> </div>
+                <div id="popup-background">
+                    <div id="popup-navbar">
+                        <span id="popup-navbar-x"> + </span>
+                    </div>
+
+                    <div id="popup-content">
+                        <span id="popup-content-files">
+<!-- This is where we'll auto generate all the files in the db -->
+                        </span>
+                        <span id="popup-content-props">
+                            <div id="popup-content-prop">Currently in Dev. </div>
+<!-- This will be the properties of the text file we have, such as extension, line count, etc. -->
+                        </span>
+                    </div>
+
+                    <div id="popup-footer">
+                        <span id="open-all-files">
+                            OPEN
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             <div class="ToolBar">
 
                 <div id="title">Text Editor v0.0.0</div>
@@ -23,12 +53,13 @@
                     <button class="main-button" id="file">FILE</button>
                     <div class="dropdown-content" id="file-dropdown">
                         <div><button id="new-file">New File</button></div>
-                        <div>
-                            <label id="open-file">
-                                <input id="imported-files" type="file" multiple/>
-                                Open File
-                            </label>
-                        </div>
+                        <div><button id="open-file">Open File</button></div>
+<!-- <label id="open-file">
+<input id="imported-files" type="file" multiple/>
+Open File
+</label> 
+-- This is what used to be here -->
+
                         <div><button id="save-file">Save File</button></div>
                     </div>
                 </div>

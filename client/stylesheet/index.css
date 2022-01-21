@@ -22,6 +22,128 @@ body {
   background: rgb(161, 161, 161)
 }
 
+/* POPUP */
+
+.FileExplorer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  transition: 0.5s;
+  z-index: 4;
+}
+
+/* .FileExplorer:hover #full-screen-popup-background {
+  opacity: 0;
+  z-index: -3;
+}
+.FileExplorer:hover #popup-background {
+  opacity: 0;
+  z-index: -3;
+} */
+
+.FileExplorer #full-screen-popup-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0;
+  z-index: 3;
+  transition: inherit;
+}
+
+#popup-background{
+  position: absolute;
+  top: 200px;
+  width: 400px;
+  height: 260px;
+  background: #222;
+  z-index: inherit;
+  opacity: 0;
+  border: 1px solid lightgrey;
+  transition: inherit;
+}
+
+/* #popup-background:hover #full-screen-popup-background {
+  opacity: 0;
+} */
+
+#popup-navbar {
+  background: teal;
+  position: relative;
+  width: 100%;
+  height: 20px;
+  border: 0;
+}
+#popup-navbar-x {
+  /* cannot select */
+  user-select: none;
+
+  float: right;
+  white-space: pre;
+  color: pink;
+  font-size: larger;
+  font-weight: bold;
+  transform: rotate(45deg);
+  z-index: inherit;
+  transition: 0.5s;
+}
+#popup-navbar-x:hover {
+  cursor: pointer;
+  color: red;
+  font-weight: bolder;
+}
+
+#popup-content-files {
+  float: left;
+  margin: 5%;
+  width: 60%;
+  height: 75%;
+  background: rgb(29, 29, 34);
+  z-index: inherit;
+  overflow-y: auto;
+}
+
+#popup-content-file {
+  user-select: none;
+  z-index: inherit;
+  color: white;
+  text-align: center;
+}
+
+#popup-content-file:hover {
+  cursor: pointer;
+  /* background-color: grey; */
+}
+
+#popup-content-props {
+  user-select: none;
+  float: left;
+  margin-top: 5%;
+  width: 30%;
+  height: 75%;
+  background: rgb(29, 29, 34);
+  z-index: inherit;
+  overflow-y: auto;
+}
+
+#popup-content-prop {
+  z-index: inherit;
+  color: white;
+}
+
+#open-all-files {
+  user-select: none;
+  cursor: pointer;
+  z-index: inherit;
+  color: white;
+  background-color: teal;
+  padding: 0px 38px;
+  text-align: center;
+}
+
+
 /* DROPDOWN */
 
 .ToolBar {
@@ -144,16 +266,24 @@ body {
     padding-top: 5px;
   }
 
-  #exit {
+  #exit-unsaved {
+    user-select: none;
     white-space: pre;
     color: pink;
     font-weight: 900;
     float: left;
     transition: 0.3s;
-  }
-  #exit:hover {
-    transform: rotate(45deg);
     cursor: pointer;
+  }
+  #exit-saved {
+    user-select: none;
+    white-space: pre;
+    color: pink;
+    font-weight: 900;
+    float: left;
+    transition: 0.3s;
+    cursor: pointer;
+    transform: rotate(45deg);
   }
 
   #tab-objects {
@@ -197,6 +327,32 @@ body {
     cursor: pointer;
   }
 
+  #side-tab-objs {
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    background-color: #222;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #side-tab-selected {
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-color: grey;
+  }
+  #side-tab-objs:hover {
+    background-color: grey;
+  }
+
   .TextBox:hover {
     cursor: text;
   }
@@ -206,7 +362,7 @@ body {
   }
 
   .TextBox #editor .statement {
-    color: #CCCCFF;
+    color: #a0a0ff;
     white-space:pre;
   }
 
@@ -233,6 +389,11 @@ body {
   }
   .TextBox #editor .self {
     color: #A95C68;
+    font-style: italic;
+    white-space:pre;
+  }
+  .TextBox #editor .comment {
+    color: grey;
     font-style: italic;
     white-space:pre;
   }
@@ -291,6 +452,6 @@ footer {
     margin-right: 5px;
   }
 
-  input[type="file"] {
+  /* input[type="file"] {
     display: none;
-  }
+  } */ /* DEPRECATED */

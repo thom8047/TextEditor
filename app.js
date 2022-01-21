@@ -89,42 +89,77 @@ function getDBFiles(result) {
 /* ---------------------------------------------------------------------------------- */
 // App post, get, update and delete
 
-app.get('/data', function(request, response) {
+function getFileNames(response) {
     pool.connect().then(client => {
-        client.query('SELECT * FROM data_holdings')
-        .then(result => {
+        if (true) {
+            //console.log('yups')
+            client.query('SELECT * FROM data_holdings;')
+                .then(result => {
+                    client.release() // release client
+
+                    //console.log(result.rows); // just to see possible updates
+
+                    var name_list = getDBFiles(result.rows)
+                    
+                    // respond with the list, so we can 
+                    response.send(name_list);
+                })
+                .catch(error => {
+                    client.release()
+                    response.send("Error * ");
+                    console.log('There was an issue pulling data from DB: ', error) 
+                });
+        }
+    });
+}
+
+function getContentOf(files, res) {
+    let filesDict = {};
+    pool.connect().then(client => {
+        const query = {
+            //text: 'SELECT * FROM data_holdings WHERE name = ANY($1) ;',
+            text: 'UPDATE data_holdings SET accessed = 1 WHERE name = ANY($1) RETURNING *',
+            values: [files],
+        }
+        client.query(query).then(result => {
             client.release() // release client
 
-            console.log(result.rows); // just to see possible updates
-
-            var name_list = getDBFiles(result.rows)
-            
-            // respond with the list, so we can 
-            response.send(name_list);
-        })
-        .catch(error => {
-            client.release()
-            response.send("Error * ");
-            console.log('There was an issue pulling data from DB: ', error) 
+            for (let ele of result.rows) {
+                filesDict[ele.name] = [ele.content, ele.file_no];
+            }
+            res.send(filesDict);
         });
     });
+}
+
+app.get('/data', function(request, response) {
+    var data = JSON.parse(JSON.stringify(request.query));
+
+    switch (data['request']) {
+        case 'names':
+            getFileNames(response);
+            break;
+        case 'content':
+            getContentOf(data['params'], response)
+            break;
+        default:
+            console.log('no request given');
+    }
 });
 
 app.post('/data', function(request, response){
 	var obj = JSON.parse(JSON.stringify(request.body)), // name | file_no
         data = {};
 
-    data.name = obj["name"]
-    data.content = obj["content"]; // needing to get content
-    data.accessed = obj["accessed"];
-    data.file_no = obj["file_no"];
-    data.type = obj["type"];
+    data.name = obj["name"]; data.content = obj["content"]; data.accessed = obj["accessed"]; data.file_no = obj["file_no"]; data.type = obj["type"];
+
+    if (data.name == 'untitled.*') { console.log('new'); /* we know we need to INSERT */ }
 
     pool.connect().then(client => {
         //var text = `UPDATE data_holdings SET content = ${data.content} WHERE name = ${data.name}`
         const query = {
-            text: 'UPDATE data_holdings SET content = $1 WHERE name = $2',
-            values: [data.content, data.name],
+            text: 'UPDATE data_holdings SET content = $1, name = $2 WHERE file_no = $3;',
+            values: [data.content, data.name, data.file_no],
         }
         client.query(query)
         .then(result => {

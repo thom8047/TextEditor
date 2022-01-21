@@ -88,7 +88,7 @@ I have done a handful of things:
 
 This comes with a caveat, I need to pull all the random code out of the display module and organize it correctly so I am using this plug and play method correctly.
 
-# THE DISPLAY MODULE MAY NOT WORK WHEN PULLED, BUT I BELIEVE IT SHOULD
+### THE DISPLAY MODULE MAY NOT WORK WHEN PULLED, BUT I BELIEVE IT SHOULD
 
 Other complex, yet achievable things:
 - I need to not allow files to be populated more than once, nming convention does not allow.
@@ -110,3 +110,11 @@ CTRL-S : save
 CTRL-U : upper
 CTRL-L : lower
 CTRL-A : select all
+
+---
+
+### Next steps: 01/12/2022
+
+- Fix file explorer
+- Get CRUD operations working for queries
+- Text coloring needs to be updated
