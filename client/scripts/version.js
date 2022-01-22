@@ -3,7 +3,7 @@ var __version__ = "2.5.0";
 export default function updateTitle() {
     var __current__ = $("#selected-tab").children().eq(1).text();
     if (__current__.length >= 50) {
-        __current__ = `${__current__.substring(0,47)}...`;
+        __current__ = `${__current__.substring(0, 47)}...`;
     }
 
     return $("#title").text(`${__current__} - Text Editor v${__version__}`);

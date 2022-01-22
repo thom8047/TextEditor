@@ -2,11 +2,11 @@
 
     // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH!
 
- --><html lang="en">
-
+ -->
+<html lang="en">
     <head>
         <title>Editor</title>
-        <link rel="stylesheet" href="stylesheet/index.css"></link>
+        <link rel="stylesheet" href="stylesheet/index.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="scripts/editor.js" type="module"></script>
         <script src="scripts/newSaveLoad.js" type="module"></script>
@@ -21,7 +21,7 @@
     <body>
         <div class="App">
             <div class="FileExplorer">
-                <div id="full-screen-popup-background"> </div>
+                <div id="full-screen-popup-background"></div>
                 <div id="popup-background">
                     <div id="popup-navbar">
                         <span id="popup-navbar-x"> + </span>
@@ -29,24 +29,21 @@
 
                     <div id="popup-content">
                         <span id="popup-content-files">
-<!-- This is where we'll auto generate all the files in the db -->
+                            <!-- This is where we'll auto generate all the files in the db -->
                         </span>
                         <span id="popup-content-props">
-                            <div id="popup-content-prop">Currently in Dev. </div>
-<!-- This will be the properties of the text file we have, such as extension, line count, etc. -->
+                            <div id="popup-content-prop">Currently in Dev.</div>
+                            <!-- This will be the properties of the text file we have, such as extension, line count, etc. -->
                         </span>
                     </div>
 
                     <div id="popup-footer">
-                        <span id="open-all-files">
-                            OPEN
-                        </span>
+                        <span id="open-all-files"> OPEN </span>
                     </div>
                 </div>
             </div>
 
             <div class="ToolBar">
-
                 <div id="title">Text Editor v0.0.0</div>
 
                 <div class="dropdown">
@@ -54,7 +51,7 @@
                     <div class="dropdown-content" id="file-dropdown">
                         <div><button id="new-file">New File</button></div>
                         <div><button id="open-file">Open File</button></div>
-<!-- <label id="open-file">
+                        <!-- <label id="open-file">
 <input id="imported-files" type="file" multiple/>
 Open File
 </label> 
@@ -71,19 +68,22 @@ Open File
                         <div><button id="redo">Redo</button></div>
                         <div><button id="find">Find</button></div>
                         <div><button id="replace">Replace</button></div>
-                        <div><button id="toggle-comment">Toggle Comment</button></div>
+                        <div>
+                            <button id="toggle-comment">Toggle Comment</button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="dropdown">
                     <button class="main-button" id="run">RUN</button>
                     <div class="dropdown-content" id="run-dropdown">
-                        <div><button id="run-without">Run Without Debug</button></div>
+                        <div>
+                            <button id="run-without">Run Without Debug</button>
+                        </div>
                         <div><button id="run-debug">Run W/ Debug</button></div>
                         <div><button id="quit">Quit</button></div>
                     </div>
                 </div>
-
             </div>
 
             <div class="TextBox">
@@ -94,28 +94,23 @@ Open File
                     </div>
 
                     <div id="main">
-                        <div id="tabs">
-                        
-                        </div>
+                        <div id="tabs"></div>
                         <div id="code">
-                            <div id="number_scale" data-name="null">
-                            </div>
+                            <div id="number_scale" data-name="null"></div>
                         </div>
-                        
                     </div>
                 </span>
             </div>
 
-            <div class="Output">
-
-            </div>
+            <div class="Output"></div>
         </div>
     </body>
 
     <footer>
-        <div id="footer">no upstream set<span id="footer-data">LN: __1 | Col: __0</span></div>
+        <div id="footer">
+            no upstream set<span id="footer-data">LN: __1 | Col: __0</span>
+        </div>
     </footer>
-
 </html>
 
 <!-- CLEAN HTML -->

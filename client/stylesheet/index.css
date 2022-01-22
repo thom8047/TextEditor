@@ -8,30 +8,30 @@ body {
 
 /* SCROLL BAR  */
 ::-webkit-scrollbar {
-  width: 2px;
-  height: 2px;
+    width: 2px;
+    height: 2px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+    background: #888;
 }
 ::-webkit-scrollbar-thumb:hover {
-  opacity: 0.5;
-  background: rgb(161, 161, 161)
+    opacity: 0.5;
+    background: rgb(161, 161, 161);
 }
 
 /* POPUP */
 
 .FileExplorer {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: none;
-  justify-content: center;
-  transition: 0.5s;
-  z-index: 4;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    transition: 0.5s;
+    z-index: 4;
 }
 
 /* .FileExplorer:hover #full-screen-popup-background {
@@ -44,25 +44,25 @@ body {
 } */
 
 .FileExplorer #full-screen-popup-background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: black;
-  opacity: 0;
-  z-index: 3;
-  transition: inherit;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    z-index: 3;
+    transition: inherit;
 }
 
-#popup-background{
-  position: absolute;
-  top: 200px;
-  width: 400px;
-  height: 260px;
-  background: #222;
-  z-index: inherit;
-  opacity: 0;
-  border: 1px solid lightgrey;
-  transition: inherit;
+#popup-background {
+    position: absolute;
+    top: 200px;
+    width: 400px;
+    height: 260px;
+    background: #222;
+    z-index: inherit;
+    opacity: 0;
+    border: 1px solid lightgrey;
+    transition: inherit;
 }
 
 /* #popup-background:hover #full-screen-popup-background {
@@ -70,79 +70,78 @@ body {
 } */
 
 #popup-navbar {
-  background: teal;
-  position: relative;
-  width: 100%;
-  height: 20px;
-  border: 0;
+    background: teal;
+    position: relative;
+    width: 100%;
+    height: 20px;
+    border: 0;
 }
 #popup-navbar-x {
-  /* cannot select */
-  user-select: none;
+    /* cannot select */
+    user-select: none;
 
-  float: right;
-  white-space: pre;
-  color: pink;
-  font-size: larger;
-  font-weight: bold;
-  transform: rotate(45deg);
-  z-index: inherit;
-  transition: 0.5s;
+    float: right;
+    white-space: pre;
+    color: pink;
+    font-size: larger;
+    font-weight: bold;
+    transform: rotate(45deg);
+    z-index: inherit;
+    transition: 0.5s;
 }
 #popup-navbar-x:hover {
-  cursor: pointer;
-  color: red;
-  font-weight: bolder;
+    cursor: pointer;
+    color: red;
+    font-weight: bolder;
 }
 
 #popup-content-files {
-  float: left;
-  margin: 5%;
-  width: 60%;
-  height: 75%;
-  background: rgb(29, 29, 34);
-  z-index: inherit;
-  overflow-y: auto;
+    float: left;
+    margin: 5%;
+    width: 60%;
+    height: 75%;
+    background: rgb(29, 29, 34);
+    z-index: inherit;
+    overflow-y: auto;
 }
 
 #popup-content-file {
-  user-select: none;
-  z-index: inherit;
-  color: white;
-  text-align: center;
+    user-select: none;
+    z-index: inherit;
+    color: white;
+    text-align: center;
 }
 
 #popup-content-file:hover {
-  cursor: pointer;
-  /* background-color: grey; */
+    cursor: pointer;
+    /* background-color: grey; */
 }
 
 #popup-content-props {
-  user-select: none;
-  float: left;
-  margin-top: 5%;
-  width: 30%;
-  height: 75%;
-  background: rgb(29, 29, 34);
-  z-index: inherit;
-  overflow-y: auto;
+    user-select: none;
+    float: left;
+    margin-top: 5%;
+    width: 30%;
+    height: 75%;
+    background: rgb(29, 29, 34);
+    z-index: inherit;
+    overflow-y: auto;
 }
 
 #popup-content-prop {
-  z-index: inherit;
-  color: white;
+    z-index: inherit;
+    color: white;
 }
 
 #open-all-files {
-  user-select: none;
-  cursor: pointer;
-  z-index: inherit;
-  color: white;
-  background-color: teal;
-  padding: 0px 38px;
-  text-align: center;
+    user-select: none;
+    cursor: pointer;
+    z-index: inherit;
+    color: white;
+    background-color: teal;
+    padding: 0px 38px;
+    text-align: center;
 }
-
 
 /* DROPDOWN */
 
@@ -152,72 +151,72 @@ body {
     width: 100%;
     display: inline-block;
     background-color: darkcyan;
-  }
-  .ToolBar #title {
+}
+.ToolBar #title {
     position: absolute;
     width: 100%;
     text-align: center;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
-  }
+    font-family: "Courier New", Courier, monospace;
+}
 
-  .ToolBar .dropdown {
+.ToolBar .dropdown {
     float: left;
-    font-family: 'Courier New', Courier, monospace;
-    position: relative;  /* This line allows the dropdowns to be above the title div */
-  }
-  
-  .dropdown button {
+    font-family: "Courier New", Courier, monospace;
+    position: relative; /* This line allows the dropdowns to be above the title div */
+}
+
+.dropdown button {
     all: unset;
     padding: 5px 7px;
     transition: 0.3s;
     color: white;
     z-index: 1;
-  }
-  .dropdown label {
+}
+.dropdown label {
     all: unset;
     display: block;
     padding: 5px 7px;
     transition: 0.3s;
     color: white;
     z-index: 1;
-  }
-  
-  .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #444;
     min-width: 160px;
     z-index: 2;
     transition: 0.3s;
-  }
-  
-  .dropdown-content div {
-    width: 100%
-  }
-  
-  .dropdown-content div:hover {
-    background-color: grey;
-    cursor: pointer;
-  }
-  
-  .dropdown:hover .main-button {
-    background-color: lightcyan;
-    color: black;
-  }
-  
-  /* MAIN SECTION */
-  
-.TextBox {
-  height: 90vh;
-  width: 100vw;
 }
 
-  .TextBox #number_scale {
+.dropdown-content div {
+    width: 100%;
+}
+
+.dropdown-content div:hover {
+    background-color: grey;
+    cursor: pointer;
+}
+
+.dropdown:hover .main-button {
+    background-color: lightcyan;
+    color: black;
+}
+
+/* MAIN SECTION */
+
+.TextBox {
+    height: 90vh;
+    width: 100vw;
+}
+
+.TextBox #number_scale {
     /* position: absolute; */
     float: left;
-    color: #FFFDD0 /* #ADD8E6 */;
-    font-family: 'source-code-pro', monospace;
+    color: #fffdd0 /* #ADD8E6 */;
+    font-family: "source-code-pro", monospace;
     border: 0px;
     background-color: #555;
     height: 97%;
@@ -225,48 +224,48 @@ body {
     display: block;
     overflow: hidden;
     text-align: right;
-  }
-  /* .TextBox #scale {
+}
+/* .TextBox #scale {
     position: absolute;
   } */
 
-  .TextBox #display {
+.TextBox #display {
     float: left;
     width: 15%;
     height: 105%;
     background-color: #222;
-  } 
+}
 
-  .TextBox #display:hover {
-    cursor:default;
-  }
+.TextBox #display:hover {
+    cursor: default;
+}
 
-  .TextBox #main {
+.TextBox #main {
     float: left;
     width: 80%;
     height: 100%;
-  }
+}
 
-  .TextBox #code {
+.TextBox #code {
     overflow: hidden;
     border: 0px;
     width: 100%;
     background-color: #555;
-  }
+}
 
-  .TextBox .line {
+.TextBox .line {
     scroll-snap-align: start;
     white-space: pre;
     /* overflow-x: auto; */
-  }
+}
 
-  .TextBox #tabs {
+.TextBox #tabs {
     cursor: grab;
     width: 100%;
     padding-top: 5px;
-  }
+}
 
-  #exit-unsaved {
+#exit-unsaved {
     user-select: none;
     white-space: pre;
     color: pink;
@@ -274,8 +273,8 @@ body {
     float: left;
     transition: 0.3s;
     cursor: pointer;
-  }
-  #exit-saved {
+}
+#exit-saved {
     user-select: none;
     white-space: pre;
     color: pink;
@@ -284,9 +283,9 @@ body {
     transition: 0.3s;
     cursor: pointer;
     transform: rotate(45deg);
-  }
+}
 
-  #tab-objects {
+#tab-objects {
     white-space: nowrap;
     display: inline-block;
     margin-bottom: 5px;
@@ -294,7 +293,7 @@ body {
     width: 15%;
     background-color: #555;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -303,31 +302,31 @@ body {
     border-right: 1px solid;
     /* border-top-left-radius: 7px;
     border-top-right-radius: 7px; */
-  } 
+}
 
-  #selected-tab {
+#selected-tab {
     padding-bottom: 5px;
     padding-top: 5px;
     display: inline-block;
     width: 15%;
     background-color: #555;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     /* border-top-left-radius: 7px;
     border-top-right-radius: 7px; */
-  }
-  #selected-tab:hover {
+}
+#selected-tab:hover {
     cursor: help;
-  }
-  #tab-objects:hover {
+}
+#tab-objects:hover {
     cursor: pointer;
-  }
+}
 
-  #side-tab-objs {
+#side-tab-objs {
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -337,8 +336,8 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  #side-tab-selected {
+}
+#side-tab-selected {
     color: white;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -348,87 +347,87 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     background-color: grey;
-  }
-  #side-tab-objs:hover {
+}
+#side-tab-objs:hover {
     background-color: grey;
-  }
+}
 
-  .TextBox:hover {
+.TextBox:hover {
     cursor: text;
-  }
+}
 
-  .TextBox [contentEditable] {
+.TextBox [contentEditable] {
     outline: 0px solid transparent;
-  }
+}
 
-  .TextBox #editor .statement {
+.TextBox #editor .statement {
     color: #a0a0ff;
-    white-space:pre;
-  }
+    white-space: pre;
+}
 
-  .TextBox #editor .functional-keys {
-    color: #89CFF0;
-    white-space:pre;
-  }
-  .TextBox #editor .operator-keys {
+.TextBox #editor .functional-keys {
+    color: #89cff0;
+    white-space: pre;
+}
+.TextBox #editor .operator-keys {
     color: darkcyan;
-    white-space:pre;
-  }
-  .TextBox #editor .value-keys {
+    white-space: pre;
+}
+.TextBox #editor .value-keys {
     color: #ff8c00;
-    white-space:pre;
-  }
-  .TextBox #editor .builtin-keys {
+    white-space: pre;
+}
+.TextBox #editor .builtin-keys {
     /* builtin would be print(), input(), and any of the other built in keywords, str, bool, <- these are built in classes though*/
     color: darkcyan;
-    white-space:pre;
-  }
-  .TextBox #editor .string-keys {
+    white-space: pre;
+}
+.TextBox #editor .string-keys {
     color: limegreen;
-    white-space:pre;
-  }
-  .TextBox #editor .self {
-    color: #A95C68;
+    white-space: pre;
+}
+.TextBox #editor .self {
+    color: #a95c68;
     font-style: italic;
-    white-space:pre;
-  }
-  .TextBox #editor .comment {
+    white-space: pre;
+}
+.TextBox #editor .comment {
     color: grey;
     font-style: italic;
-    white-space:pre;
-  }
-  .TextBox #editor .class-keys {
+    white-space: pre;
+}
+.TextBox #editor .class-keys {
     color: yellow;
-    white-space:pre;
-  }
-  .TextBox #editor .other{
-    white-space:pre;
-  }
-  .TextBox #editor .tab{
-    white-space:pre;
-    border-left:darkgray 1px solid;
-  }
+    white-space: pre;
+}
+.TextBox #editor .other {
+    white-space: pre;
+}
+.TextBox #editor .tab {
+    white-space: pre;
+    border-left: darkgray 1px solid;
+}
 
-  #explorer {
+#explorer {
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 5px;
     width: 100%;
     background-color: #333;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     text-align: left;
     font-size: large;
-  }
-  #display-toolbar {
+}
+#display-toolbar {
     background-color: #333;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     width: 100%;
     height: 100%;
     display: inline;
     text-align: center;
-  }
+}
 
 /* OUTPUT */
 /* In development... */
@@ -436,22 +435,22 @@ body {
 /* FOOTER */
 
 footer {
-  position: absolute;
-  bottom: 0;
+    position: absolute;
+    bottom: 0;
 }
 
-  #footer {
-    background-color:lightcoral;
+#footer {
+    background-color: lightcoral;
     color: #111;
     width: 100vw;
     display: inline-block;
-  }
+}
 
-  #footer #footer-data {
+#footer #footer-data {
     float: right;
     margin-right: 5px;
-  }
+}
 
-  /* input[type="file"] {
+/* input[type="file"] {
     display: none;
   } */ /* DEPRECATED */
