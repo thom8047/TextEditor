@@ -6,7 +6,7 @@
     "scripts": {
         "test": "jest",
         "prepare": "husky install",
-        "lint": "npx prettier --check ."
+        "lint": "bash bash_scripts/prettier"
     },
     "repository": {
         "type": "git",

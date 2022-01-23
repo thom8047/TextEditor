@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Run `npm run lint` and if you send the fix argument then we'll write
+
+if [ "$1" != "fix" ]
+    then
+        npx prettier --check .
+else
+    npx prettier --write .
+fi
