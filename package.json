@@ -1,27 +1,37 @@
 {
-  "name": "texteditor",
-  "version": "2.5.0",
-  "description": "Text editor meant to be implemented with a database that holds txt files and saves, stores them for future use",
-  "main": "app.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thom8047/TextEditor.git"
-  },
-  "author": "Edward Thomas",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/thom8047/TextEditor/issues"
-  },
-  "homepage": "https://github.com/thom8047/TextEditor#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "pg": "^8.7.1"
-  },
-  "devDependencies": {
-    "fs": "0.0.1-security",
-    "jest": "^27.0.6"
-  }
+    "name": "texteditor",
+    "version": "2.5.0",
+    "description": "Text editor meant to be implemented with a database that holds txt files and saves, stores them for future use",
+    "main": "app.js",
+    "scripts": {
+        "test": "jest",
+        "prepare": "husky install",
+        "lint": "npx prettier --check ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thom8047/TextEditor.git"
+    },
+    "author": "Edward Thomas",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/thom8047/TextEditor/issues"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
+    "homepage": "https://github.com/thom8047/TextEditor#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "pg": "^8.7.1"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.16.11",
+        "fs": "0.0.1-security",
+        "husky": "^7.0.4",
+        "jest": "^27.0.6",
+        "prettier": "2.5.1"
+    }
 }

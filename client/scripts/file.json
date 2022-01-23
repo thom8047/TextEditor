@@ -1,17 +1,16 @@
 {
-    "current_file" : "1",
-    
-    "file1" :{
+    "current_file": "1",
+
+    "file1": {
         "name": "test1.txt",
         "file_no": "1",
         "content": "# Testing \n\ndef gotTest1():\n    print('Done')\n",
         "accessed": "0"
     },
-    "file0" : { 
-        "name" : "blank.txt",
-        "file_no" : "0", 
-        "content" : "Test\n", 
-        "accessed" : "0"
+    "file0": {
+        "name": "blank.txt",
+        "file_no": "0",
+        "content": "Test\n",
+        "accessed": "0"
     }
 }
-  
