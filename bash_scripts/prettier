@@ -4,7 +4,20 @@
 
 if [ "$1" != "fix" ]
     then
-        npx prettier --check .
+        if npx prettier --check .
+            then
+                exit 0
+        else
+            while [ true ] ; do
+                printf "\n" && echo -n "Do you want to run prettier: " && read -n 1 -t 15 a
+                if [ "$a" = "y" ]; then
+                    npx prettier --write .
+                    exit 0
+                else
+                    exit 1
+                fi
+            done
+        fi
 else
     npx prettier --write .
 fi
