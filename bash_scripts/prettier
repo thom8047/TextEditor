@@ -9,7 +9,7 @@ if [ "$1" != "fix" ]
                 exit 0
         else
             while [ true ] ; do
-                printf "\n" && echo -n "Do you want to run prettier: " && read -n 1 -t 15 a
+                printf "\n" && echo -n "Do you want to run prettier: " && read -n 1 -t 10 a
                 if [ "$a" = "y" ]; then
                     npx prettier --write .
                     exit 0
