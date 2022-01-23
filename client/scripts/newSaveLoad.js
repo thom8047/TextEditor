@@ -1,4 +1,5 @@
 import { genericEditor } from "./display.js";
+import { NoEditorError } from "./utils/Errors";
 
 function getText(editor) {
     var str = "";
@@ -6,28 +7,6 @@ function getText(editor) {
         str = `${str}${$(this).text()}\n`;
     });
     return str;
-}
-
-function ajaxReqFunc(fileList) {
-    $.ajax({
-        // use to pull data for the names of the file.
-        type: "GET",
-        url: "/data", // learn how to pass in parameters to pull different code!!
-        data: { request: "content", params: fileList },
-        contentType: "application/json",
-        success: function (returned_data) {
-            for (const key in returned_data) {
-                genericEditor(
-                    key,
-                    returned_data[key][0],
-                    returned_data[key][1]
-                );
-            }
-        },
-        error: function (err) {
-            return err;
-        },
-    });
 }
 
 function openAll() {
@@ -40,16 +19,9 @@ function openAll() {
             }
         });
 
-    // call ajax deeper into to a handful of functions and the success will open the editors for us.
-    // issues include: no file_no, duplicates
-
-    getFilesContent(fileDomElementList);
+    // Code needs to be pulling from file.json
 
     fade();
-}
-
-function getFilesContent(fileList) {
-    var content = ajaxReqFunc(fileList);
 }
 
 function fade() {
@@ -104,33 +76,44 @@ function openFile(id) {
 }
 
 function saveFile(id, editor) {
-    var data = {};
-    data.name = editor.attr("data-name"); //"blank.txt";
-    data.content = getText(editor);
-    data.accessed = 0;
-    data.file_no = editor.attr("data-file-number");
-    data.type = "save"; //id.split('-file')[0];
+    // This likely can stay the same. When we save/save as this code will do it
+    /* For save-as we will need to generate a new file name, and add a new, random file_no */
+    try {
+        if (Object.keys(editor).length <= 0) {
+            throw NoEditorError;
+        }
 
-    if (editor.attr("saved") == "true") {
-        return;
-    } else {
-        editor.attr("saved", true);
-        $("#selected-tab").children().eq(0).attr("id", "exit-saved");
+        var data = {};
+        data.name = editor.attr("data-name"); //"blank.txt";
+        data.content = getText(editor);
+        data.accessed = 0;
+        data.file_no = editor.attr("data-file-number");
+        data.type = "save"; //id.split('-file')[0];
+
+        if (editor.attr("saved") == "true") {
+            console.log("Already saved");
+            return;
+        } else {
+            editor.attr("saved", true);
+            $("#selected-tab").children().eq(0).attr("id", "exit-saved");
+        }
+
+        $.ajax({
+            // use to save data created.
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            url: "/data",
+            success: function (data) {
+                console.log("saved");
+            },
+            error: function (err) {
+                console.log("not saved", err);
+            },
+        });
+    } catch (err) {
+        console.error(err);
     }
-
-    $.ajax({
-        // use to save data created.
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        url: "/data",
-        success: function (data) {
-            console.log("saved");
-        },
-        error: function (err) {
-            console.log("not saved", err);
-        },
-    });
 }
 
 function bindClickEvent(id, editor) {
@@ -147,7 +130,6 @@ function bindClickEvent(id, editor) {
                     today.getDate();
 
             // access the json file and hopefully find a way to write to it!!!
-            console.log(today);
             genericEditor(
                 "untitled.*",
                 `# ${date}\n# © 2021 Edward Thomas; All rights reserved`,
@@ -169,7 +151,7 @@ function bindClickEvent(id, editor) {
 // keeping the original main script, here I will clean up as needed
 function main() {
     $(".dropdown button").each(function (index) {
-        var which = $(this).attr("id"),
+        let which = $(this).attr("id"),
             dropdown = "#" + which + "-dropdown",
             drop_div = $(".dropdown").find(dropdown);
 
@@ -181,11 +163,6 @@ function main() {
         });
 
         $(this).click(function (event) {
-            // variables for main toolbar buttons
-            var which = $(this).attr("id"),
-                dropdown = "#" + which + "-dropdown",
-                drop_div = $(".dropdown").find(dropdown);
-
             // we need to first actually view the div so heres that
             drop_div.css("display", "block");
         });

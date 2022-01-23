@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Run `npm run lint` and if you send the fix argument then we'll write
+
+if [ "$1" != "fix" ]
+    then
+        if npx prettier --check .
+            then
+                exit 0
+        else
+            while [ true ] ; do
+                printf "\n" && echo -n "Do you want to run prettier: " && read -n 1 -t 10 a
+                if [ "$a" = "y" ]; then
+                    npx prettier --write .
+                    exit 0
+                else
+                    exit 1
+                fi
+            done
+        fi
+else
+    npx prettier --write .
+fi

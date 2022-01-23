@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Run webPack to get lastest code compiled
+npm run webpack
+
 npm run lint && npm run test

@@ -1,5 +1,6 @@
 package-lock.json
+node_modules
+client/dist
 .gitignore
 .husky
 .github
-node_modules
