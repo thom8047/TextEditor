@@ -17,12 +17,18 @@
     "bugs": {
         "url": "https://github.com/thom8047/TextEditor/issues"
     },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
     "homepage": "https://github.com/thom8047/TextEditor#readme",
     "dependencies": {
         "express": "^4.17.1",
         "pg": "^8.7.1"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.16.11",
         "fs": "0.0.1-security",
         "husky": "^7.0.4",
         "jest": "^27.0.6",

@@ -8,19 +8,26 @@ function clear(scale) {
 }
 
 function createNumbers(n, remove) {
-    var scale = $("#number_scale");
+    try {
+        var scale = $("#number_scale");
 
-    if (remove) {
-        clear(scale);
-    }
+        if (remove) {
+            clear(scale);
+        }
 
-    for (let i = 1; i < n + 1; i++) {
-        var number = document.createElement("div");
-        $(number).attr("id", i);
-        var str = `${i}|`;
-        $(number).text(str);
+        for (let i = 1; i < n + 1; i++) {
+            var number = document.createElement("div");
+            $(number).attr("id", i);
+            var str = `${i}|`;
+            $(number).text(str);
 
-        scale.append(number);
+            scale.append(number);
+        }
+
+        return true;
+    } catch (e) {
+        // console.error(e);
+        return false;
     }
 }
 
