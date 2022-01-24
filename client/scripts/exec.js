@@ -1,5 +1,5 @@
-import { getDropDown, openFile, closePopUp, fade } from "./newSaveLoad.js";
-import { genericEditor } from "./display.js";
+import { getDropDown, closePopUp } from "./drop_down.js";
+import colorCode from "./pythonColorCode";
 
 // main module as of 9/12/21
 
@@ -8,4 +8,5 @@ $(document).ready(function () {
 
     getDropDown();
     closePopUp();
+    colorCode();
 });

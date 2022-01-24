@@ -1,135 +1,135 @@
 // gloabls
-currentRow = 1;
-pyKeyWords = [
-    "while",
-    "async",
-    "except",
-    "lambda",
-    "with",
-    "await",
-    "finally",
-    "nonlocal",
-    "yield",
-    "break",
-    "for",
-    "import",
-    "return",
-    "as",
-    "elif",
-    "in",
-    "try",
-    "assert",
-    "else",
-    "class",
-    "from",
-    "continue",
-    "global",
-    "pass",
-    "def",
-    "if",
-    "raise",
-    "del",
+const currentRow = 1,
+    pyKeyWords = [
+        "while",
+        "async",
+        "except",
+        "lambda",
+        "with",
+        "await",
+        "finally",
+        "nonlocal",
+        "yield",
+        "break",
+        "for",
+        "import",
+        "return",
+        "as",
+        "elif",
+        "in",
+        "try",
+        "assert",
+        "else",
+        "class",
+        "from",
+        "continue",
+        "global",
+        "pass",
+        "def",
+        "if",
+        "raise",
+        "del",
 
-    "is",
-    "or",
-    "and",
-    "not",
+        "is",
+        "or",
+        "and",
+        "not",
 
-    "False",
-    "None",
-    "True",
+        "False",
+        "None",
+        "True",
 
-    "print",
-    " input",
-    " str",
-    " int",
-    " bool",
+        "print",
+        " input",
+        " str",
+        " int",
+        " bool",
 
-    '"',
-    ".",
-    "'",
-    "	",
-];
-txtKeyWords = [
-    "while",
-    "async",
-    "except",
-    "lambda",
-    "with",
-    "await",
-    "finally",
-    "nonlocal",
-    "yield",
-    "break",
-    "for",
-    "import",
-    "return",
-    "as",
-    "elif",
-    "in",
-    "try",
-    "assert",
-    "else",
-    "class",
-    "from",
-    "continue",
-    "global",
-    "pass",
-    "def",
-    "if",
-    "raise",
-    "del",
+        '"',
+        ".",
+        "'",
+        "	",
+    ],
+    txtKeyWords = [
+        "while",
+        "async",
+        "except",
+        "lambda",
+        "with",
+        "await",
+        "finally",
+        "nonlocal",
+        "yield",
+        "break",
+        "for",
+        "import",
+        "return",
+        "as",
+        "elif",
+        "in",
+        "try",
+        "assert",
+        "else",
+        "class",
+        "from",
+        "continue",
+        "global",
+        "pass",
+        "def",
+        "if",
+        "raise",
+        "del",
 
-    "is",
-    "or",
-    "and",
-    "not",
+        "is",
+        "or",
+        "and",
+        "not",
 
-    "False",
-    "None",
-    "True",
+        "False",
+        "None",
+        "True",
 
-    "print",
-    " input",
-    " str",
-    " int",
-    " bool",
+        "print",
+        " input",
+        " str",
+        " int",
+        " bool",
 
-    '"',
-    ".",
-    "'",
-    "#",
+        '"',
+        ".",
+        "'",
+        "#",
 
-    "self",
-];
-unacceptableKeys = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-];
+        "self",
+    ],
+    unacceptableKeys = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+    ];
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
     if (text.indexOf(keyWord, start) == -1) {
@@ -137,10 +137,10 @@ function checkForOccuranceOf(keyWord, text, start, current_node) {
     }
 
     var occuranceIndex = text.indexOf(keyWord, start),
-        end = occuranceIndex + keyWord.length;
-    (specificNodes = $(current_node).children().slice(occuranceIndex, end)),
-        (prevKey = text.slice(occuranceIndex - 1, occuranceIndex)),
-        (afterKey = text.slice(end, end + 1));
+        end = occuranceIndex + keyWord.length,
+        specificNodes = $(current_node).children().slice(occuranceIndex, end),
+        prevKey = text.slice(occuranceIndex - 1, occuranceIndex),
+        afterKey = text.slice(end, end + 1);
 
     if (["is", "or", "and", "not"].includes(keyWord)) {
         if (
@@ -311,31 +311,8 @@ function colorCode(event) {
         }
         checkForOccuranceOf(keyWord, text, 0, current_node);
     }
-    /* 
-
-    Notes of dumb ass thoughts:
-
-
-    When text is updated, use this func with our keywords to check if string contains each keyword and if so
-    then we can get a selection of the children using jQuery and .eq() and get the specific nodes from the length of the 
-    keyword and from their change the class elements to a statement, this leaves all other span's uneffected. It is best
-    time case, but we will need to account for the keywords possibly being changed by random changes.
-
-    This could be solved by making all children elements class = other then specifically changing the keywords each keydown events
-
-    Think of better solution!!!!
-
-    As of July 14th, I'll use this script as a module and if it is a .py file then ill use this to run it and i can 
-    make other color code scripts to use with different extensions
-    */
 }
 
-function main() {
+export default function main() {
     $(document).on("keydown", colorCode);
 }
-
-$(document).ready(main);
-
-/* 8/7/21
-This will come into play eventually
-*/

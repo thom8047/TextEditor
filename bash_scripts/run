@@ -2,6 +2,9 @@
 
 echo "Application starting up..."
 
+# Added code to make sure when we start our server, the client code is currently compiled 
+# npm run webpack
+
 # Need to run this in the background | To run command with logs piped to a separate file, add `nohup` with 
 #                                    | command as argument and continue running in background
 
