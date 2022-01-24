@@ -1,135 +1,4 @@
-// gloabls
-const currentRow = 1,
-    pyKeyWords = [
-        "while",
-        "async",
-        "except",
-        "lambda",
-        "with",
-        "await",
-        "finally",
-        "nonlocal",
-        "yield",
-        "break",
-        "for",
-        "import",
-        "return",
-        "as",
-        "elif",
-        "in",
-        "try",
-        "assert",
-        "else",
-        "class",
-        "from",
-        "continue",
-        "global",
-        "pass",
-        "def",
-        "if",
-        "raise",
-        "del",
-
-        "is",
-        "or",
-        "and",
-        "not",
-
-        "False",
-        "None",
-        "True",
-
-        "print",
-        " input",
-        " str",
-        " int",
-        " bool",
-
-        '"',
-        ".",
-        "'",
-        "	",
-    ],
-    txtKeyWords = [
-        "while",
-        "async",
-        "except",
-        "lambda",
-        "with",
-        "await",
-        "finally",
-        "nonlocal",
-        "yield",
-        "break",
-        "for",
-        "import",
-        "return",
-        "as",
-        "elif",
-        "in",
-        "try",
-        "assert",
-        "else",
-        "class",
-        "from",
-        "continue",
-        "global",
-        "pass",
-        "def",
-        "if",
-        "raise",
-        "del",
-
-        "is",
-        "or",
-        "and",
-        "not",
-
-        "False",
-        "None",
-        "True",
-
-        "print",
-        " input",
-        " str",
-        " int",
-        " bool",
-
-        '"',
-        ".",
-        "'",
-        "#",
-
-        "self",
-    ],
-    unacceptableKeys = [
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z",
-    ];
+import { pyKeyWords, txtKeyWords, unacceptableKeys } from "./utils/keywords";
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
     if (text.indexOf(keyWord, start) == -1) {
@@ -289,9 +158,14 @@ function colorCode(event) {
         return;
     }
     // Get the current tab's extension and now we can reference this to our known keywords
-    var currentFileType = $("#selected-tab").text().split(".")[1],
+    let currentFileType = $("#selected-tab").text().split(".")[1],
         current_node = $(document.activeElement),
-        text = current_node.text();
+        text = current_node.text(),
+        contentKeyWords = txtKeyWords;
+
+    if (currentFileType == "py") {
+        contentKeyWords = pyKeyWords;
+    }
     // remove the classes so we can set them. we need to leave the tabs alone, so we can have a cool tab css
     $(current_node)
         .children()
@@ -305,7 +179,7 @@ function colorCode(event) {
             }
         });
 
-    for (const keyWord of txtKeyWords) {
+    for (const keyWord of contentKeyWords) {
         if (text.indexOf(keyWord) == -1) {
             continue;
         }
