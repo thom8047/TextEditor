@@ -1,5 +1,5 @@
 import { getDropDown, closePopUp } from "./drop_down.js";
-import colorCode from "./pythonColorCode";
+import colorCode from "./utils/ColorCode";
 
 // main module as of 9/12/21
 

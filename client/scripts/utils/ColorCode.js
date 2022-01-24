@@ -1,4 +1,4 @@
-import { pyKeyWords, txtKeyWords, unacceptableKeys } from "./utils/keywords";
+import { pyKeyWords, txtKeyWords, unacceptableKeys } from "./keywords";
 
 function checkForOccuranceOf(keyWord, text, start, current_node) {
     if (text.indexOf(keyWord, start) == -1) {
