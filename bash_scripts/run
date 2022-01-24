@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Application starting up..."
+
+# Need to run this in the background | To run command with logs piped to a separate file, add `nohup` with 
+#                                    | command as argument and continue running in background
+
+/c/"Program Files"/Google/Chrome/Application/Chrome.exe --app=http://localhost:8000/ &
+
+# Run node in parent process, if killed should kill the above process
+node app.js
