@@ -1,14 +1,13 @@
-<!-- <!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 
-    // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH!
+    <!-- // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH! -->
 
- -->
+
 <html lang="en">
     <head>
         <title>Editor</title>
         <link rel="stylesheet" href="stylesheet/index.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="dist/main.js"></script>
     </head>
 
     <body>
@@ -42,15 +41,16 @@
                 <div class="dropdown">
                     <button class="main-button" id="file">FILE</button>
                     <div class="dropdown-content" id="file-dropdown">
-                        <div><button id="new-file">New File</button></div>
-                        <div><button id="open-file">Open File</button></div>
+                        <div id="new-file"><button>New File</button></div>
+                        <div id="open-file"><button>Open File</button></div>
                         <!-- <label id="open-file">
 <input id="imported-files" type="file" multiple/>
 Open File
 </label> 
--- This is what used to be here -->
+-- This is what used to be here 
+test-->
 
-                        <div><button id="save-file">Save File</button></div>
+                        <div id="save-file"><button onclick="saveButton()">Save File</button></div>
                     </div>
                 </div>
 
@@ -97,6 +97,7 @@ Open File
 
             <div class="Output"></div>
         </div>
+        <script src="dist/main.js"></script>
     </body>
 
     <footer>

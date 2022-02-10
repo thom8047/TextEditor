@@ -149,22 +149,11 @@ function getDropDown() {
             }, 100);
         });
 
-        $(this).click(function (event) {
+        $(this).on("click", function (event) {
             // we need to first actually view the div so heres that
             drop_div.css("display", "block");
         });
     });
-
-    // for each button in the dropdown, add click events...
-    $("#new-file").on("click", function (event) {
-        newFile();
-    });
-    $("#open-file").on("click", function (event) {
-        openFile();
-    });
-    $("#save-file").on("click", function (event) {
-        saveFile($("#editor"));
-    });
 }
 
-export { getDropDown, closePopUp, saveFile };
+export { getDropDown, closePopUp, saveFile, openFile, newFile };
