@@ -1,110 +1,112 @@
 <!-- <!DOCTYPE html> -->
 
-    <!-- // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH! -->
-
+<!-- // DO NOT MAKE THE DOC TYPE HTML, IT CAISES ERRORS I HAVE YET TO DEAL WITH! -->
 
 <html lang="en">
-    <head>
-        <title>Editor</title>
-        <link rel="stylesheet" href="stylesheet/index.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    </head>
 
-    <body>
-        <div class="App">
-            <div class="FileExplorer">
-                <div id="full-screen-popup-background"></div>
-                <div id="popup-background">
-                    <div id="popup-navbar">
-                        <span id="popup-navbar-x"> + </span>
-                    </div>
+<head>
+    <title>Editor</title>
+    <link rel="stylesheet" href="stylesheet/index.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
 
-                    <div id="popup-content">
-                        <span id="popup-content-files">
-                            <!-- This is where we'll auto generate all the files in the db -->
-                        </span>
-                        <span id="popup-content-props">
-                            <div id="popup-content-prop">Currently in Dev.</div>
-                            <!-- This will be the properties of the text file we have, such as extension, line count, etc. -->
-                        </span>
-                    </div>
+<body>
+    <div class="App">
+        <div class="FileExplorer">
+            <div id="full-screen-popup-background"></div>
+            <div id="popup-background">
+                <div id="popup-navbar">
+                    <span id="popup-navbar-x"> + </span>
+                </div>
 
-                    <div id="popup-footer">
-                        <span id="open-all-files"> OPEN </span>
-                    </div>
+                <div id="popup-content">
+                    <span id="popup-content-files">
+                        <!-- This is where we'll auto generate all the files in the db -->
+                    </span>
+                    <span id="popup-content-props">
+                        <div id="popup-content-prop">Currently in Dev.</div>
+                        <!-- This will be the properties of the text file we have, such as extension, line count, etc. -->
+                    </span>
+                </div>
+
+                <div id="popup-footer">
+                    <span id="open-all-files"> OPEN </span>
                 </div>
             </div>
+        </div>
 
-            <div class="ToolBar">
-                <div id="title">Text Editor v0.0.0</div>
+        <div class="ToolBar">
+            <div id="title">Text Editor v0.0.0</div>
 
-                <div class="dropdown">
-                    <button class="main-button" id="file">FILE</button>
-                    <div class="dropdown-content" id="file-dropdown">
-                        <div id="new-file"><button>New File</button></div>
-                        <div id="open-file"><button>Open File</button></div>
-                        <!-- <label id="open-file">
+            <div class="dropdown">
+                <button class="main-button" id="file">FILE</button>
+                <div class="dropdown-content" id="file-dropdown">
+                    <div id="new-file"><button>New File</button></div>
+                    <div id="open-file"><button>Open File</button></div>
+                    <!-- <label id="open-file">
 <input id="imported-files" type="file" multiple/>
 Open File
 </label> 
--- This is what used to be here 
-test-->
+-- This is what used to be here -->
 
-                        <div id="save-file"><button onclick="saveButton()">Save File</button></div>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <button class="main-button" id="edit">EDIT</button>
-                    <div class="dropdown-content" id="edit-dropdown">
-                        <div><button id="undo">Undo</button></div>
-                        <div><button id="redo">Redo</button></div>
-                        <div><button id="find">Find</button></div>
-                        <div><button id="replace">Replace</button></div>
-                        <div>
-                            <button id="toggle-comment">Toggle Comment</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <button class="main-button" id="run">RUN</button>
-                    <div class="dropdown-content" id="run-dropdown">
-                        <div>
-                            <button id="run-without">Run Without Debug</button>
-                        </div>
-                        <div><button id="run-debug">Run W/ Debug</button></div>
-                        <div><button id="quit">Quit</button></div>
+                    <div id="save-file">
+                        <button onclick="saveButton()">Save File</button>
                     </div>
                 </div>
             </div>
 
-            <div class="TextBox">
-                <span>
-                    <div id="display">
-                        <div id="explorer">EXPLORER</div>
-                        <div id="display-toolbar"></div>
+            <div class="dropdown">
+                <button class="main-button" id="edit">EDIT</button>
+                <div class="dropdown-content" id="edit-dropdown">
+                    <div><button id="undo">Undo</button></div>
+                    <div><button id="redo">Redo</button></div>
+                    <div><button id="find">Find</button></div>
+                    <div><button id="replace">Replace</button></div>
+                    <div>
+                        <button id="toggle-comment">Toggle Comment</button>
                     </div>
-
-                    <div id="main">
-                        <div id="tabs"></div>
-                        <div id="code">
-                            <div id="number_scale" data-name="null"></div>
-                        </div>
-                    </div>
-                </span>
+                </div>
             </div>
 
-            <div class="Output"></div>
+            <div class="dropdown">
+                <button class="main-button" id="run">RUN</button>
+                <div class="dropdown-content" id="run-dropdown">
+                    <div>
+                        <button id="run-without">Run Without Debug</button>
+                    </div>
+                    <div><button id="run-debug">Run W/ Debug</button></div>
+                    <div><button id="quit">Quit</button></div>
+                </div>
+            </div>
         </div>
-        <script src="dist/main.js"></script>
-    </body>
 
-    <footer>
-        <div id="footer">
-            no upstream set<span id="footer-data">LN: __1 | Col: __0</span>
+        <div class="TextBox">
+            <span>
+                <div id="display">
+                    <div id="explorer">EXPLORER</div>
+                    <div id="display-toolbar"></div>
+                </div>
+
+                <div id="main">
+                    <div id="tabs"></div>
+                    <div id="code">
+                        <div id="number_scale" data-name="null"></div>
+                    </div>
+                </div>
+            </span>
         </div>
-    </footer>
+
+        <div class="Output"></div>
+    </div>
+    <script src="dist/main.js"></script>
+</body>
+
+<footer>
+    <div id="footer">
+        no upstream set<span id="footer-data">LN: __1 | Col: __0</span>
+    </div>
+</footer>
+
 </html>
 
 <!-- CLEAN HTML -->
