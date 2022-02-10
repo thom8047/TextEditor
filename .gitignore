@@ -1,1 +1,4 @@
 node_modules
+
+# Just incase we pipe log output from the run file
+nohup.out
